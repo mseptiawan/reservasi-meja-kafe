@@ -9,17 +9,42 @@
     </x-slot>
 
     <!-- Baris Kontrol di Bawah Header (Tombol Tambah di Kanan) -->
-    <div class="flex items-center justify-between mb-5">
-        <div class="text-xs text-slate-500 font-medium">
-            Total Meja: <span class="text-slate-800 font-bold">{{ $tables->count() }} Unit</span>
+   <!-- Baris Kontrol di Bawah Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+        
+        <!-- SISI KIRI: Tombol Filter Area -->
+        <div class="flex flex-wrap items-center gap-1.5">
+            <!-- Tombol Semua Area -->
+            <a href="{{ route('admin.tables.index', ['area' => 'all']) }}" 
+               class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all duration-150 {{ (!$selectedArea || $selectedArea === 'all') ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50' }}">
+                Semua Meja ({{ \App\Models\Table::count() }})
+            </a>
+
+            <!-- Loop Filter Area secara Otomatis dari Database -->
+            @foreach($availableAreas as $area)
+                @php
+                    $countArea = \App\Models\Table::where('area', $area)->count();
+                @endphp
+                <a href="{{ route('admin.tables.index', ['area' => $area]) }}" 
+                   class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all duration-150 {{ $selectedArea === $area ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50' }}">
+                    {{ $area }} ({{ $countArea }})
+                </a>
+            @endforeach
         </div>
         
-        <!-- Tombol Tambah Meja (Sesuai Request: Di bawah header, sebelah kanan, bg-blue-600, tanpa shadow) -->
-        <a href="{{ route('admin.tables.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-all duration-150">
+        <!-- SISI KANAN: Tombol Tambah Meja -->
+        <a href="{{ route('admin.tables.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-all duration-150 self-start sm:self-auto">
             <i class="fa-solid fa-plus text-[10px]"></i>
             Tambah Meja
         </a>
     </div>
+
+    <!-- Info hasil filter aktif (Hanya muncul kalau sedang memfilter area tertentu) -->
+    @if($selectedArea && $selectedArea !== 'all')
+        <div class="text-[11px] text-slate-500 font-medium mb-3">
+            Menampilkan filter area: <span class="text-slate-800 font-bold">"{{ $selectedArea }}"</span> ({{ $tables->count() }} Meja ditemukan)
+        </div>
+    @endif
 
     <!-- Notifikasi Sukses -->
     @if(session('success'))

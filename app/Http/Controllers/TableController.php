@@ -11,10 +11,21 @@ class TableController extends Controller
     /**
      * Tampilkan semua daftar meja.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tables = Table::orderBy('table_number', 'asc')->get();
-        return view('admin.tables.index', compact('tables'));
+        $selectedArea = $request->get('area');
+
+        $query = Table::orderBy('table_number', 'asc');
+
+        if ($selectedArea && $selectedArea !== 'all') {
+            $query->where('area', $selectedArea);
+        }
+
+        $tables = $query->get();
+
+        $availableAreas = Table::distinct()->pluck('area');
+
+        return view('admin.tables.index', compact('tables', 'availableAreas', 'selectedArea'));
     }
 
     /**
