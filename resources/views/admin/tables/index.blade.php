@@ -102,14 +102,13 @@
                     </a>
 
                     <!-- Tombol Hapus -->
-                    <form action="{{ route('admin.tables.destroy', $table->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus meja ini?');" class="inline-block m-0">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-100 text-slate-400 hover:text-rose-600 transition-colors" title="Hapus">
-                            <i class="fa-solid fa-trash-can text-[10px]"></i>
-                        </button>
-                    </form>
-                </div>
+                  <form action="{{ route('admin.tables.destroy', $table->id) }}" method="POST" class="delete-form inline-block m-0">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-100 text-slate-400 hover:text-rose-600 transition-colors" title="Hapus">
+        <i class="fa-solid fa-trash-can text-[10px]"></i>
+    </button>
+</form>                </div>
 
             </div>
         @empty

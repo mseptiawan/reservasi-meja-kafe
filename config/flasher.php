@@ -13,11 +13,9 @@ return Configuration::from([
 
     'styles' => [
         '/vendor/flasher/flasher.min.css',
-        '/vendor/flasher/sweetalert2.min.css',
     ],
 
     'scripts' => [
-        '/vendor/flasher/sweetalert2.min.js',
         '/vendor/flasher/flasher-sweetalert.min.js',
     ],
 

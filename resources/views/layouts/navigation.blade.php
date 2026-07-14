@@ -5,11 +5,8 @@
     <!-- LOGO & BRAND -->
     <div class="h-20 flex items-center px-6 md:px-0 xl:px-8 border-b border-slate-100 relative shrink-0 justify-between md:justify-center xl:justify-start">
         <div class="flex items-center gap-3 relative z-10">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md shadow-indigo-100 shrink-0">
-                <i class="fa-solid fa-mug-hot text-lg"></i>
-            </div>
             <div class="leading-tight md:hidden xl:block">
-                <h2 class="font-bold text-slate-800 text-sm">Senja Space</h2>
+                <h2 class="font-bold text-slate-800 text-sm">Lsp Proyek</h2>
                 <span class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase">Reservasi Meja</span>
             </div>
         </div>
@@ -50,14 +47,14 @@
                     </div>
                     <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 md:hidden xl:block"></i>
                 </button>
-                <!-- Submenu -->
-                <div x-show="open" x-collapse class="flex flex-col border-l border-slate-100 ml-6 md:ml-0 xl:ml-6 pl-3 md:pl-0 xl:pl-3 space-y-1">
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-circle-plus text-[10px] w-4 text-center shrink-0"></i>
+                <!-- Submenu (Indentasi Dihapus) -->
+                <div x-show="open" x-collapse class="flex flex-col space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-circle-plus text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Pesan Meja Baru</span>
                     </a>
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-map text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-map text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Denah Area Kafe</span>
                     </a>
                 </div>
@@ -73,14 +70,14 @@
                     </div>
                     <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 md:hidden xl:block"></i>
                 </button>
-                <!-- Submenu -->
-                <div x-show="open" x-collapse class="flex flex-col border-l border-slate-100 ml-6 md:ml-0 xl:ml-6 pl-3 md:pl-0 xl:pl-3 space-y-1">
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-list-ul text-[10px] w-4 text-center shrink-0"></i>
+                <!-- Submenu (Indentasi Dihapus) -->
+                <div x-show="open" x-collapse class="flex flex-col space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-list-ul text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Daftar Reservasi</span>
                     </a>
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-wallet text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-wallet text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Konfirmasi Pembayaran</span>
                     </a>
                 </div>
@@ -96,14 +93,14 @@
                     </div>
                     <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 md:hidden xl:block"></i>
                 </button>
-                <!-- Submenu -->
-                <div x-show="open" x-collapse class="flex flex-col border-l border-slate-100 ml-6 md:ml-0 xl:ml-6 pl-3 md:pl-0 xl:pl-3 space-y-1">
-                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-user-pen text-[10px] w-4 text-center shrink-0"></i>
+                <!-- Submenu (Indentasi Dihapus) -->
+                <div x-show="open" x-collapse class="flex flex-col space-y-1">
+                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-user-pen text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Edit Profil</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}#change-password" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-key text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="{{ route('profile.edit') }}#change-password" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-key text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Ganti Password</span>
                     </a>
                 </div>
@@ -134,14 +131,14 @@
                     </div>
                     <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 md:hidden xl:block"></i>
                 </button>
-                <!-- Submenu -->
-                <div x-show="open" x-collapse class="flex flex-col border-l border-slate-100 ml-6 md:ml-0 xl:ml-6 pl-3 md:pl-0 xl:pl-3 space-y-1">
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-user-check text-[10px] w-4 text-center shrink-0"></i>
+                <!-- Submenu (Indentasi Dihapus) -->
+                <div x-show="open" x-collapse class="flex flex-col space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-user-check text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Persetujuan Akun</span>
                     </a>
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-users text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-users text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Daftar Pelanggan</span>
                     </a>
                 </div>
@@ -157,18 +154,18 @@
                     </div>
                     <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 md:hidden xl:block"></i>
                 </button>
-                <!-- Submenu -->
-                <div x-show="open" x-collapse class="flex flex-col border-l border-slate-100 ml-6 md:ml-0 xl:ml-6 pl-3 md:pl-0 xl:pl-3 space-y-1">
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-calendar-check text-[10px] w-4 text-center shrink-0"></i>
+                <!-- Submenu (Indentasi Dihapus) -->
+                <div x-show="open" x-collapse class="flex flex-col space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-calendar-check text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Persetujuan Reservasi</span>
                     </a>
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-file-invoice-dollar text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-file-invoice-dollar text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Verifikasi Pembayaran</span>
                     </a>
-                    <a href="#" class="flex items-center gap-2.5 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
-                        <i class="fa-solid fa-history text-[10px] w-4 text-center shrink-0"></i>
+                    <a href="#" class="flex items-center gap-3 px-4 md:px-0 xl:px-4 py-2 text-[11px] font-medium text-slate-500 hover:text-indigo-600 transition-colors md:justify-center xl:justify-start">
+                        <i class="fa-solid fa-history text-xs w-5 text-center shrink-0"></i>
                         <span class="md:hidden xl:block">Semua Transaksi</span>
                     </a>
                 </div>
