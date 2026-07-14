@@ -15,17 +15,19 @@
         </div>
     </x-slot>
     <div class="max-w-xl mx-auto bg-white border border-slate-200 rounded-xl overflow-hidden ">
-
-        <div class="p-4 bg-slate-50/70 border-b border-slate-200/50 flex items-start gap-2.5">
-            <div class="mt-0.5 shrink-0 text-slate-400">
-                <i class="fa-solid fa-circle-info text-xs"></i>
-            </div>
-            <div class="flex-1">
-                <p class="text-xs text-slate-600 font-medium leading-relaxed">
-                    <span class="font-bold text-slate-700">Status: Menunggu Verifikasi.</span> Permintaan Anda sedang masuk dalam antrean pengecekan ketersediaan meja secara fisik oleh pihak manajemen Senja Space.
-                </p>
-            </div>
-        </div>
+<div class="p-4 bg-slate-50/70 border-b border-slate-200/50 flex items-start gap-2.5">
+    <div class="mt-0.5 shrink-0 text-slate-400">
+        <i class="fa-solid fa-circle-info text-xs"></i>
+    </div>
+    <div class="flex-1">
+        <span class="block text-xs font-bold text-slate-700 leading-none mb-1">
+            Status: Menunggu Verifikasi
+        </span>
+        <p class="text-[11px] text-slate-500 font-normal leading-relaxed">
+            Permintaan Anda sedang masuk dalam antrean pengecekan ketersediaan meja secara fisik oleh pihak manajemen Senja Space.
+        </p>
+    </div>
+</div>
 
         <div class="p-6 space-y-4 text-xs text-slate-600">
             <div class="flex justify-between items-center border-b border-dashed border-slate-200 pb-3">
