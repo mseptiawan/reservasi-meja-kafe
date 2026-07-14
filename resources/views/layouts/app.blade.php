@@ -15,22 +15,31 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-100/50">
-        <div class="flex min-h-screen p-4 gap-4">
+   <body class="font-sans antialiased bg-slate-100/50" x-data x-init="$store.sidebar = { open: false }">
+        
+        <!-- PENTING: Tambahkan margin-left seukuran sidebar di breakpoint tertentu -->
+        <div class="flex min-h-screen p-4 gap-4 md:pl-20 xl:pl-[280px]">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-          <div class="flex-1 flex flex-col min-w-0">
+            <!-- Page Heading & Content -->
+            <div class="flex-1 flex flex-col min-w-0">
                 @isset($header)
-                    <header class="bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-slate-100 mb-4">
-                        <div class="max-w-7xl mx-auto py-5 px-6">
-                            {{ $header }}
+                    <header class="mb-4">
+                        <div class="max-w-7xl mx-auto py-5 px-6 flex items-center gap-4">
+                            <!-- Tombol Hamburger khusus Mobile -->
+                            <button @click="$store.sidebar.open = true" class="md:hidden p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-slate-600">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                            
+                            <div class="flex-1">
+                                {{ $header }}
+                            </div>
                         </div>
                     </header>
                 @endisset
 
                 <!-- Page Content -->
-                <main class="flex-1">
+                <main class="flex-1 p-8">
                     {{ $slot }}
                 </main>
             </div>

@@ -50,7 +50,10 @@ class TableController extends Controller
 
         Table::create($data);
 
-        return redirect()->route('admin.tables.index')->with('success', 'Meja baru berhasil ditambahkan.');
+        flash()->success('Meja baru berhasil ditambahkan.');
+
+        return redirect()->route('admin.tables.index');
+
     }
 
     /**
@@ -90,7 +93,9 @@ class TableController extends Controller
 
         $table->update($data);
 
-        return redirect()->route('admin.tables.index')->with('success', 'Data meja berhasil diperbarui.');
+        flash()->success('Data meja berhasil diperbarui.');
+
+        return redirect()->route('admin.tables.index');
     }
 
     /**
@@ -104,7 +109,9 @@ class TableController extends Controller
         }
 
         $table->delete();
+        
+        flash()->success('Meja berhasil dihapus dari sistem.');
 
-        return redirect()->route('admin.tables.index')->with('success', 'Meja berhasil dihapus dari sistem.');
+        return redirect()->route('admin.tables.index');
     }
 }
