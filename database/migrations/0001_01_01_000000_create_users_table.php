@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_number'); 
-            $table->string('identity_number')->unique(); 
             $table->string('role')->default('pelanggan'); 
             $table->string('status_verifikasi')->default('pending'); 
             $table->timestamp('email_verified_at')->nullable();
