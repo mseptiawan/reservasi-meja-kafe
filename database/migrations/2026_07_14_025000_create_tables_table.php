@@ -13,9 +13,24 @@ return new class extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
-            $table->string('table_number')->unique(); 
-            $table->integer('capacity'); 
-            $table->string('status')->default('available'); 
+
+            $table->string('table_number')->unique();
+            $table->string('area')->default('Indoor');
+            $table->unsignedTinyInteger('capacity');
+
+            $table->enum('status', [
+                'available',
+                'reserved',
+                'occupied',
+                'maintenance'
+            ])->default('available');
+
+            $table->string('image')->nullable(); 
+            $table->text('description')->nullable();
+
+            $table->boolean('is_active')->default(true);
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

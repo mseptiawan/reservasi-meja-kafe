@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RevervationController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AnnouncementController;
 
 use Illuminate\Support\Facades\Route;
