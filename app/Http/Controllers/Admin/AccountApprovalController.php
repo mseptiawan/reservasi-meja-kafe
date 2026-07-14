@@ -19,7 +19,12 @@ class AccountApprovalController extends Controller
         ];
 
         $users = User::where('role', 'pelanggan')
-            ->where('status_verifikasi', $status)
+            ->when($status === 'pending', function ($query) {
+                return $query->where('status_verifikasi', 'pending');
+            })
+            ->when($status === 'rejected', function ($query) {
+                return $query->whereIn('status_verifikasi', ['rejected', 'active']);
+            })
             ->latest()
             ->paginate(10);
 

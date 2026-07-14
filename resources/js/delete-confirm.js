@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 showCancelButton: true,
                 confirmButtonColor: "#f43f5e",
                 cancelButtonColor: "#64748b",
-                confirmButtonText: "Ya, Hapus!s",
+                confirmButtonText: "Ya, Hapus!",
                 cancelButtonText: "Batal",
                 customClass: {
                     popup: "rounded-xl border border-slate-100 shadow-lg font-sans p-6 bg-white",

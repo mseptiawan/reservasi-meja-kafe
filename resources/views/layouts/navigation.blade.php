@@ -52,6 +52,7 @@
     }
 
     // --- PANEL KHUSUS ADMINISTRATOR ---
+    // --- PANEL KHUSUS ADMINISTRATOR ---
     if ($userRole === 'admin') {
         $menus['Admin Panel'] = [
             [
@@ -65,17 +66,19 @@
                 'type' => 'dropdown',
                 'title' => 'Manajemen Anggota',
                 'icon' => 'fa-solid fa-users-gear',
-                'active_pattern' => 'admin.anggota.*',
+                // DIUBAH: Menggunakan array pattern agar mencakup rute approvals dan customers
+                'active_pattern' => ['admin.approvals.*', 'admin.customers.*'], 
                 'submenu' => [
                     ['title' => 'Persetujuan Akun', 'url' => route('admin.approvals.index'), 'icon' => 'fa-solid fa-user-check'],
-                    ['title' => 'Daftar Pelanggan', 'url' => '#', 'icon' => 'fa-solid fa-users'],
+                    ['title' => 'Daftar Pelanggan', 'url' => route('admin.customers.index'), 'icon' => 'fa-solid fa-users'],
                 ]
             ],
             [
                 'type' => 'dropdown',
                 'title' => 'Permohonan Booking',
                 'icon' => 'fa-solid fa-folder-open',
-                'active_pattern' => 'admin.booking.*',
+                // DIUBAH: Disesuaikan dengan prefix resource/rute admin pembukuan (jika nanti ditambahkan)
+                'active_pattern' => ['admin.booking.*', 'admin.reservasi.*', 'admin.payments.*'], 
                 'submenu' => [
                     ['title' => 'Persetujuan Reservasi', 'url' => '#', 'icon' => 'fa-solid fa-calendar-check'],
                     ['title' => 'Verifikasi Pembayaran', 'url' => '#', 'icon' => 'fa-solid fa-file-invoice-dollar'],

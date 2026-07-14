@@ -37,7 +37,9 @@
                     <!-- Gambar Banner/Thumbnail -->
                     <div class="relative h-40 bg-slate-50 overflow-hidden border-b border-slate-100">
                         @if($announcement->image)
-                            <img src="{{ asset('storage/' . $announcement->image) }}" alt="{{ $announcement->title }}" class="w-full h-full object-cover">
+                        <img src="{{ \Illuminate\Support\Str::contains($announcement->image, ['http://', 'https://']) ? $announcement->image : asset('storage/' . $announcement->image) }}" 
+     alt="{{ $announcement->title }}" 
+     class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex flex-col items-center justify-center text-slate-300 bg-slate-50">
                                 <i class="fa-solid fa-bullhorn text-3xl"></i>

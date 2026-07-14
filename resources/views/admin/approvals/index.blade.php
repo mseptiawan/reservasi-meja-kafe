@@ -2,7 +2,7 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
-        <div class="border border-slate-200/60 md:border-none md:shadow-none">
+        <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
             <div class="flex flex-col gap-1">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-500">Area Kerja / Keamanan</span>
                 <h2 class="font-bold text-xl text-slate-800 leading-tight">
@@ -70,7 +70,7 @@
                     </button>
                     <button type="button" id="tab-btn-rejected" onclick="switchTab('rejected')" 
                         class="tab-btn flex-none whitespace-nowrap rounded-lg px-3.5 py-1.5 text-center text-[11px] transition-all duration-200 outline-none cursor-pointer {{ $status === 'rejected' ? 'bg-white font-bold text-slate-900 shadow-xs' : 'font-medium text-slate-500 hover:text-slate-800' }}">
-                        Daftar Ditolak ({{ $stats['rejected'] }})
+                        Riwayat ({{ $stats['rejected'] }})
                     </button>
                 </div>
             </div>
@@ -128,6 +128,11 @@
                                         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-wide border bg-amber-50 text-amber-600 border-amber-200/50">
                                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                             <span>PENDING</span>
+                                        </div>
+                                    @elseif($user->status_verifikasi === 'active')
+                                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-wide border bg-emerald-50 text-emerald-600 border-emerald-200/50">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            <span>APPROVED</span>
                                         </div>
                                     @else
                                         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-wide border bg-rose-50 text-rose-600 border-rose-200/50">
