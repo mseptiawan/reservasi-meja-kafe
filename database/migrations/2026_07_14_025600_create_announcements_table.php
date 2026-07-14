@@ -18,9 +18,20 @@ return new class extends Migration
             $table->string('slug')->unique(); 
             $table->text('content');
             $table->string('image')->nullable(); 
-            $table->string('type')->default('info_internal'); 
-            $table->string('status')->default('active');
-            $table->integer('view_count')->default(0);
+            $table->enum('type', [
+                'info_internal',
+                'promo',
+                'event',
+                'maintenance',
+                'announcement'
+            ])->default('announcement');
+            $table->enum('status', [
+                'draft',
+                'published',
+                'archived'
+            ])->default('draft');
+            $table->timestamp('published_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
