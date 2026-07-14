@@ -13,11 +13,11 @@
 
         <!-- LIST MENU UTAMA -->
         <div class="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
-            
+
             <!-- ================= ALL ROLES ================= -->
             <!-- Dashboard -->
-            <a href="{{ route('dashboard') }}" 
-               class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-slate-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+            <a href="{{ route('dashboard') }}"
+                class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-slate-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-chart-pie text-base w-5 text-center"></i>
                     <span>Dashboard</span>
@@ -26,115 +26,115 @@
 
             <!-- ================= KHUSUS PELANGGAN AKTIF ================= -->
             @if(Auth::user()->role === 'pelanggan' && Auth::user()->status_verifikasi === 'active')
-                
-                <!-- Reservasi Meja Group -->
-                <div x-data="{ open: {{ request()->routeIs('reservasi.*') ? 'true' : 'false' }} }" class="space-y-1">
-                    <button @click="open = !open" 
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-calendar-check text-base w-5 text-center"></i>
-                            <span>Reservasi Meja</span>
-                        </div>
-                        <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
-                    </button>
-                    <!-- Submenu -->
-                    <div x-show="open" x-collapse class="pl-12 space-y-1">
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Pesan Meja Baru</a>
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Denah Area Kafe</a>
-                    </div>
-                </div>
 
-                <!-- Booking-ku Group -->
-                <div x-data="{ open: {{ request()->routeIs('booking.*') ? 'true' : 'false' }} }" class="space-y-1">
-                    <button @click="open = !open" 
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-receipt text-base w-5 text-center"></i>
-                            <span>Booking-ku</span>
-                        </div>
-                        <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
-                    </button>
-                    <!-- Submenu -->
-                    <div x-show="open" x-collapse class="pl-12 space-y-1">
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Daftar Reservasi</a>
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Konfirmasi Pembayaran</a>
+            <!-- Reservasi Meja Group -->
+            <div x-data="{ open: {{ request()->routeIs('reservasi.*') ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-calendar-check text-base w-5 text-center"></i>
+                        <span>Reservasi Meja</span>
                     </div>
+                    <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <!-- Submenu -->
+                <div x-show="open" x-collapse class="pl-12 space-y-1">
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Pesan Meja Baru</a>
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Denah Area Kafe</a>
                 </div>
+            </div>
 
-                <!-- Profil Saya Group -->
-                <div x-data="{ open: {{ request()->routeIs('profile.*') ? 'true' : 'false' }} }" class="space-y-1">
-                    <button @click="open = !open" 
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-user-gear text-base w-5 text-center"></i>
-                            <span>Profil Saya</span>
-                        </div>
-                        <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
-                    </button>
-                    <!-- Submenu -->
-                    <div x-show="open" x-collapse class="pl-12 space-y-1">
-                        <a href="{{ route('profile.edit') }}" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Edit Profil</a>
-                        <a href="{{ route('profile.edit') }}#change-password" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Ganti Password</a>
+            <!-- Booking-ku Group -->
+            <div x-data="{ open: {{ request()->routeIs('booking.*') ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-receipt text-base w-5 text-center"></i>
+                        <span>Booking-ku</span>
                     </div>
+                    <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <!-- Submenu -->
+                <div x-show="open" x-collapse class="pl-12 space-y-1">
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Daftar Reservasi</a>
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Konfirmasi Pembayaran</a>
                 </div>
+            </div>
+
+            <!-- Profil Saya Group -->
+            <div x-data="{ open: {{ request()->routeIs('profile.*') ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-user-gear text-base w-5 text-center"></i>
+                        <span>Profil Saya</span>
+                    </div>
+                    <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <!-- Submenu -->
+                <div x-show="open" x-collapse class="pl-12 space-y-1">
+                    <a href="{{ route('profile.edit') }}" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Edit Profil</a>
+                    <a href="{{ route('profile.edit') }}#change-password" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Ganti Password</a>
+                </div>
+            </div>
 
             @endif
 
             <!-- ================= KHUSUS ADMINISTRATOR ================= -->
             @if(Auth::user()->role === 'admin')
 
-                <!-- Manajemen Anggota Group -->
-                <div x-data="{ open: {{ request()->routeIs('admin.anggota.*') ? 'true' : 'false' }} }" class="space-y-1">
-                    <button @click="open = !open" 
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-users-gear text-base w-5 text-center"></i>
-                            <span>Manajemen Anggota</span>
-                        </div>
-                        <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
-                    </button>
-                    <!-- Submenu -->
-                    <div x-show="open" x-collapse class="pl-12 space-y-1">
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Persetujuan Akun</a>
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Daftar Pelanggan</a>
-                    </div>
-                </div>
-
-                <!-- Permohonan Booking Group -->
-                <div x-data="{ open: {{ request()->routeIs('admin.booking.*') ? 'true' : 'false' }} }" class="space-y-1">
-                    <button @click="open = !open" 
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-folder-open text-base w-5 text-center"></i>
-                            <span>Permohonan Booking</span>
-                        </div>
-                        <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
-                    </button>
-                    <!-- Submenu -->
-                    <div x-show="open" x-collapse class="pl-12 space-y-1">
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Persetujuan Reservasi</a>
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Verifikasi Pembayaran</a>
-                        <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Semua Transaksi</a>
-                    </div>
-                </div>
-
-                <!-- Data Meja dan Kursi -->
-                <a href="#" 
-                   class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.tables.*') ? 'bg-slate-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+            <!-- Manajemen Anggota Group -->
+            <div x-data="{ open: {{ request()->routeIs('admin.anggota.*') ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
                     <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-chair text-base w-5 text-center"></i>
-                        <span>Data Meja dan Kursi</span>
+                        <i class="fa-solid fa-users-gear text-base w-5 text-center"></i>
+                        <span>Manajemen Anggota</span>
                     </div>
-                </a>
+                    <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <!-- Submenu -->
+                <div x-show="open" x-collapse class="pl-12 space-y-1">
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Persetujuan Akun</a>
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Daftar Pelanggan</a>
+                </div>
+            </div>
 
-                <!-- Pusat Informasi -->
-                <a href="#" 
-                   class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements.*') ? 'bg-slate-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+            <!-- Permohonan Booking Group -->
+            <div x-data="{ open: {{ request()->routeIs('admin.booking.*') ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-slate-500 hover:bg-slate-50/50 hover:text-slate-800">
                     <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-bullhorn text-base w-5 text-center"></i>
-                        <span>Pusat Informasi</span>
+                        <i class="fa-solid fa-folder-open text-base w-5 text-center"></i>
+                        <span>Permohonan Booking</span>
                     </div>
-                </a>
+                    <i :class="open ? 'rotate-180' : ''" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <!-- Submenu -->
+                <div x-show="open" x-collapse class="pl-12 space-y-1">
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Persetujuan Reservasi</a>
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Verifikasi Pembayaran</a>
+                    <a href="#" class="block py-2 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">Semua Transaksi</a>
+                </div>
+            </div>
+
+            <!-- Data Meja dan Kursi -->
+            <a href="{{ route('admin.tables.index') }}"
+                class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.tables.*') ? 'bg-indigo-50/55 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-chair text-base w-5 text-center"></i>
+                    <span>Data Meja dan Kursi</span>
+                </div>
+            </a>
+
+            <!-- Pusat Informasi -->
+            <a href="#"
+                class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements.*') ? 'bg-slate-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-bullhorn text-base w-5 text-center"></i>
+                    <span>Pusat Informasi</span>
+                </div>
+            </a>
 
             @endif
 
@@ -160,9 +160,9 @@
             <!-- Tombol Log Out -->
             <form method="POST" action="{{ route('logout') }}" class="m-0">
                 @csrf
-                <button type="submit" 
-                        class="w-8 h-8 rounded-lg bg-white hover:bg-red-50 text-slate-400 hover:text-red-500 border border-slate-100 transition-colors flex items-center justify-center"
-                        title="Keluar Aplikasi">
+                <button type="submit"
+                    class="w-8 h-8 rounded-lg bg-white hover:bg-red-50 text-slate-400 hover:text-red-500 border border-slate-100 transition-colors flex items-center justify-center"
+                    title="Keluar Aplikasi">
                     <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                 </button>
             </form>
@@ -175,13 +175,16 @@
     .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
         background: transparent;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
         background: #cbd5e1;
         border-radius: 10px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
     }
