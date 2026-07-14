@@ -5,6 +5,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: "${WWWGROUP}"
+        container_name: "reservasimejakafe"
         image: "sail-8.5/app"
         extra_hosts:
             - "host.docker.internal:host-gateway"
