@@ -49,7 +49,7 @@
                 <div class="px-4 py-3 border-t border-slate-100 bg-slate-50/50">
                     @if($table->status === 'available')
                         <!-- Meja Kosong: Bisa Diklik -->
-                        <a href="#" class="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition-colors">
+                        <a href="{{ route('reservasi.create', $table->id) }}" class="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition-colors">
                             Booking Meja Ini
                         </a>
                     @elseif($table->status === 'reserved' || $table->status === 'occupied')

@@ -34,6 +34,11 @@ Route::middleware('auth')->group(function () {
         
     });
     Route::get('/reservasi', [ReservationController::class, 'index'])->name('reservasi.index');
+    Route::get('/reservasi/create/{table_id}', [ReservationController::class, 'create'])->name('reservasi.create');
+    Route::post('/reservasi/store', [ReservationController::class, 'store'])->name('reservasi.store');
+    Route::get('/reservasi/detail/{id}', [ReservationController::class, 'show'])->name('reservasi.show');
+    Route::get('/reservasi/riwayat', [ReservationController::class, 'history'])->name('reservasi.history');
+    Route::get('/reservasi/{id}', [ReservationController::class, 'show'])->name('reservasi.show');
 });
 
 Route::get('/cek-status', [AccountStatusController::class, 'index'])->name('account.status');
