@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RevervationController;
+use App\Http\Controllers\AnnouncementController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,4 +25,5 @@ Route::middleware('auth')->group(function () {
 // Route::middleware('auth')->group(function () {
 //     Route::get('/table', )
 // })
+
 require __DIR__.'/auth.php';

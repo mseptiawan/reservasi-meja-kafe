@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
             'name'              => 'Septiawan',
             'email'             => 'mseptiawan017@gmail.com',
             'phone_number'      => '081234567890',
-            'identity_number'   => '1671000000000001', 
             'role'              => 'admin',
             'status_verifikasi' => 'active',
             'password'          => Hash::make('Smartlinux3'),
