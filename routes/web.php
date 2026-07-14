@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountStatusController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
@@ -26,6 +27,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('announcements', AnnouncementController::class);
     });
 });
+
+Route::get('/cek-status', [AccountStatusController::class, 'index'])->name('account.status');
+Route::post('/cek-status', [AccountStatusController::class, 'check'])->name('account.status.check');
 
 
 require __DIR__.'/auth.php';

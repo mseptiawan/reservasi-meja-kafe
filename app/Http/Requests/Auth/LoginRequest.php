@@ -33,7 +33,7 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
+/**
      * Attempt to authenticate the request's credentials.
      *
      * @throws ValidationException
@@ -42,11 +42,37 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // 1. Cek dulu apakah email dan password benar
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+        // 2. Jika kredensial benar, ambil data user yang mencoba login tersebut
+        $user = Auth::user();
+
+        // 3. Cek apakah status verifikasinya masih 'pending'
+        if ($user->status_verifikasi === 'pending') {
+            // Logout kembali karena Auth::attempt otomatis sempat meloginkan user di session saat itu
+            Auth::guard('web')->logout(); 
+
+            RateLimiter::hit($this->throttleKey());
+
+            // Tembakkan error ke halaman login
+            throw ValidationException::withMessages([
+                'email' => 'Akun Anda belum aktif. Mohon tunggu verifikasi dari Admin.',
+            ]);
+        }
+
+        // 4. Cek juga jika sewaktu-waktu ada status 'ditolak' (Opsional, untuk melengkapi sistem Anda)
+        if ($user->status_verifikasi === 'rejected') {
+            Auth::guard('web')->logout();
+            
+            throw ValidationException::withMessages([
+                'email' => 'Mohon maaf, pendaftaran akun Anda ditolak oleh Admin.',
             ]);
         }
 
