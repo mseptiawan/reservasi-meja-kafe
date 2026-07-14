@@ -67,7 +67,7 @@
                 'icon' => 'fa-solid fa-users-gear',
                 'active_pattern' => 'admin.anggota.*',
                 'submenu' => [
-                    ['title' => 'Persetujuan Akun', 'url' => '#', 'icon' => 'fa-solid fa-user-check'],
+                    ['title' => 'Persetujuan Akun', 'url' => route('admin.approvals.index'), 'icon' => 'fa-solid fa-user-check'],
                     ['title' => 'Daftar Pelanggan', 'url' => '#', 'icon' => 'fa-solid fa-users'],
                 ]
             ],

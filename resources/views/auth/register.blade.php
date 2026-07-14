@@ -142,7 +142,7 @@
                     <!-- Sesuai Request: Jarak atas ditinggikan (pt-5) & border pemisah -->
                     <div class="pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-1">
                         <span class="text-slate-400">Ingin tahu progres verifikasi?</span> 
-                        <a href="/#cek-status" class="text-purple-600 hover:text-purple-700 font-bold transition-colors inline-flex items-center gap-0.5">
+                        <a href="{{ route('account.status') }}" class="text-purple-600 hover:text-purple-700 font-bold transition-colors inline-flex items-center gap-0.5">
                             Cek Status Akun Saya <i class="fa-solid fa-arrow-right text-[9px]"></i>
                         </a>
                     </div>

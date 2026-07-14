@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\AccountStatusController;
+use App\Http\Controllers\Admin\AccountApprovalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('tables', TableController::class);
         Route::resource('announcements', AnnouncementController::class);
+        Route::get('/approvals', [AccountApprovalController::class, 'index'])->name('approvals.index');
+        Route::patch('/approvals/{user}/verify', [AccountApprovalController::class, 'verify'])->name('approvals.verify');
     });
 });
 
