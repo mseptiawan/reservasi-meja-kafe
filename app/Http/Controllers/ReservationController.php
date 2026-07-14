@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Table;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -11,7 +12,12 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $tables = Table::where('is_active', true)
+            ->orderBy('area', 'asc')
+            ->orderBy('table_number', 'asc')
+            ->get();
+
+        return view('pelanggan.reservasi.index', compact('tables'));
     }
 
     /**

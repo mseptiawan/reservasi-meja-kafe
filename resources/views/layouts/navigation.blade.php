@@ -19,14 +19,11 @@
     if ($userRole === 'pelanggan' && $userStatus === 'active') {
         $menus['Layanan'] = [
             [
-                'type' => 'dropdown',
-                'title' => 'Reservasi Meja',
-                'icon' => 'fa-solid fa-calendar-check',
+                'type' => 'single',
+                'title' => 'Buat Reservasi',
+                'route' => 'reservasi.index',
                 'active_pattern' => 'reservasi.*',
-                'submenu' => [
-                    ['title' => 'Pesan Meja Baru', 'url' => '#', 'icon' => 'fa-solid fa-circle-plus'],
-                    ['title' => 'Denah Area Kafe', 'url' => '#', 'icon' => 'fa-solid fa-map'],
-                ]
+                'icon' => 'fa-solid fa-chair',
             ],
             [
                 'type' => 'dropdown',

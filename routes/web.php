@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/approvals', [AccountApprovalController::class, 'index'])->name('approvals.index');
         Route::patch('/approvals/{user}/verify', [AccountApprovalController::class, 'verify'])->name('approvals.verify');
         Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+        
     });
+    Route::get('/reservasi', [ReservationController::class, 'index'])->name('reservasi.index');
 });
 
 Route::get('/cek-status', [AccountStatusController::class, 'index'])->name('account.status');
