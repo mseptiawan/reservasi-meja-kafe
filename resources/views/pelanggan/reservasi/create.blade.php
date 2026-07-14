@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-bold text-xl text-slate-800 leading-tight">
+        <h2 class="font-medium text-xl text-slate-800 leading-tight">
             {{ __('Formulir Reservasi Meja') }}
         </h2>
     </x-slot>
@@ -8,13 +8,12 @@
     <div class="max-w-2xl mx-auto bg-white border border-slate-200/60 rounded-xl overflow-hidden shadow-sm">
         <div class="p-5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
             <div>
-                <span class="text-[10px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded uppercase">Meja {{ $table->table_number }}</span>
-                <h3 class="font-bold text-sm text-slate-800 mt-1">Area {{ $table->area }}</h3>
+                <span class="text-[10px] font-medium text-white bg-blue-600 px-2 py-0.5 rounded uppercase">Meja {{ $table->table_number }}</span>
+                <h3 class="font-medium text-sm text-slate-800 mt-1">Area {{ $table->area }}</h3>
             </div>
             <div class="text-right text-xs text-slate-500 font-medium"> Max Kapasitas: <strong class="text-slate-700">{{ $table->capacity }} Kursi</strong> </div>
         </div>
 
-        <!-- TAMPILKAN ALERT KLO ADA ERROR VALIDASI GLOBAL -->
         @if ($errors->any())
             <div class="m-5 p-3 bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-lg font-medium">
                 <ul class="list-disc pl-4 space-y-1">
@@ -37,11 +36,9 @@
                 
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Orang (Tamu)</label>
-                    <!-- Validasi HTML5: max="{{ $table->capacity }}" mencegah user nge-klik panah naik melebihi kapasitas -->
                     <input type="number" name="guests_count" max="{{ $table->capacity }}" min="1" value="{{ old('guests_count') }}" required 
                            class="w-full p-2 text-xs border @error('guests_count') border-rose-400 focus:border-rose-500 @else border-slate-200 focus:border-blue-500 @enderror rounded-lg outline-none">
                     
-                    <!-- PESAN ERROR SPESIFIK DI BAWAH INPUT TAMU -->
                     @error('guests_count')
                         <span class="text-[10px] text-rose-500 font-medium mt-1 block">{{ $message }}</span>
                     @enderror

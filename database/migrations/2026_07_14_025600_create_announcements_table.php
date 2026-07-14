@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null'); 
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('title');
-            $table->string('slug')->unique(); 
+            $table->string('slug')->unique();
             $table->text('content');
-            $table->string('image')->nullable(); 
+            $table->string('image')->nullable();
             $table->enum('type', [
                 'info_internal',
                 'promo',

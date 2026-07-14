@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['customer_code','name', 'email', 'phone_number',  'role', 'status_verifikasi', 'password'])]
+#[Fillable(['customer_code', 'name', 'email', 'phone_number',  'role', 'status_verifikasi', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {

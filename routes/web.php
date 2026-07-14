@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/approvals', [AccountApprovalController::class, 'index'])->name('approvals.index');
         Route::patch('/approvals/{user}/verify', [AccountApprovalController::class, 'verify'])->name('approvals.verify');
         Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-        
     });
     Route::get('/reservasi', [ReservationController::class, 'index'])->name('reservasi.index');
     Route::get('/reservasi/create/{table_id}', [ReservationController::class, 'create'])->name('reservasi.create');
@@ -45,4 +44,4 @@ Route::get('/cek-status', [AccountStatusController::class, 'index'])->name('acco
 Route::post('/cek-status', [AccountStatusController::class, 'check'])->name('account.status.check');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

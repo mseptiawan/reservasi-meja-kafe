@@ -42,7 +42,7 @@ class AnnouncementController extends Controller
 
         $data = $request->only(['title', 'content', 'type', 'status']);
         $data['user_id'] = Auth::id();
-        $data['slug'] = Str::slug($request->title) . '-' . Str::random(5); // Slug unik otomatis
+        $data['slug'] = Str::slug($request->title) . '-' . Str::random(5);
 
         if ($request->status === 'published') {
             $data['published_at'] = now();
@@ -79,13 +79,11 @@ class AnnouncementController extends Controller
         ]);
 
         $data = $request->only(['title', 'content', 'type', 'status']);
-        
-        // Update slug jika judul berubah
+
         if ($request->title !== $announcement->title) {
             $data['slug'] = Str::slug($request->title) . '-' . Str::random(5);
         }
 
-        // Handle published_at jika status berubah ke published
         if ($request->status === 'published' && !$announcement->published_at) {
             $data['published_at'] = now();
         } elseif ($request->status === 'draft') {

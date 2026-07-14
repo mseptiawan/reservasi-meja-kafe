@@ -11,7 +11,7 @@ class AccountApprovalController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status', 'pending');
-        
+
         $stats = [
             'total'    => User::where('role', 'pelanggan')->count(),
             'pending'  => User::where('role', 'pelanggan')->where('status_verifikasi', 'pending')->count(),

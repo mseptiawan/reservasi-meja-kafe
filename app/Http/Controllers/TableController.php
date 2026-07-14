@@ -53,7 +53,6 @@ class TableController extends Controller
         $data = $request->only(['table_number', 'area', 'capacity', 'status', 'description']);
         $data['is_active'] = $request->has('is_active') ? true : false;
 
-        // Proses unggah gambar jika ada
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('tables', 'public');
             $data['image'] = $path;
@@ -62,8 +61,7 @@ class TableController extends Controller
         Table::create($data);
 
 
-        return redirect()->route('admin.tables.index')->with('success','meja berhasil ditambah.');
-
+        return redirect()->route('admin.tables.index')->with('success', 'meja berhasil ditambah.');
     }
 
     /**
@@ -92,11 +90,9 @@ class TableController extends Controller
         $data['is_active'] = $request->has('is_active') ? true : false;
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
             if ($table->image && Storage::disk('public')->exists($table->image)) {
                 Storage::disk('public')->delete($table->image);
             }
-            // Simpan gambar baru
             $path = $request->file('image')->store('tables', 'public');
             $data['image'] = $path;
         }
@@ -112,7 +108,6 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
-        // Hapus file gambar dari storage jika ingin hemat penyimpanan
         if ($table->image && Storage::disk('public')->exists($table->image)) {
             Storage::disk('public')->delete($table->image);
         }

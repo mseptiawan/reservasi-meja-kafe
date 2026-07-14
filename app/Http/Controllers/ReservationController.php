@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Table;
-use App\Models\Reservation; // Pastikan kamu sudah membuat model ini
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,9 +31,8 @@ class ReservationController extends Controller
     /**
      * Proses simpan data reservasi ke database
      */
-   public function store(Request $request)
+    public function store(Request $request)
     {
-        // 1. Ambil data meja terlebih dahulu untuk tahu kapasitas maksimalnya
         $table = Table::findOrFail($request->table_id);
 
         // 2. Lakukan validasi ketat
@@ -42,23 +41,20 @@ class ReservationController extends Controller
             'reservation_date' => 'required|date|after_or_equal:today',
             'start_time'       => 'required',
             'end_time'         => 'required|after:start_time',
-            // Gunakan kapasitas meja sebagai batas maksimum dinamis
-            'guests_count'     => 'required|integer|min:1|max:' . $table->capacity, 
+            'guests_count'     => 'required|integer|min:1|max:' . $table->capacity,
             'notes'            => 'nullable|string',
         ], [
-            // Custom pesan error bahasa Indonesia agar lebih ramah
             'guests_count.max' => 'Jumlah tamu melebihi kapasitas maksimal Meja ' . $table->table_number . ' (Maksimal ' . $table->capacity . ' kursi).',
             'end_time.after'   => 'Jam selesai harus lebih lambat dari jam mulai.',
         ]);
 
-        // 3. Jika lolos validasi, buat kode unik dan simpan
         $reservationCode = 'RES-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
 
         $reservation = Reservation::create([
-            'reservation_code'=> $reservationCode,
+            'reservation_code' => $reservationCode,
             'user_id'         => Auth::id(),
             'table_id'        => $request->table_id,
-            'reservation_date'=> $request->reservation_date,
+            'reservation_date' => $request->reservation_date,
             'start_time'      => $request->start_time,
             'end_time'        => $request->end_time,
             'guests_count'    => $request->guests_count,
@@ -68,24 +64,36 @@ class ReservationController extends Controller
 
         return redirect()->route('reservasi.show', $reservation->id)->with('success', 'Reservasi berhasil diajukan!');
     }
-public function history()
+    public function history(Request $request)
     {
-        $reservations = Reservation::where('user_id', Auth::id())
-            ->with('table') // Eager load data meja terkait
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $status = $request->get('status', 'pending');
 
-        return view('pelanggan.reservasi.history', compact('reservations'));
+        $stats = [
+            'total'    => Reservation::where('user_id', Auth::id())->count(),
+            'pending'  => Reservation::where('user_id', Auth::id())->where('status', 'pending')->count(),
+            'approved' => Reservation::where('user_id', Auth::id())->where('status', 'approved')->count(),
+        ];
+
+        $reservations = Reservation::where('user_id', Auth::id())
+            ->with('table')
+            ->when($status === 'pending', function ($query) {
+                return $query->where('status', 'pending');
+            })
+            ->when($status === 'history', function ($query) {
+                return $query->whereIn('status', ['approved', 'rejected']);
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('pelanggan.reservasi.history', compact('reservations', 'status', 'stats'));
     }
     /**
      * Tampilkan Nota/Detail Struk Reservasi
      */
     public function show($id)
     {
-        // Tarik data reservasi beserta relasi user dan table-nya
         $reservation = Reservation::with(['user', 'table'])->findOrFail($id);
 
-        // Amankan agar pelanggan tidak bisa mengintip nota milik orang lain
         if ($reservation->user_id !== Auth::id()) {
             abort(403, 'Akses tidak sah.');
         }

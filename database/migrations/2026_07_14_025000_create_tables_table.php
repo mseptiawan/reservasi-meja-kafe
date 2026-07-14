@@ -25,7 +25,7 @@ return new class extends Migration
                 'maintenance'
             ])->default('available');
 
-            $table->string('image')->nullable(); 
+            $table->string('image')->nullable();
             $table->text('description')->nullable();
 
             $table->boolean('is_active')->default(true);

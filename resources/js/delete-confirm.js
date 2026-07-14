@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 cancelButtonText: "Batal",
                 customClass: {
                     popup: "rounded-xl border border-slate-100 shadow-lg font-sans p-6 bg-white",
-                    title: "text-lg font-bold text-slate-800",
+                    title: "text-lg font-medium text-slate-800",
                     htmlContainer: "text-sm text-slate-500 my-2",
                     confirmButton:
                         "px-4 py-2.5 rounded-lg text-white font-medium text-sm transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-rose-500",

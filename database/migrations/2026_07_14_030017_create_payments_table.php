@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade'); 
-            $table->string('payment_code')->unique(); 
-            $table->decimal('amount', 12, 2); 
-            $table->string('proof_of_payment'); 
-            $table->string('status')->default('pending'); 
-            $table->text('admin_note')->nullable(); 
+            $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
+            $table->string('payment_code')->unique();
+            $table->decimal('amount', 12, 2);
+            $table->string('proof_of_payment');
+            $table->string('status')->default('pending');
+            $table->text('admin_note')->nullable();
             $table->timestamps();
         });
     }

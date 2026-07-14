@@ -21,8 +21,8 @@ class AccountStatusController extends Controller
         ]);
 
         $user = User::where('email', $request->search_key)
-                    ->orWhere('customer_code', $request->search_key)
-                    ->first();
+            ->orWhere('customer_code', $request->search_key)
+            ->first();
 
         if (!$user) {
             return back()->withInput()->with('error', 'Data akun tidak ditemukan. Pastikan Email atau Kode Customer benar.');
