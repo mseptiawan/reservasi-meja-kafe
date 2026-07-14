@@ -36,7 +36,7 @@
                 
                 <!-- Gambar (Tinggi dikurangi dari h-48 menjadi h-36 agar lebih ringkas) -->
                 <div>
-                    <div class="relative h-36 bg-slate-50 overflow-hidden border-b border-slate-100">
+                    <div class="relative h-48 bg-slate-50 overflow-hidden border-b border-slate-100">
                         @if($table->image)
                             <img src="{{ asset('storage/' . $table->image) }}" alt="Meja {{ $table->table_number }}" class="w-full h-full object-cover">
                         @else
