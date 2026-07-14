@@ -2,136 +2,158 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <!-- Tombol Kembali -->
-            <a href="{{ route('admin.tables.index') }}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-800 transition-colors">
-                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            <a href="{{ route('admin.tables.index') }}" 
+               class="inline-flex items-center justify-center w-8 h-8 rounded-lg  text-slate-500 hover:text-slate-800 transition-all duration-150" 
+               title="Kembali ke Daftar Meja">
+                <i class="fa-solid fa-arrow-left text-[11px]"></i>
             </a>
             <div>
-                <h2 class="font-bold text-xl text-slate-800 leading-tight">
+                <h2 class="font-bold text-sm text-slate-800 leading-tight">
                     {{ __('Tambah Meja Baru') }}
                 </h2>
-                <p class="text-[11px] text-slate-400 mt-1">Tambahkan unit meja dan kursi baru ke dalam sistem layout kafe</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Tambahkan unit meja dan kursi baru ke dalam sistem layout kafe</p>
             </div>
         </div>
     </x-slot>
 
-    <div class="max-w-3xl mx-auto mt-4">
-        <!-- Form Card (Flat, Border Slate-200) -->
-        <form action="{{ route('admin.tables.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-5">
+        <div class="min-h-[calc(100vh-200px)] flex items-center justify-center p-6">
+        <!-- Form Card (Flat, Border Slate-200/60) -->
+        <form action="{{ route('admin.tables.store') }}" method="POST" enctype="multipart/form-data" 
+              class="bg-white rounded-lg border border-slate-200/60 overflow-hidden">
             @csrf
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- Nomor Meja -->
-                <div>
-                    <label for="table_number" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor / Kode Meja <span class="text-rose-500">*</span></label>
-                    <input type="text" name="table_number" id="table_number" value="{{ old('table_number') }}" 
-                           placeholder="Contoh: 01, A1, VIP-02" 
-                           class="w-full px-3.5 py-2 rounded-xl border {{ $errors->has('table_number') ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-200' }} text-xs focus:ring transition-all placeholder:text-slate-400 text-slate-800" required>
-                    @error('table_number')
-                        <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Area Lokasi -->
-                <div>
-                    <label for="area" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Area<span class="text-rose-500">*</span></label>
-                    <select name="area" id="area" 
-                            class="w-full px-3.5 py-2 rounded-xl border {{ $errors->has('area') ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-200' }} text-xs focus:ring transition-all text-slate-800" required>
-                        <option value="Indoor" {{ old('area') == 'Indoor' ? 'selected' : '' }}>Indoor (Ber-AC)</option>
-                        <option value="Outdoor" {{ old('area') == 'Outdoor' ? 'selected' : '' }}>Outdoor (Terbuka)</option>
-                        <option value="Semi Outdoor" {{ old('area') == 'Semi Outdoor' ? 'selected' : '' }}>Semi Outdoor (Teras/Kanopi)</option>
-                        <option value="VIP Room" {{ old('area') == 'VIP Room' ? 'selected' : '' }}>VIP Room (Private)</option>
-                    </select>
-                    @error('area')
-                        <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Kapasitas Kursi -->
-                <div>
-                    <label for="capacity" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kapasitas (Jumlah Kursi) <span class="text-rose-500">*</span></label>
-                    <div class="relative flex items-center">
-                        <input type="number" name="capacity" id="capacity" value="{{ old('capacity', 2) }}" min="1" 
-                               class="w-full px-3.5 py-2 rounded-xl border {{ $errors->has('capacity') ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-200' }} text-xs focus:ring transition-all text-slate-800" required>
-                        <span class="absolute right-4 text-[10px] font-semibold text-slate-400 pointer-events-none">Kursi</span>
-                    </div>
-                    @error('capacity')
-                        <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Status Awal Meja -->
-                <div> 
-                    <label for="status" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Status Awal <span class="text-rose-500">*</span></label>
-                    <select name="status" id="status" 
-                            class="w-full px-3.5 py-2 rounded-xl border {{ $errors->has('status') ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-200' }} text-xs focus:ring transition-all text-slate-800" required>
-                        <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Tersedia (Available)</option>
-                        <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>Dipesan (Reserved)</option>
-                        <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Terisi (Occupied)</option>
-                        <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Perbaikan (Maintenance)</option>
-                    </select>
-                    @error('status')
-                        <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <!-- Upload Gambar Meja dengan Real-Time Preview -->
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Foto / Visual Meja</label>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                    
-                    <!-- Box Preview -->
-                    <div id="preview-container" class="h-28 rounded-xl border border-dashed border-slate-200 bg-slate-50 flex flex-col items-center justify-center overflow-hidden text-slate-400 relative">
-                        <img id="image-preview" src="#" alt="Preview" class="w-full h-full object-cover hidden">
-                        <div id="preview-placeholder" class="text-center flex flex-col items-center">
-                            <i class="fa-solid fa-image text-lg mb-1 text-slate-300"></i>
-                            <span class="text-[9px] uppercase font-bold tracking-wider">No File Chosen</span>
-                        </div>
-                    </div>
-
-                    <!-- Input File -->
-                    <div class="md:col-span-2">
-                        <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(event)"
-                               class="block w-full text-[11px] text-slate-500 file:mr-4 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 cursor-pointer" required>
-                        <p class="text-[10px] text-slate-400 mt-1.5">Format: JPG, JPEG, PNG, WEBP. Maksimal 2MB. Gambar wajib diunggah.</p>
-                        @error('image')
+            <!-- Body Form -->
+            <div class="p-6 space-y-5">
+                
+                <!-- Baris 1: Nomor Meja & Area -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Nomor Meja -->
+                    <div class="space-y-1.5">
+                        <label for="table_number" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">
+                            Nomor / Kode Meja <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" name="table_number" id="table_number" value="{{ old('table_number') }}" 
+                               placeholder="Contoh: 01, A1, VIP-02" 
+                               class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all" required autofocus>
+                        @error('table_number')
                             <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
 
+                    <!-- Area Lokasi -->
+                    <div class="space-y-1.5">
+                        <label for="area" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">
+                            Area Lokasi <span class="text-rose-500">*</span>
+                        </label>
+                        <select name="area" id="area" 
+                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all" required>
+                            <option value="Indoor" {{ old('area') == 'Indoor' ? 'selected' : '' }}>Indoor (Ber-AC)</option>
+                            <option value="Outdoor" {{ old('area') == 'Outdoor' ? 'selected' : '' }}>Outdoor (Terbuka)</option>
+                            <option value="Semi Outdoor" {{ old('area') == 'Semi Outdoor' ? 'selected' : '' }}>Semi Outdoor (Teras/Kanopi)</option>
+                            <option value="VIP Room" {{ old('area') == 'VIP Room' ? 'selected' : '' }}>VIP Room (Private)</option>
+                        </select>
+                        @error('area')
+                            <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
-            </div>
 
-            <!-- Deskripsi Meja -->
-            <div>
-                <label for="description" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Deskripsi / Catatan Tambahan</label>
-                <textarea name="description" id="description" rows="3" 
-                          placeholder="Tambahkan info detail (misal: dekat colokan listrik, dekat jendela utama, dll.)"
-                          class="w-full px-3.5 py-2 rounded-xl border {{ $errors->has('description') ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-200' }} text-xs focus:ring transition-all placeholder:text-slate-400 text-slate-800">{{ old('description') }}</textarea>
-                @error('description')
-                    <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
-                @enderror
-            </div>
+                <!-- Baris 2: Kapasitas & Status Awal -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Kapasitas Kursi -->
+                    <div class="space-y-1.5">
+                        <label for="capacity" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">
+                            Kapasitas <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative flex items-center">
+                            <input type="number" name="capacity" id="capacity" value="{{ old('capacity', 2) }}" min="1" 
+                                   class="w-full pl-3 pr-12 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all" required>
+                            <span class="absolute right-3 text-[10px] font-semibold text-slate-400 pointer-events-none">Kursi</span>
+                        </div>
+                        @error('capacity')
+                            <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            <!-- Status Aktif (Toggle Switch) -->
-            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200/50">
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" name="is_active" value="1" class="sr-only peer" checked>
-                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
-                <div>
-                    <span class="block text-[11px] font-bold text-slate-700">Aktifkan Meja Dalam Sistem</span>
-                    <span class="block text-[9px] text-slate-400">Jika dinonaktifkan, pelanggan tidak akan bisa memesan meja ini secara langsung.</span>
+                    <!-- Status Awal Meja -->
+                    <div class="space-y-1.5">
+                        <label for="status" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">
+                            Status Awal <span class="text-rose-500">*</span>
+                        </label>
+                        <select name="status" id="status" 
+                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all" required>
+                            <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Tersedia (Available)</option>
+                            <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>Dipesan (Reserved)</option>
+                            <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Terisi (Occupied)</option>
+                            <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Perbaikan (Maintenance)</option>
+                        </select>
+                        @error('status')
+                            <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
+
+                <!-- Baris 3: Upload Gambar dengan Real-Time Preview -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-slate-700 tracking-wide uppercase">Foto / Visual Meja <span class="text-rose-500">*</span></label>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                        
+                        <!-- Box Preview -->
+                        <div id="preview-container" class="h-24 rounded-lg border border-dashed border-slate-200 bg-slate-50 flex flex-col items-center justify-center overflow-hidden text-slate-400 relative">
+                            <img id="image-preview" src="#" alt="Preview" class="w-full h-full object-cover hidden">
+                            <div id="preview-placeholder" class="text-center flex flex-col items-center">
+                                <i class="fa-solid fa-image text-lg mb-1 text-slate-300"></i>
+                                <span class="text-[8px] uppercase font-bold tracking-wider">No Preview</span>
+                            </div>
+                        </div>
+
+                        <!-- Input File -->
+                        <div class="md:col-span-3 space-y-1.5">
+                            <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(event)"
+                                   class="block w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-500 focus:outline-none text-xs transition-all file:mr-4 file:py-0.5 file:px-2.5 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer" required>
+                            <p class="text-[10px] text-slate-400">Format: JPG, JPEG, PNG, WEBP (Maksimal 2MB). Gambar wajib diunggah.</p>
+                            @error('image')
+                                <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Baris 4: Deskripsi Meja -->
+                <div class="space-y-1.5">
+                    <label for="description" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">Deskripsi / Catatan Tambahan</label>
+                    <textarea name="description" id="description" rows="3" 
+                              placeholder="Tambahkan info detail (misal: dekat colokan listrik, dekat jendela utama, dll.)"
+                              class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="text-[10px] text-rose-500 mt-1 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Baris 5: Status Aktif (Switch Inline) -->
+                <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200/50">
+                    <div class="space-y-0.5">
+                        <span class="block text-xs font-bold text-slate-700">Aktifkan Meja Dalam Sistem</span>
+                        <span class="block text-[10px] text-slate-400 max-w-md">Jika dinonaktifkan, pelanggan tidak akan bisa memesan meja ini secara langsung melalui aplikasi.</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" name="is_active" value="1" class="sr-only peer" checked>
+                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+
             </div>
 
-            <!-- Action Buttons (Flat, Sesuai Tema, Button Simpan: bg-blue-600) -->
-            <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-                <a href="{{ route('admin.tables.index') }}" class="px-4 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 font-semibold text-xs rounded-xl transition-colors">
+            <!-- Footer Form / Tombol Aksi (Flat, Sesuai Tema) -->
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2">
+                <a href="{{ route('admin.tables.index') }}" 
+                   class="px-4 py-2 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold text-xs rounded-lg transition-all">
                     Batal
                 </a>
-                <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl transition-all duration-150">
-                    <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
+                <button type="submit" 
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-all">
+                    <i class="fa-solid fa-floppy-disk mr-1.5 text-[10px]"></i> Simpan Meja
                 </button>
             </div>
         </form>

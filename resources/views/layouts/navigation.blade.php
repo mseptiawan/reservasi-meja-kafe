@@ -170,14 +170,13 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Pusat Informasi -->
-            <a href="#"
-                class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements.*') ? 'bg-indigo-50 text-indigo-600 font-semibold border border-indigo-100/50' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}"
-                title="Pusat Informasi">
-                <i class="fa-solid fa-bullhorn text-base w-5 text-center shrink-0"></i>
-                <span class="md:hidden xl:block">Pusat Informasi</span>
-            </a>
+<!-- Pusat Informasi -->
+<a href="{{ route('admin.announcements.index') }}"
+    class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements.*') ? 'bg-indigo-50 text-indigo-600 font-semibold border border-indigo-100/50' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}"
+    title="Pusat Informasi">
+    <i class="fa-solid fa-bullhorn text-base w-5 text-center shrink-0"></i>
+    <span class="md:hidden xl:block">Pusat Informasi</span>
+</a>
         </section>
         @endif
 

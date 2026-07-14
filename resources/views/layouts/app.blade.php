@@ -31,7 +31,7 @@
                                 <i class="fa-solid fa-bars"></i>
                             </button>
                             
-                            <div class="flex-1">
+                            <div class="flex-1 mt-8">
                                 {{ $header }}
                             </div>
                         </div>

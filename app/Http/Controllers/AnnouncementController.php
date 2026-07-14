@@ -2,63 +2,119 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan semua daftar pengumuman.
      */
     public function index()
     {
-        //
+        $announcements = Announcement::with('author')->orderBy('created_at', 'desc')->get();
+        return view('admin.announcements.index', compact('announcements'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form tambah pengumuman.
      */
     public function create()
     {
-        //
+        return view('admin.announcements.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan pengumuman baru ke database.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'type'    => 'required|in:info_internal,promo,event,maintenance,announcement',
+            'status'  => 'required|in:draft,published,archived',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $data = $request->only(['title', 'content', 'type', 'status']);
+        $data['user_id'] = Auth::id();
+        $data['slug'] = Str::slug($request->title) . '-' . Str::random(5); // Slug unik otomatis
+
+        if ($request->status === 'published') {
+            $data['published_at'] = now();
+        }
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('announcements', 'public');
+        }
+
+        Announcement::create($data);
+
+        return redirect()->route('admin.announcements.index')->with('success', 'Pengumuman berhasil ditambahkan.');
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan form edit pengumuman.
      */
-    public function show(string $id)
+    public function edit(Announcement $announcement)
     {
-        //
+        return view('admin.announcements.edit', compact('announcement'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Perbarui data pengumuman.
      */
-    public function edit(string $id)
+    public function update(Request $request, Announcement $announcement)
     {
-        //
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'type'    => 'required|in:info_internal,promo,event,maintenance,announcement',
+            'status'  => 'required|in:draft,published,archived',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $data = $request->only(['title', 'content', 'type', 'status']);
+        
+        // Update slug jika judul berubah
+        if ($request->title !== $announcement->title) {
+            $data['slug'] = Str::slug($request->title) . '-' . Str::random(5);
+        }
+
+        // Handle published_at jika status berubah ke published
+        if ($request->status === 'published' && !$announcement->published_at) {
+            $data['published_at'] = now();
+        } elseif ($request->status === 'draft') {
+            $data['published_at'] = null;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($announcement->image && Storage::disk('public')->exists($announcement->image)) {
+                Storage::disk('public')->delete($announcement->image);
+            }
+            $data['image'] = $request->file('image')->store('announcements', 'public');
+        }
+
+        $announcement->update($data);
+
+        return redirect()->route('admin.announcements.index')->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Hapus pengumuman.
      */
-    public function update(Request $request, string $id)
+    public function destroy(Announcement $announcement)
     {
-        //
-    }
+        if ($announcement->image && Storage::disk('public')->exists($announcement->image)) {
+            Storage::disk('public')->delete($announcement->image);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $announcement->delete();
+
+        return redirect()->route('admin.announcements.index')->with('success', 'Pengumuman berhasil dihapus.');
     }
 }

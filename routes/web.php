@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('tables', TableController::class);
+        Route::resource('announcements', AnnouncementController::class);
     });
 });
 
