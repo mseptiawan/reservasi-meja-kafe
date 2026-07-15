@@ -83,13 +83,13 @@
                     [
                         'title' => 'Persetujuan Akun',
                         'url' => route('admin.approvals.index'),
-                        'route_name' => 'admin.approvals.*',
+                        'route_name' => 'admin.approvals.index',
                         'icon' => 'fa-solid fa-user-check',
                     ],
                     [
                         'title' => 'Daftar Pelanggan',
                         'url' => route('admin.customers.index'),
-                        'route_name' => 'admin.customers.*',
+                        'route_name' => 'admin.customers.index',
                         'icon' => 'fa-solid fa-users',
                     ],
                 ],
@@ -98,18 +98,18 @@
                 'type' => 'dropdown',
                 'title' => 'Permohonan Booking',
                 'icon' => 'fa-solid fa-folder-open',
-                'active_pattern' => ['admin.booking.*', 'admin.reservasi.*', 'admin.payments.*'],
+                'active_pattern' => ['admin.reservations.*', 'admin.payments.*', 'admin.booking.*'],
                 'submenu' => [
                     [
                         'title' => 'Persetujuan Reservasi',
-                        'url' => '#',
-                        'route_name' => 'admin.reservasi.*',
+                        'url' => route('admin.reservations.index'),
+                        'route_name' => 'admin.reservations.index',
                         'icon' => 'fa-solid fa-calendar-check',
                     ],
                     [
                         'title' => 'Verifikasi Pembayaran',
                         'url' => '#',
-                        'route_name' => 'admin.payments.*',
+                        'route_name' => 'admin.payments.index',
                         'icon' => 'fa-solid fa-file-invoice-dollar',
                     ],
                     [
@@ -157,7 +157,7 @@
             </div>
         </div>
         <button @click="$store.sidebar.open = false"
-            class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-100 bg-slate-50 text-slate-500 md:hidden active:scale-95">
+            class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-100 bg-slate-100 text-slate-500 md:hidden active:scale-95">
             <i class="fa-solid fa-xmark text-sm"></i>
         </button>
     </div>
@@ -178,7 +178,7 @@
                                 : request()->routeIs($menu['route']);
                         @endphp
                         <a href="{{ isset($menu['route']) ? route($menu['route']) : $menu['url'] }}"
-                            class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-2 py-2 rounded-xl text-xs font-medium transition-all duration-200 {{ $isRouteActive ? 'bg-slate-50/50 text-indigo-600 font-medium border border-indigo-100/50' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}"
+                            class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-2 py-2 rounded-xl text-xs font-medium transition-all duration-200 {{ $isRouteActive ? 'bg-blue-50/40 text-blue-600 font-semibold border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}"
                             title="{{ $menu['title'] }}">
                             <i class="{{ $menu['icon'] }} text-base w-5 text-center shrink-0"></i>
                             <span class="md:hidden xl:block">{{ $menu['title'] }}</span>
@@ -201,7 +201,7 @@
                         @endphp
                         <div x-data="{ open: {{ $isDropdownActive ? 'true' : 'false' }} }" class="space-y-1">
                             <button @click="open = !open"
-                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'bg-slate-50/30 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50/50 hover:text-slate-800' }}">
+                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'text-blue-600 font-bold bg-slate-100' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}">
                                 <div class="flex items-center gap-3">
                                     <i class="{{ $menu['icon'] }} text-base w-5 text-center shrink-0"></i>
                                     <span class="md:hidden xl:block">{{ $menu['title'] }}</span>
@@ -224,7 +224,7 @@
                                     @endphp
                                     <a href="{{ $sub['url'] }}"
                                         class="flex items-center gap-3 px-4 md:px-2 xl:px-4 py-2 text-[11px] font-medium rounded-lg transition-all md:justify-center xl:justify-start
-                                            {{ $isSubActive ? 'bg-indigo-50/50 text-indigo-600 font-semibold border border-indigo-100/30' : 'text-slate-500 hover:text-indigo-600 hover:bg-slate-50/70' }}">
+    {{ $isSubActive ? 'bg-blue-50/50 text-blue-600 font-bold border border-blue-100/50' : 'text-slate-500 hover:text-blue-600 hover:bg-slate-100' }}">
                                         <i class="{{ $sub['icon'] }} text-xs w-5 text-center shrink-0"></i>
                                         <span class="md:hidden xl:block">{{ $sub['title'] }}</span>
                                     </a>
@@ -239,7 +239,7 @@
 
     <div class="p-4 md:p-2 xl:p-4 border-t border-slate-100 bg-white">
         <div
-            class="flex flex-row md:flex-col xl:flex-row items-center justify-between p-3 md:p-1 xl:p-3 rounded-2xl bg-slate-50/70 border border-slate-200/50 hover:bg-slate-100/60 hover:border-slate-300/80 cursor-pointer transition-all duration-200 active:scale-[0.99] group/card gap-3 xl:gap-0">
+            class="flex flex-row md:flex-col xl:flex-row items-center justify-between p-3 md:p-1 xl:p-3 rounded-2xl bg-slate-100 border border-slate-200/50 hover:bg-slate-100/60 hover:border-slate-300/80 cursor-pointer transition-all duration-200 active:scale-[0.99] group/card gap-3 xl:gap-0">
             <div
                 class="flex flex-row md:flex-col xl:flex-row items-center gap-3 min-w-0 flex-1 w-full justify-start md:justify-center xl:justify-start">
                 <div
@@ -248,7 +248,7 @@
                 </div>
                 <div class="min-w-0 flex-1 leading-normal pr-1 md:hidden xl:block">
                     <p
-                        class="text-xs font-medium text-slate-800 truncate group-hover/card:text-indigo-600 transition-colors">
+                        class="text-xs font-medium text-slate-800 truncate group-hover/card:text-blue-600 transition-colors">
                         {{ Auth::user()->name }}
                     </p>
                     <p class="text-[8px] font-medium uppercase tracking-[0.15em] text-slate-400 truncate mt-0.5">

@@ -8,10 +8,12 @@
     <div class="max-w-2xl mx-auto bg-white border border-slate-200/60 rounded-xl overflow-hidden shadow-sm">
         <div class="p-5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
             <div>
-                <span class="text-[10px] font-medium text-white bg-blue-600 px-2 py-0.5 rounded uppercase">Meja {{ $table->table_number }}</span>
+                <span class="text-[10px] font-medium text-white bg-blue-600 px-2 py-0.5 rounded uppercase">Meja
+                    {{ $table->table_number }}</span>
                 <h3 class="font-medium text-sm text-slate-800 mt-1">Area {{ $table->area }}</h3>
             </div>
-            <div class="text-right text-xs text-slate-500 font-medium"> Max Kapasitas: <strong class="text-slate-700">{{ $table->capacity }} Kursi</strong> </div>
+            <div class="text-right text-xs text-slate-500 font-medium"> Max Kapasitas: <strong
+                    class="text-slate-700">{{ $table->capacity }} Kursi</strong> </div>
         </div>
 
         @if ($errors->any())
@@ -31,14 +33,17 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Kedatangan</label>
-                    <input type="date" name="reservation_date" min="{{ date('Y-m-d') }}" value="{{ old('reservation_date') }}" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
+                    <input type="date" name="reservation_date" min="{{ date('Y-m-d') }}"
+                        value="{{ old('reservation_date') }}" required
+                        class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
                 </div>
-                
+
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Orang (Tamu)</label>
-                    <input type="number" name="guests_count" max="{{ $table->capacity }}" min="1" value="{{ old('guests_count') }}" required 
-                           class="w-full p-2 text-xs border @error('guests_count') border-rose-400 focus:border-rose-500 @else border-slate-200 focus:border-blue-500 @enderror rounded-lg outline-none">
-                    
+                    <input type="number" name="guests_count" max="{{ $table->capacity }}" min="1"
+                        value="{{ old('guests_count') }}" required
+                        class="w-full p-2 text-xs border @error('guests_count') border-rose-400 focus:border-rose-500 @else border-slate-200 focus:border-blue-500 @enderror rounded-lg outline-none">
+
                     @error('guests_count')
                         <span class="text-[10px] text-rose-500 font-medium mt-1 block">{{ $message }}</span>
                     @enderror
@@ -48,22 +53,28 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Jam Mulai</label>
-                    <input type="time" name="start_time" value="{{ old('start_time') }}" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
+                    <input type="time" name="start_time" value="{{ old('start_time') }}" required
+                        class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Jam Selesai</label>
-                    <input type="time" name="end_time" value="{{ old('end_time') }}" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
+                    <input type="time" name="end_time" value="{{ old('end_time') }}" required
+                        class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">
                 </div>
             </div>
 
             <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1">Catatan Tambahan (Opsional)</label>
-                <textarea name="notes" rows="3" placeholder="Contoh: Minta pasang lilin ulang tahun..." class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">{{ old('notes') }}</textarea>
+                <textarea name="notes" rows="3" placeholder="Contoh: Minta pasang lilin ulang tahun..."
+                    class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:border-blue-500">{{ old('notes') }}</textarea>
             </div>
 
             <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                <a href="{{ route('reservasi.index') }}" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-semibold text-xs hover:bg-slate-50">Batal</a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-colors">Ajukan Reservasi</button>
+                <a href="{{ route('reservasi.index') }}"
+                    class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-semibold text-xs hover:bg-slate-50">Batal</a>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-colors">Ajukan
+                    Reservasi</button>
             </div>
         </form>
     </div>

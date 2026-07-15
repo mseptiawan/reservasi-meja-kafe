@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AccountStatusController;
 use App\Http\Controllers\Admin\AccountApprovalController;
+use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
@@ -31,6 +32,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/approvals', [AccountApprovalController::class, 'index'])->name('approvals.index');
         Route::patch('/approvals/{user}/verify', [AccountApprovalController::class, 'verify'])->name('approvals.verify');
         Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+
+        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
+        Route::patch('/reservations/{id}/update-status', [AdminReservationController::class, 'updateStatus'])->name('reservations.update_status');
     });
     Route::get('/reservasi', [ReservationController::class, 'index'])->name('reservasi.index');
     Route::get('/reservasi/create/{table_id}', [ReservationController::class, 'create'])->name('reservasi.create');

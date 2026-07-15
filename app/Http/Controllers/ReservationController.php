@@ -94,7 +94,8 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with(['user', 'table'])->findOrFail($id);
 
-        if ($reservation->user_id !== Auth::id()) {
+        // Jika yang login BUKAN admin DAN BUKAN pemilik reservasi, cekal.
+        if (Auth::user()->role !== 'admin' && $reservation->user_id !== Auth::id()) {
             abort(403, 'Akses tidak sah.');
         }
 
