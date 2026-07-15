@@ -14,16 +14,54 @@ class PaymentController extends Controller
      * Menampilkan daftar reservasi milik pelanggan yang berstatus 'approved'
      * tetapi BELUM memiliki data payment (belum dibayar).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pendingPayments = Reservation::with('table')
-            ->where('user_id', Auth::id())
-            ->where('status', 'approved')
-            ->whereDoesntHave('payment') // Belum ada record di tabel payments
-            ->orderBy('reservation_date', 'asc')
-            ->get();
+        $userId = Auth::id();
+        // Ambil status tab dari URL, default adalah 'pending' (Permintaan Aktif)
+        $status = $request->get('status', 'pending');
 
-        return view('pelanggan.payment.index', compact('pendingPayments'));
+        // 1. Hitung Statistik untuk Card Komponen Pelanggan
+        // Tagihan Aktif: Reservasi 'approved' yang belum dibayar sama sekali
+        $pendingCount = Reservation::where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->count();
+
+        // Riwayat Sukses: Pembayaran user yang sudah di-acc admin
+        $successCount = Payment::whereHas('reservation', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('status', 'success')
+            ->count();
+
+        // Riwayat Ditolak: Pembayaran user yang ditolak admin
+        $failedCount = Payment::whereHas('reservation', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('status', 'failed')
+            ->count();
+
+        $stats = [
+            'total' => $pendingCount + $successCount + $failedCount,
+            'pending' => $pendingCount,
+            'success' => $successCount,
+            'failed' => $failedCount,
+        ];
+
+        // 2. Ambil Data Berdasarkan Tab Aktif
+        $displayData = [];
+        if ($status === 'pending') {
+            // Ambil data Reservasi yang perlu dibayar
+            $displayData = Reservation::with('table')->where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->orderBy('reservation_date', 'asc')->get();
+        } else {
+            // Ambil data dari tabel Payments untuk riwayat (Success & Failed)
+            $displayData = Payment::with(['reservation.table'])
+                ->whereHas('reservation', function ($q) use ($userId) {
+                    $q->where('user_id', $userId);
+                })
+                ->whereIn('status', ['success', 'failed'])
+                ->latest()
+                ->get();
+        }
+
+        return view('pelanggan.payment.index', compact('displayData', 'status', 'stats'));
     }
 
     /**

@@ -4,6 +4,7 @@
 
     $menus = [];
 
+    // 1. MENU UTAMA
     $menus['Menu Utama'] = [
         [
             'type' => 'single',
@@ -13,6 +14,7 @@
         ],
     ];
 
+    // 2. LAYANAN (PELANGGAN)
     if ($userRole === 'pelanggan' && $userStatus === 'active') {
         $menus['Layanan'] = [
             [
@@ -26,7 +28,8 @@
                 'type' => 'dropdown',
                 'title' => 'Booking-ku',
                 'icon' => 'fa-solid fa-receipt',
-                'active_pattern' => ['reservasi.history', 'booking.*'],
+                'active_pattern' => [],
+                'open_pattern' => ['reservasi.history', 'payment.confirm', 'booking.*'],
                 'submenu' => [
                     [
                         'title' => 'Daftar Reservasi',
@@ -46,7 +49,8 @@
                 'type' => 'dropdown',
                 'title' => 'Profil Saya',
                 'icon' => 'fa-solid fa-user-gear',
-                'active_pattern' => 'profile.*',
+                'active_pattern' => [],
+                'open_pattern' => ['profile.*'],
                 'submenu' => [
                     [
                         'title' => 'Edit Profil',
@@ -65,6 +69,7 @@
         ];
     }
 
+    // 3. ADMIN PANEL
     if ($userRole === 'admin') {
         $menus['Admin Panel'] = [
             [
@@ -78,7 +83,8 @@
                 'type' => 'dropdown',
                 'title' => 'Manajemen Anggota',
                 'icon' => 'fa-solid fa-users-gear',
-                'active_pattern' => ['admin.approvals.*', 'admin.customers.*'],
+                'active_pattern' => [],
+                'open_pattern' => ['admin.approvals.*', 'admin.customers.*'],
                 'submenu' => [
                     [
                         'title' => 'Persetujuan Akun',
@@ -98,7 +104,8 @@
                 'type' => 'dropdown',
                 'title' => 'Permohonan Booking',
                 'icon' => 'fa-solid fa-folder-open',
-                'active_pattern' => ['admin.reservations.*', 'admin.payments.*', 'admin.booking.*'],
+                'active_pattern' => [],
+                'open_pattern' => ['admin.reservations.*', 'admin.payments.*', 'admin.booking.*'],
                 'submenu' => [
                     [
                         'title' => 'Persetujuan Reservasi',
@@ -124,7 +131,6 @@
         ];
     }
 @endphp
-
 <style>
     [x-cloak] {
         display: none !important;
@@ -179,23 +185,61 @@
                         </a>
                     @elseif($menu['type'] === 'dropdown')
                         @php
+                            $isDropdownOpen = false;
                             $isDropdownActive = false;
+
                             if (isset($menu['active_pattern'])) {
                                 if (is_array($menu['active_pattern'])) {
                                     foreach ($menu['active_pattern'] as $pattern) {
                                         if (request()->routeIs($pattern)) {
+                                            $isDropdownOpen = true;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    $isDropdownOpen = request()->routeIs($menu['active_pattern']);
+                                }
+                            }
+
+                            if (!$isDropdownOpen && isset($menu['submenu'])) {
+                                foreach ($menu['submenu'] as $sub) {
+                                    if (isset($sub['route_name']) && request()->routeIs($sub['route_name'])) {
+                                        $isDropdownOpen = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (isset($menu['active_pattern'])) {
+                                if (is_array($menu['active_pattern'])) {
+                                    foreach ($menu['active_pattern'] as $pattern) {
+                                        if (
+                                            request()->routeIs($pattern) &&
+                                            !request()->routeIs('admin.reservations.*') &&
+                                            !request()->routeIs('admin.payments.*') &&
+                                            !request()->routeIs('reservasi.history') &&
+                                            !request()->routeIs('payment.confirm') &&
+                                            !request()->routeIs('profile.edit')
+                                        ) {
                                             $isDropdownActive = true;
                                             break;
                                         }
                                     }
                                 } else {
-                                    $isDropdownActive = request()->routeIs($menu['active_pattern']);
+                                    if (
+                                        request()->routeIs($menu['active_pattern']) &&
+                                        !request()->routeIs('profile.edit') &&
+                                        !request()->routeIs('profile.password')
+                                    ) {
+                                        $isDropdownActive = true;
+                                    }
                                 }
                             }
                         @endphp
-                        <div x-data="{ open: {{ $isDropdownActive ? 'true' : 'false' }} }" class="space-y-1">
+
+                        <div x-data="{ open: {{ $isDropdownOpen ? 'true' : 'false' }} }" class="space-y-1">
                             <button @click="open = !open"
-                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'text-blue-600 font-bold bg-slate-100' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}">
+                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'text-blue-600 font-bold bg-blue-50/40 border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}">
                                 <div class="flex items-center gap-3">
                                     <i class="{{ $menu['icon'] }} text-base w-5 text-center shrink-0"></i>
                                     <span class="md:hidden xl:block">{{ $menu['title'] }}</span>
