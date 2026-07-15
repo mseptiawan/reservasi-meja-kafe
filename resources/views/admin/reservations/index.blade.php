@@ -140,7 +140,10 @@
                             <th class="py-4 px-6">Tamu & Waktu</th>
                             <th class="py-4 px-6 text-center">Nota</th>
                             <th class="py-4 px-6 text-center">Status</th>
-                            <th class="py-4 px-6 text-center">Aksi</th>
+                            <!-- KOLOM AKSI HANYA MUNCUL DI TAB PENDING -->
+                            @if ($status === 'pending')
+                                <th class="py-4 px-6 text-center">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white font-medium text-slate-600">
@@ -198,16 +201,18 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="py-4 px-6">
-                                    <div class="flex items-center justify-center gap-4 text-xs font-medium">
-                                        @if ($res->status === 'pending')
+
+                                <!-- TOMBOL AKSI HANYA DIRENDER DI TAB PENDING -->
+                                @if ($status === 'pending')
+                                    <td class="py-4 px-6">
+                                        <div class="flex items-center justify-center gap-4 text-xs font-medium">
                                             <form action="{{ route('admin.reservations.update_status', $res->id) }}"
                                                 method="POST" class="inline m-0">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit"
-                                                    class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0">
+                                                    class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
                                                     Setujui
                                                 </button>
                                             </form>
@@ -218,26 +223,28 @@
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="rejected">
                                                 <button type="submit"
-                                                    class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0">
+                                                    class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
                                                     Tolak
                                                 </button>
                                             </form>
-                                        @else
-                                            <span class="text-slate-300 text-xs font-normal select-none">-</span>
-                                        @endif
-                                    </div>
-                                </td>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="py-12 text-center text-slate-400 font-medium">Tidak ada data
-                                    reservasi dengan status saat ini.</td>
+                                <!-- Ubah colspan dinamis menyesuaikan tab yang aktif -->
+                                <td colspan="{{ $status === 'pending' ? '6' : '5' }}"
+                                    class="py-12 text-center text-slate-400 font-medium">
+                                    Tidak ada data reservasi dengan status saat ini.
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
 
+            <!-- MOBILE RESPONSIVE CARD VIEW -->
             <!-- MOBILE RESPONSIVE CARD VIEW -->
             <div class="block md:hidden divide-y divide-slate-100 w-full">
                 @forelse($reservations as $res)
@@ -279,8 +286,8 @@
                                     {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/Y') }}</p>
                                 <p class="text-[10px] text-slate-400 mt-px">{{ substr($res->start_time, 0, 5) }} -
                                     {{ substr($res->end_time, 0, 5) }} WIB</p>
-                                <p class="text-[11px] text-indigo-500 font-medium mt-1">{{ $res->guests_count }}
-                                    Kursi Dipesan</p>
+                                <p class="text-[11px] text-indigo-500 font-medium mt-1">{{ $res->guests_count }} Kursi
+                                    Dipesan</p>
                             </div>
                             <div class="text-right flex flex-col justify-between items-end">
                                 <div>
@@ -302,15 +309,17 @@
                             <span class="text-[10px] font-medium text-slate-400 truncate max-w-[150px]">
                                 <i class="fa-solid fa-envelope mr-1"></i>{{ $res->user->email }}
                             </span>
-                            <div class="flex items-center gap-4 text-xs font-medium">
-                                @if ($res->status === 'pending')
+
+                            <!-- TOMBOL AKSI MOBILE HANYA MUNCUL DI TAB PENDING -->
+                            @if ($status === 'pending')
+                                <div class="flex items-center gap-4 text-xs font-medium">
                                     <form action="{{ route('admin.reservations.update_status', $res->id) }}"
                                         method="POST" class="inline m-0">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="approved">
                                         <button type="submit"
-                                            class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0">
+                                            class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
                                             Setujui
                                         </button>
                                     </form>
@@ -320,12 +329,12 @@
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="rejected">
                                         <button type="submit"
-                                            class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0">
+                                            class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
                                             Tolak
                                         </button>
                                     </form>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @empty
@@ -335,7 +344,6 @@
                     </div>
                 @endforelse
             </div>
-
         </div>
 
         <!-- Pagination -->

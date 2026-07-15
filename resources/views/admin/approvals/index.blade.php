@@ -95,7 +95,10 @@
                             <th class="py-4 px-6">Kode Customer</th>
                             <th class="py-4 px-6">Tanggal Daftar</th>
                             <th class="py-4 px-6 text-center">Status</th>
+                            <!-- KOLOM AKSI HANYA DIRENDER JIKA DI TAB PENDING -->
+                            @if($status === 'pending')
                             <th class="py-4 px-6 text-center">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white font-medium text-slate-600">
@@ -137,9 +140,11 @@
                                 </div>
                                 @endif
                             </td>
+
+                            <!-- TOMBOL AKSI HANYA DIRENDER PADA TAB PENDING -->
+                            @if($status === 'pending')
                             <td class="py-4 px-6">
                                 <div class="flex items-center justify-center gap-2">
-                                    @if($user->status_verifikasi !== 'active')
                                     <form action="{{ route('admin.approvals.verify', $user->id) }}" method="POST" class="inline m-0">
                                         @csrf
                                         @method('PATCH')
@@ -148,9 +153,7 @@
                                             <i class="fa-solid fa-user-check text-[11px]"></i>
                                         </button>
                                     </form>
-                                    @endif
 
-                                    @if($user->status_verifikasi !== 'rejected')
                                     <form action="{{ route('admin.approvals.verify', $user->id) }}" method="POST" class="inline m-0">
                                         @csrf
                                         @method('PATCH')
@@ -159,19 +162,24 @@
                                             <i class="fa-solid fa-user-xmark text-[11px]"></i>
                                         </button>
                                     </form>
-                                    @endif
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="py-12 text-center text-slate-400 font-medium">Belum ada dokumen permohonan pendaftaran.</td>
+                            <!-- Sesuaikan jumlah colspan berdasarkan tab -->
+                            <td colspan="{{ $status === 'pending' ? '6' : '5' }}" class="py-12 text-center text-slate-400 font-medium">
+                                Belum ada dokumen permohonan pendaftaran.
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
 
+            <!-- MOBILE RESPONSIVE CARD VIEW -->
+            <!-- MOBILE RESPONSIVE CARD VIEW -->
             <!-- MOBILE RESPONSIVE CARD VIEW -->
             <div class="block md:hidden divide-y divide-slate-100 w-full">
                 @forelse($users as $user)
@@ -185,6 +193,11 @@
                         <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9.5px] font-medium tracking-wider border shrink-0 bg-amber-50 text-amber-600 border-amber-200/50">
                             <span class="w-1 h-1 rounded-full bg-amber-500"></span>
                             <span>PENDING</span>
+                        </div>
+                        @elseif($user->status_verifikasi === 'active')
+                        <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9.5px] font-medium tracking-wider border shrink-0 bg-emerald-50 text-emerald-600 border-emerald-200/50">
+                            <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                            <span>APPROVED</span>
                         </div>
                         @else
                         <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9.5px] font-medium tracking-wider border shrink-0 bg-rose-50 text-rose-600 border-rose-200/50">
@@ -209,18 +222,19 @@
                         <span class="text-[11px] font-medium text-slate-400">
                             <i class="fa-solid fa-calendar mr-1"></i>{{ $user->created_at->format('d/m/Y') }}
                         </span>
+
+                        <!-- AKSI HANYA UNTUK MOBILE DI TAB PENDING -->
+                        @if($status === 'pending')
                         <div class="flex items-center gap-1.5">
-                            @if($user->status_verifikasi !== 'active')
                             <form action="{{ route('admin.approvals.verify', $user->id) }}" method="POST" class="inline m-0">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="action" value="active">
-                                <button type="submit" class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-medium rounded-lg flex items-center justify-center tracking-wide active:scale-95">
+                                <button type="submit" class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-semibold rounded-lg flex items-center justify-center tracking-wide active:scale-95">
                                     SETUJUI
                                 </button>
                             </form>
-                            @endif
-                            @if($user->status_verifikasi !== 'rejected')
+
                             <form action="{{ route('admin.approvals.verify', $user->id) }}" method="POST" class="inline m-0">
                                 @csrf
                                 @method('PATCH')
@@ -229,8 +243,8 @@
                                     <i class="fa-solid fa-user-xmark"></i>
                                 </button>
                             </form>
-                            @endif
                         </div>
+                        @endif
                     </div>
                 </div>
                 @empty
@@ -255,7 +269,7 @@
         function switchTab(tabName) {
             const url = new URL(window.location.href);
             url.searchParams.set('status', tabName);
-            url.searchParams.delete('page'); 
+            url.searchParams.delete('page');
             window.location.href = url.toString();
         }
     </script>

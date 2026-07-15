@@ -12,19 +12,37 @@
     <!-- Baris Kontrol di Bawah Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
 
-        <div class="flex flex-wrap items-center gap-1.5">
+        <div class="flex flex-wrap items-center gap-2">
+            <!-- TOMBOL SEMUA MEJA -->
             <a href="{{ route('admin.tables.index', ['area' => 'all']) }}"
-                class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all duration-150 {{ !$selectedArea || $selectedArea === 'all' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50' }}">
-                Semua Meja ({{ \App\Models\Table::count() }})
+                class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-xl border transition-all duration-200 
+        {{ !$selectedArea || $selectedArea === 'all'
+            ? 'bg-slate-950 text-white border-slate-950 shadow-sm shadow-slate-950/10'
+            : 'bg-white text-slate-600 border-slate-200/80 hover:bg-slate-50 hover:text-slate-900' }}">
+                <span>Semua Meja</span>
+                <span
+                    class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold rounded-md tracking-wide
+            {{ !$selectedArea || $selectedArea === 'all' ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-500' }}">
+                    {{ \App\Models\Table::count() }}
+                </span>
             </a>
 
+            <!-- LOOPING FILTER AREA -->
             @foreach ($availableAreas as $area)
                 @php
                     $countArea = \App\Models\Table::where('area', $area)->count();
                 @endphp
                 <a href="{{ route('admin.tables.index', ['area' => $area]) }}"
-                    class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all duration-150 {{ $selectedArea === $area ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50' }}">
-                    {{ $area }} ({{ $countArea }})
+                    class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-xl border transition-all duration-200 
+            {{ $selectedArea === $area
+                ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/10'
+                : 'bg-white text-slate-600 border-slate-200/80 hover:bg-slate-50 hover:text-slate-900' }}">
+                    <span>{{ $area }}</span>
+                    <span
+                        class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold rounded-md tracking-wide
+                {{ $selectedArea === $area ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500' }}">
+                        {{ $countArea }}
+                    </span>
                 </a>
             @endforeach
         </div>

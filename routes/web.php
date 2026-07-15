@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnnouncementController;
 use App\Models\Announcement;
 use App\Models\Table;
@@ -22,9 +23,7 @@ Route::get('/', function () {
     return view('welcome', compact('announcements', 'tables'));
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
