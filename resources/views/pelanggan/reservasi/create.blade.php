@@ -4,7 +4,21 @@
             {{ __('Formulir Reservasi Meja') }}
         </h2>
     </x-slot>
-
+    @if ($existingBookings->isNotEmpty())
+        <div class="m-5 p-3.5 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-xs">
+            <h4 class="font-semibold mb-1.5"><i class="fa-solid fa-calendar-clock mr-1"></i> Jadwal Terisi Untuk Meja Ini:
+            </h4>
+            <ul class="list-disc pl-4 space-y-1 font-medium">
+                @foreach ($existingBookings as $booking)
+                    <li>
+                        {{ \Carbon\Carbon::parse($booking->reservation_date)->format('d M Y') }} :
+                        <span class="underline">{{ substr($booking->start_time, 0, 5) }} -
+                            {{ substr($booking->end_time, 0, 5) }} WIB</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="max-w-2xl mx-auto bg-white border border-slate-200/60 rounded-xl overflow-hidden shadow-sm">
         <div class="p-5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
             <div>

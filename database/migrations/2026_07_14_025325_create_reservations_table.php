@@ -1,48 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Http\Controllers\Controller;
-use App\Models\Reservation;
-use Illuminate\Http\Request;
-
-class AdminReservationController extends Controller
-{
-    public function index(Request $request)
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        $status = $request->get('status', 'pending');
-
-        $stats = [
-            'total' => Reservation::count(),
-            'pending' => Reservation::where('status', 'pending')->count(),
-            'approved' => Reservation::where('status', 'approved')->count(),
-            'rejected' => Reservation::where('status', 'rejected')->count(),
-        ];
-
-        $reservations = Reservation::with(['user', 'table'])
-            ->when($status === 'pending', function ($query) {
-                return $query->where('status', 'pending');
-            })
-            ->when($status === 'history', function ($query) {
-                return $query->whereIn('status', ['approved', 'rejected']);
-            })
-            ->latest()
-            ->paginate(10);
-
-        return view('admin.reservations.index', compact('reservations', 'status', 'stats'));
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->id();
+            $table->string('reservation_code')->unique();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
+            $table->date('reservation_date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->integer('guests_count');
+            $table->string('status')->default('pending');
+            $table->timestamps();
+        });
     }
 
-    public function updateStatus(Request $request, $id)
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        $request->validate([
-            'status' => 'required|in:approved,rejected',
-        ]);
-
-        $reservation = Reservation::findOrFail($id);
-        $reservation->update([
-            'status' => $request->status,
-        ]);
-
-        return redirect()->back()->with('success', 'Status reservasi berhasil diperbarui.');
+        Schema::dropIfExists('reservations');
     }
-}
+};

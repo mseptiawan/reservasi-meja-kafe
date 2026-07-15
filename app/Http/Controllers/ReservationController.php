@@ -11,10 +11,7 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $tables = Table::where('is_active', true)
-            ->orderBy('area', 'asc')
-            ->orderBy('table_number', 'asc')
-            ->get();
+        $tables = Table::where('is_active', true)->orderBy('area', 'asc')->orderBy('table_number', 'asc')->get();
 
         return view('pelanggan.reservasi.index', compact('tables'));
     }
@@ -25,7 +22,10 @@ class ReservationController extends Controller
     public function create($table_id)
     {
         $table = Table::findOrFail($table_id);
-        return view('pelanggan.reservasi.create', compact('table'));
+
+        $existingBookings = Reservation::where('table_id', $table_id)->where('reservation_date', '>=', date('Y-m-d'))->where('status', 'approved')->orderBy('reservation_date', 'asc')->orderBy('start_time', 'asc')->get();
+
+        return view('pelanggan.reservasi.create', compact('table', 'existingBookings'));
     }
 
     /**
@@ -35,31 +35,52 @@ class ReservationController extends Controller
     {
         $table = Table::findOrFail($request->table_id);
 
-        // 2. Lakukan validasi ketat
-        $request->validate([
-            'table_id'         => 'required|exists:tables,id',
-            'reservation_date' => 'required|date|after_or_equal:today',
-            'start_time'       => 'required',
-            'end_time'         => 'required|after:start_time',
-            'guests_count'     => 'required|integer|min:1|max:' . $table->capacity,
-            'notes'            => 'nullable|string',
-        ], [
-            'guests_count.max' => 'Jumlah tamu melebihi kapasitas maksimal Meja ' . $table->table_number . ' (Maksimal ' . $table->capacity . ' kursi).',
-            'end_time.after'   => 'Jam selesai harus lebih lambat dari jam mulai.',
-        ]);
+        $request->validate(
+            [
+                'table_id' => 'required|exists:tables,id',
+                'reservation_date' => 'required|date|after_or_equal:today',
+                'start_time' => 'required',
+                'end_time' => 'required|after:start_time',
+                'guests_count' => 'required|integer|min:1|max:' . $table->capacity,
+                'notes' => 'nullable|string',
+            ],
+            [
+                'guests_count.max' => 'Jumlah tamu melebihi kapasitas maksimal Meja ' . $table->table_number . ' (Maksimal ' . $table->capacity . ' kursi).',
+                'end_time.after' => 'Jam selesai harus lebih lambat dari jam mulai.',
+            ],
+        );
+
+        $requestedDate = $request->reservation_date;
+        $startTime = $request->start_time;
+        $endTime = $request->end_time;
+
+        $isBooked = Reservation::where('table_id', $request->table_id)
+            ->where('reservation_date', $requestedDate)
+            ->whereIn('status', ['pending', 'approved'])
+            ->where(function ($query) use ($startTime, $endTime) {
+                $query->where('start_time', '<', $endTime)->where('end_time', '>', $startTime);
+            })
+            ->exists();
+
+        if ($isBooked) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['start_time' => 'Maaf, meja ini sudah dipesan oleh pelanggan lain pada rentang waktu tersebut (' . $startTime . ' - ' . $endTime . '). Silakan pilih jam atau meja lain.']);
+        }
 
         $reservationCode = 'RES-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
 
         $reservation = Reservation::create([
             'reservation_code' => $reservationCode,
-            'user_id'         => Auth::id(),
-            'table_id'        => $request->table_id,
-            'reservation_date' => $request->reservation_date,
-            'start_time'      => $request->start_time,
-            'end_time'        => $request->end_time,
-            'guests_count'    => $request->guests_count,
-            'status'          => 'pending',
-            'notes'           => $request->notes,
+            'user_id' => Auth::id(),
+            'table_id' => $request->table_id,
+            'reservation_date' => $requestedDate,
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'guests_count' => $request->guests_count,
+            'status' => 'pending',
+            'notes' => $request->notes,
         ]);
 
         return redirect()->route('reservasi.show', $reservation->id)->with('success', 'Reservasi berhasil diajukan!');
@@ -69,8 +90,8 @@ class ReservationController extends Controller
         $status = $request->get('status', 'pending');
 
         $stats = [
-            'total'    => Reservation::where('user_id', Auth::id())->count(),
-            'pending'  => Reservation::where('user_id', Auth::id())->where('status', 'pending')->count(),
+            'total' => Reservation::where('user_id', Auth::id())->count(),
+            'pending' => Reservation::where('user_id', Auth::id())->where('status', 'pending')->count(),
             'approved' => Reservation::where('user_id', Auth::id())->where('status', 'approved')->count(),
         ];
 
@@ -94,7 +115,6 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with(['user', 'table'])->findOrFail($id);
 
-        // Jika yang login BUKAN admin DAN BUKAN pemilik reservasi, cekal.
         if (Auth::user()->role !== 'admin' && $reservation->user_id !== Auth::id()) {
             abort(403, 'Akses tidak sah.');
         }
