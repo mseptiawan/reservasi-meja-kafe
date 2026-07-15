@@ -36,7 +36,7 @@
                     ],
                     [
                         'title' => 'Konfirmasi Pembayaran',
-                        'url' => '#',
+                        'url' => route('payment.confirm'),
                         'route_name' => 'payment.confirm',
                         'icon' => 'fa-solid fa-wallet',
                     ],
@@ -108,15 +108,9 @@
                     ],
                     [
                         'title' => 'Verifikasi Pembayaran',
-                        'url' => '#',
+                        'url' => route('admin.payments.index'),
                         'route_name' => 'admin.payments.index',
                         'icon' => 'fa-solid fa-file-invoice-dollar',
-                    ],
-                    [
-                        'title' => 'Semua Transaksi',
-                        'url' => '#',
-                        'route_name' => 'admin.booking.history',
-                        'icon' => 'fa-solid fa-history',
                     ],
                 ],
             ],
