@@ -79,20 +79,37 @@ class PaymentController extends Controller
 
         return redirect()->route('reservasi.history')->with('success', 'Bukti pembayaran berhasil diunggah. Mohon tunggu verifikasi keuangan dari admin.');
     }
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        // Beri proteksi tambahan jika belum pasang middleware role admin global
         if (Auth::user()->role !== 'admin') {
-            // Sesuaikan nama kolom role di DB Anda
             abort(403, 'Akses ditolak.');
         }
 
-        $payments = Payment::with(['reservation.user', 'reservation.table'])
-            ->orderByRaw("FIELD(status, 'pending', 'success', 'failed')")
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // 1. Ambil status dari URL, default-nya 'pending'
+        $status = $request->get('status', 'pending');
 
-        return view('admin.payments.index', compact('payments'));
+        // 2. Hitung statistik riwayat pembayaran (untuk Stat Cards)
+        $stats = [
+            'total' => Payment::count(),
+            'pending' => Payment::where('status', 'pending')->count(),
+            'success' => Payment::where('status', 'success')->count(),
+            'failed' => Payment::where('status', 'failed')->count(),
+        ];
+
+        // 3. Filter data berdasarkan Tab yang dipilih
+        $payments = Payment::with(['reservation.user', 'reservation.table'])
+            ->when($status === 'pending', function ($query) {
+                // Permintaan Aktif yang harus segera di-verifikasi
+                return $query->where('status', 'pending');
+            })
+            ->when($status === 'history', function ($query) {
+                // Riwayat pembayaran yang sudah sukses ataupun gagal/ditolak
+                return $query->whereIn('status', ['success', 'failed']);
+            })
+            ->latest()
+            ->get(); // Jika data sangat banyak, kamu bisa ganti ->paginate(10);
+
+        return view('admin.payments.index', compact('payments', 'status', 'stats'));
     }
 
     /**
