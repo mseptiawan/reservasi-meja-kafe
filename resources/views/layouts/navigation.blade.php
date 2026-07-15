@@ -139,9 +139,8 @@
     }
 </style>
 
-<aside id="sidebar" :class="$store.sidebar.open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+<aside id="sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
     class="fixed inset-y-0 left-0 w-64 md:w-16 xl:w-64 bg-white text-black flex flex-col z-[100] border-r border-slate-100 transition-transform duration-300 xl:transition-all shrink-0">
-
     <div
         class="h-20 flex items-center px-6 md:px-0 xl:px-8 border-b border-slate-100 relative shrink-0 justify-between md:justify-center xl:justify-start">
         <div class="flex items-center gap-3 relative z-10">
@@ -150,8 +149,8 @@
                 <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Reservasi Meja</span>
             </div>
         </div>
-        <button @click="$store.sidebar.open = false"
-            class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-100 bg-slate-100 text-slate-500 md:hidden active:scale-95">
+        <button @click="sidebarOpen = false" type="button"
+            class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-100 bg-slate-100 text-slate-500 md:hidden active:scale-95 cursor-pointer">
             <i class="fa-solid fa-xmark text-sm"></i>
         </button>
     </div>
@@ -271,16 +270,15 @@
 
     <div class="p-4 md:p-2 xl:p-4 border-t border-slate-100 bg-white">
         <div
-            class="flex flex-row md:flex-col xl:flex-row items-center justify-between p-3 md:p-1 xl:p-3 rounded-2xl bg-slate-100 border border-slate-200/50 hover:bg-slate-100/60 hover:border-slate-300/80 cursor-pointer transition-all duration-200 active:scale-[0.99] group/card gap-3 xl:gap-0">
+            class="flex flex-row md:flex-col xl:flex-row items-center justify-between p-3 md:p-1 xl:p-3 rounded-2xl bg-slate-100 border border-slate-200/50 transition-all duration-200 active:scale-[0.99] group/card gap-3 xl:gap-0">
             <div
                 class="flex flex-row md:flex-col xl:flex-row items-center gap-3 min-w-0 flex-1 w-full justify-start md:justify-center xl:justify-start">
                 <div
-                    class="w-8 h-8 xl:w-10 xl:h-10 rounded-xl bg-slate-200 border border-slate-300 overflow-hidden shrink-0 transition-transform duration-200 group-hover/card:scale-105 flex items-center justify-center font-medium text-slate-600 text-xs">
+                    class="w-8 h-8 xl:w-10 xl:h-10 rounded-xl bg-slate-200 border border-slate-300 overflow-hidden shrink-0 transition-transform duration-200  flex items-center justify-center font-medium text-slate-600 text-xs">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                 </div>
                 <div class="min-w-0 flex-1 leading-normal pr-1 md:hidden xl:block">
-                    <p
-                        class="text-xs font-medium text-slate-800 truncate group-hover/card:text-blue-600 transition-colors">
+                    <p class="text-xs font-medium text-slate-800 truncate  transition-colors">
                         {{ Auth::user()->name }}
                     </p>
                     <p class="text-[8px] font-medium uppercase tracking-[0.15em] text-slate-400 truncate mt-0.5">

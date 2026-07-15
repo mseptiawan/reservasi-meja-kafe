@@ -17,38 +17,58 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased bg-slate-100/50" x-data x-init="$store.sidebar = { open: false }">
 
-    <div class="flex min-h-screen p-4 gap-4 md:pl-20 xl:pl-[280px]">
+<body class="font-sans antialiased bg-slate-50" x-data="{ sidebarOpen: false }">
+
+    <div x-cloak x-show="sidebarOpen" @click="sidebarOpen = false" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-[90] md:hidden">
+    </div>
+
+    <div class="flex min-h-screen p-0 md:p-4 gap-0 md:gap-4 md:pl-20 xl:pl-[280px]">
+
+        <!-- SIDEBAR NAVIGATION -->
         @include('layouts.navigation')
 
-        <!-- Page Heading & Content -->
-        <div class="flex-1 flex flex-col min-w-0">
-            @isset($header)
-                <header class="mb-4">
-                    <div class="max-w-7xl mx-auto py-5 px-6 flex items-center gap-4">
-                        <button @click="$store.sidebar.open = true"
-                            class="md:hidden p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-slate-600">
-                            <i class="fa-solid fa-bars"></i>
-                        </button>
+        <!-- MAIN CONTENT AREA -->
+        <div class="flex-1 flex flex-col min-w-0 w-full">
 
-                        <div class="flex-1 mt-8">
-                            {{ $header }}
-                        </div>
+            <div
+                class="flex md:hidden items-center justify-between px-6 h-16 bg-white border-b border-slate-100 shrink-0 sticky top-0 z-40">
+                <div class="flex items-center gap-3">
+                    <button @click="sidebarOpen = true" type="button"
+                        class="p-2 -ml-2 rounded-xl text-slate-600 active:scale-95 hover:bg-slate-50 transition-all cursor-pointer">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                    <div>
+                        <h2 class="font-semibold text-slate-800 text-xs">
+                            @isset($headerTitle)
+                                {{ $headerTitle }}
+                            @else
+                                Lsp Proyek
+                            @endisset
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            @isset($header)
+                <header class="px-5 md:px-8 pt-5 md:pt-8">
+                    <div class="max-w-7xl mx-auto">
+                        {{ $header }}
                     </div>
                 </header>
             @endisset
 
-            <!-- Page Content -->
-            <main class="flex-1 p-8">
+            <main class="flex-1 p-5 md:p-8">
                 {{ $slot }}
             </main>
         </div>
-    </div>z
+    </div>
 </body>
 
 </html>

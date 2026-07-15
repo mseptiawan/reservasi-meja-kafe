@@ -2,17 +2,14 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
-        <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
-            <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500">Area Kerja /
-                    Operasional</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                    {{ __('Permohonan Reservasi') }}
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Verifikasi ketersediaan meja fisik dan tentukan persetujuan
-                    pemesanan pelanggan di Senja Space</p>
-            </div>
-        </div>
+        <x-slot name="header">
+            <x-page-header title="Permohonan Reservasi"
+                subtitle="Verifikasi ketersediaan meja fisik dan tentukan persetujuan pemesanan pelanggan di Senja Space">
+                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                    Area Kerja / Operasional
+                </span>
+            </x-page-header>
+        </x-slot>
 
         <!-- STATS CARDS -->
         <div

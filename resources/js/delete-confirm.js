@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#f43f5e",
-                cancelButtonColor: "#64748b",
+                cancelButtonColor: "#687587",
                 confirmButtonText: "Ya, Hapus!",
                 cancelButtonText: "Batal",
                 customClass: {

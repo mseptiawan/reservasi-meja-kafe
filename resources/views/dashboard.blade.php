@@ -27,7 +27,7 @@
             <!-- STAT CARDS GRID -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1: Verifikasi User -->
-                <div class="bg-white p-5 border border-slate-200 rounded-lg  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Verifikasi Akun</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_users'] }}</h4>
@@ -40,7 +40,7 @@
                 </div>
 
                 <!-- Card 2: Reservasi Pending -->
-                <div class="bg-white p-5 border border-slate-200 rounded-lg  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Reservasi Baru</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_reservations'] }}</h4>
@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Card 3: Pembayaran Masuk -->
-                <div class="bg-white p-5 border border-slate-200 rounded-lg  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Verifikasi Bayar</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_payments'] }}</h4>
@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- Card 4: Total Pelanggan -->
-                <div class="bg-white p-5 border border-slate-200 rounded-lg  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Total Pelanggan</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['total_customers'] }}</h4>
