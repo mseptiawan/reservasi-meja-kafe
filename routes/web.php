@@ -9,12 +9,18 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AnnouncementController;
+use App\Models\Announcement;
+use App\Models\Table;
 
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $announcements = Announcement::where('status', 'published')->latest()->take(3)->get();
+
+    $tables = Table::where('is_active', true)->orderBy('table_number', 'asc')->get();
+
+    return view('welcome', compact('announcements', 'tables'));
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
