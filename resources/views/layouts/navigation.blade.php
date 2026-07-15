@@ -58,12 +58,6 @@
                         'route_name' => 'profile.edit',
                         'icon' => 'fa-solid fa-user-pen',
                     ],
-                    [
-                        'title' => 'Ganti Password',
-                        'url' => route('profile.edit') . '#change-password',
-                        'route_name' => 'profile.password',
-                        'icon' => 'fa-solid fa-key',
-                    ],
                 ],
             ],
         ];

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-full max-w-4xl mx-auto space-y-5 md:space-y-8 px-4">
+    <div class="w-full  mx-auto space-y-5 md:space-y-8 px-4">
 
         <!-- PAGE HEADER -->
         <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
@@ -17,7 +17,6 @@
         <!-- STATS GRID -->
         <div
             class="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5 w-full max-w-full select-none box-border overflow-hidden">
-            <!-- Total Invoice Belum Dibayar -->
             <div
                 class="bg-white rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-row items-start justify-between border border-slate-200/75 w-full min-w-0 box-border break-words gap-2">
                 <div class="space-y-0.5 md:space-y-1 min-w-0 flex-1">
@@ -99,7 +98,6 @@
         <div class="space-y-4">
             @forelse($displayData as $item)
                 @if ($status === 'pending')
-                    {{-- TAB PERMINTAAN AKTIF: Menampilkan data Reservasi --}}
                     <div
                         class="bg-white p-5 border border-slate-200 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
@@ -122,7 +120,6 @@
                         </div>
                     </div>
                 @else
-                    {{-- TAB RIWAYAT TRANSAKSI: Menampilkan data Pembayaran --}}
                     <div
                         class="bg-white p-5 border border-slate-200 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
