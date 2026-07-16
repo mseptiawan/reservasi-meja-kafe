@@ -83,22 +83,17 @@
                     </div>
 
                     <!-- Status Meja -->
+                    <!-- Status Meja -->
                     <div class="space-y-1.5">
                         <label for="status" class="text-xs font-semibold text-slate-700 tracking-wide uppercase">
-                            Status <span class="text-rose-500">*</span>
+                            Status Operasional <span class="text-rose-500">*</span>
                         </label>
                         <select name="status" id="status"
-                            class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-xs transition-all"
+                            class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-xs transition-all"
                             required>
                             <option value="available"
-                                {{ old('status', $table->status) == 'available' ? 'selected' : '' }}>Tersedia
-                                (Available)</option>
-                            <option value="reserved"
-                                {{ old('status', $table->status) == 'reserved' ? 'selected' : '' }}>Dipesan (Reserved)
-                            </option>
-                            <option value="occupied"
-                                {{ old('status', $table->status) == 'occupied' ? 'selected' : '' }}>Terisi (Occupied)
-                            </option>
+                                {{ old('status', $table->status) == 'available' ? 'selected' : '' }}>Tersedia (Ready /
+                                Available)</option>
                             <option value="maintenance"
                                 {{ old('status', $table->status) == 'maintenance' ? 'selected' : '' }}>Perbaikan
                                 (Maintenance)</option>

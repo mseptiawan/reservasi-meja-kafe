@@ -2,15 +2,19 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
-        <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
-            <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500">Area Kerja / Keamanan</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                    {{ __('Persetujuan Akun Pelanggan') }}
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Verifikasi pendaftaran pelanggan baru untuk memberikan akses pemesanan meja di Senja Space</p>
-            </div>
-        </div>
+        <x-slot name="headerTitle">Persetujuan Akun</x-slot>
+
+        <!-- 2. Pengiriman Komponen Page Header ke Layout Utama -->
+        <x-slot name="header">
+            <x-page-header
+                title="Persetujuan Akun Pelanggan"
+                subtitle="Verifikasi pendaftaran pelanggan baru untuk memberikan akses pemesanan meja di Senja Space">
+                {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
+                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                    Area Kerja / Keamanan
+                </span>
+            </x-page-header>
+        </x-slot>
 
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5 w-full max-w-full select-none box-border overflow-hidden">
             <!-- Total Registrasi -->

@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->time('start_time');
             $table->time('end_time');
             $table->integer('guests_count');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

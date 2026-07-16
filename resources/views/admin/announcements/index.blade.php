@@ -1,10 +1,15 @@
 <x-app-layout>
+    <x-slot name="headerTitle">Pengumuman</x-slot>
+
     <x-slot name="header">
-        <div>
-            <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                {{ __('Data Pengumuman') }}
-            </h2>
-            <p class="text-[11px] text-slate-400 mt-1">Kelola info internal, promo, event, dan info maintenance Senja Space</p>
+        <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+            <!-- Komponen Page Header -->
+            <x-page-header title="Data Pengumuman"
+                subtitle="Kelola info internal, promo, event, dan info maintenance Senja Space">
+                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                    Area Kerja / Informasi
+                </span>
+            </x-page-header>
         </div>
     </x-slot>
 

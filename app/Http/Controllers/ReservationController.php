@@ -96,7 +96,11 @@ class ReservationController extends Controller
         ];
 
         $reservations = Reservation::where('user_id', Auth::id())
-            ->with('table')
+            ->with([
+                'table' => function ($query) {
+                    $query->withTrashed();
+                },
+            ])
             ->when($status === 'pending', function ($query) {
                 return $query->where('status', 'pending');
             })
@@ -113,7 +117,12 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        $reservation = Reservation::with(['user', 'table'])->findOrFail($id);
+        $reservation = Reservation::with([
+            'user',
+            'table' => function ($query) {
+                $query->withTrashed();
+            },
+        ])->findOrFail($id);
 
         if (Auth::user()->role !== 'admin' && $reservation->user_id !== Auth::id()) {
             abort(403, 'Akses tidak sah.');

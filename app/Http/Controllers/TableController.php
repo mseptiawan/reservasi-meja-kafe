@@ -25,7 +25,9 @@ class TableController extends Controller
 
         $availableAreas = Table::distinct()->pluck('area');
 
-        return view('admin.tables.index', compact('tables', 'availableAreas', 'selectedArea'));
+        $totalTables = Table::count();
+
+        return view('admin.tables.index', compact('tables', 'availableAreas', 'selectedArea', 'totalTables'));
     }
 
     /**
@@ -43,11 +45,11 @@ class TableController extends Controller
     {
         $request->validate([
             'table_number' => 'required|string|max:50|unique:tables,table_number',
-            'area'         => 'required|string|max:100',
-            'capacity'     => 'required|integer|min:1',
-            'status'       => 'required|in:available,reserved,occupied,maintenance',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'description'  => 'nullable|string',
+            'area' => 'required|string|max:100',
+            'capacity' => 'required|integer|min:1',
+            'status' => 'required|in:available,maintenance',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'description' => 'nullable|string',
         ]);
 
         $data = $request->only(['table_number', 'area', 'capacity', 'status', 'description']);
@@ -59,7 +61,6 @@ class TableController extends Controller
         }
 
         Table::create($data);
-
 
         return redirect()->route('admin.tables.index')->with('success', 'meja berhasil ditambah.');
     }
@@ -79,11 +80,11 @@ class TableController extends Controller
     {
         $request->validate([
             'table_number' => 'required|string|max:50|unique:tables,table_number,' . $table->id,
-            'area'         => 'required|string|max:100',
-            'capacity'     => 'required|integer|min:1',
-            'status'       => 'required|in:available,reserved,occupied,maintenance',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'description'  => 'nullable|string',
+            'area' => 'required|string|max:100',
+            'capacity' => 'required|integer|min:1',
+            'status' => 'required|in:available,maintenance',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'description' => 'nullable|string',
         ]);
 
         $data = $request->only(['table_number', 'area', 'capacity', 'status', 'description']);
@@ -99,8 +100,7 @@ class TableController extends Controller
 
         $table->update($data);
 
-
-        return redirect()->route('admin.tables.index')->with('success', "data berhasil diupdate");
+        return redirect()->route('admin.tables.index')->with('success', 'data berhasil diupdate');
     }
 
     /**
@@ -113,7 +113,6 @@ class TableController extends Controller
         }
 
         $table->delete();
-
 
         return redirect()->route('admin.tables.index')->with('success', 'data berhasil dihapus.');
     }

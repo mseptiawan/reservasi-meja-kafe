@@ -2,17 +2,19 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
-        <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
-            <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500">Area Kerja /
-                    Keuangan</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                    {{ __('Verifikasi Pembayaran Masuk') }}
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Konfirmasi bukti transfer tanda jadi reservasi pelanggan
-                    Senja Space Cafe</p>
+        <x-slot name="headerTitle">Verifikasi Pembayaran</x-slot>
+
+        <x-slot name="header">
+            <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+                <!-- Komponen Page Header -->
+                <x-page-header title="Verifikasi Pembayaran Masuk"
+                    subtitle="Konfirmasi bukti transfer tanda jadi reservasi pelanggan Senja Space Cafe">
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                        Area Kerja / Keuangan
+                    </span>
+                </x-page-header>
             </div>
-        </div>
+        </x-slot>
 
         <!-- STATS GRID -->
         <div

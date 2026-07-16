@@ -1,58 +1,65 @@
 <x-app-layout>
+    <x-slot name="headerTitle">Kelola Meja</x-slot>
+
+    <!-- 2. Pengiriman Komponen Page Header ke Layout Utama -->
     <x-slot name="header">
-        <div>
-            <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                {{ __('Data Meja & Kursi') }}
-            </h2>
-            <p class="text-[11px] text-slate-400 mt-1">Kelola ketersediaan, kapasitas, dan tata letak meja di Senja Space
-            </p>
-        </div>
+        <x-page-header title="Kelola Data Meja"
+            subtitle="Atur daftar meja fisik, kapasitas, lokasi area, dan status ketersediaan untuk reservasi pelanggan di Senja Space">
+            {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
+            <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                Area Kerja / Master Data
+            </span>
+        </x-page-header>
     </x-slot>
 
     <!-- Baris Kontrol di Bawah Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-slate-100 mb-6">
 
-        <div class="flex flex-wrap items-center gap-2">
-            <!-- TOMBOL SEMUA MEJA -->
+        <!-- SISI KIRI: FILTER AREA (Bisa di-slide horizontal di mobile agar tidak merusak layout) -->
+        <div
+            class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none shrink-0">
+            <!-- Tombol Semua Meja -->
             <a href="{{ route('admin.tables.index', ['area' => 'all']) }}"
-                class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-xl border transition-all duration-200 
-        {{ !$selectedArea || $selectedArea === 'all'
-            ? 'bg-slate-950 text-white border-slate-950 shadow-sm shadow-slate-950/10'
-            : 'bg-white text-slate-600 border-slate-200/80 hover:bg-slate-50 hover:text-slate-900' }}">
+                class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-xl border transition-all duration-200 shrink-0
+            {{ !$selectedArea || $selectedArea === 'all'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300' }}">
                 <span>Semua Meja</span>
                 <span
-                    class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold rounded-md tracking-wide
-            {{ !$selectedArea || $selectedArea === 'all' ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-500' }}">
-                    {{ \App\Models\Table::count() }}
+                    class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold rounded-md transition-colors
+                {{ !$selectedArea || $selectedArea === 'all' ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-500' }}">
+                    {{ $totalTables }}
                 </span>
             </a>
 
-            <!-- LOOPING FILTER AREA -->
+            <!-- Looping Filter Area -->
             @foreach ($availableAreas as $area)
                 @php
                     $countArea = \App\Models\Table::where('area', $area)->count();
                 @endphp
                 <a href="{{ route('admin.tables.index', ['area' => $area]) }}"
-                    class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-xl border transition-all duration-200 
-            {{ $selectedArea === $area
-                ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/10'
-                : 'bg-white text-slate-600 border-slate-200/80 hover:bg-slate-50 hover:text-slate-900' }}">
+                    class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-xl border transition-all duration-200 shrink-0
+                {{ $selectedArea === $area
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-100'
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300' }}">
                     <span>{{ $area }}</span>
                     <span
-                        class="inline-flex items-center justify-center px-2 py-0.5 text-[10px] font-bold rounded-md tracking-wide
-                {{ $selectedArea === $area ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500' }}">
+                        class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold rounded-md transition-colors
+                    {{ $selectedArea === $area ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500' }}">
                         {{ $countArea }}
                     </span>
                 </a>
             @endforeach
         </div>
 
-        <!-- SISI KANAN: Tombol Tambah Meja -->
-        <a href="{{ route('admin.tables.create') }}"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-all duration-150 self-start sm:self-auto">
-            <i class="fa-solid fa-plus text-[10px]"></i>
-            Tambah Meja
-        </a>
+        <!-- SISI KANAN: TOMBOL TAMBAH MEJA (Otomatis geser kanan di desktop, rapi di mobile) -->
+        <div class="flex justify-end sm:block shrink-0">
+            <a href="{{ route('admin.tables.create') }}"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-sm shadow-blue-100 hover:shadow-md transition-all duration-150 cursor-pointer">
+                <i class="fa-solid fa-plus text-[10px]"></i>
+                Tambah Meja
+            </a>
+        </div>
     </div>
 
     @if ($selectedArea && $selectedArea !== 'all')

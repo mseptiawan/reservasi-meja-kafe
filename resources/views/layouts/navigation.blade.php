@@ -21,7 +21,7 @@
                 'type' => 'single',
                 'title' => 'Buat Reservasi',
                 'route' => 'reservasi.index',
-                'active_pattern' => 'reservasi.index',
+                'active_pattern' => ['reservasi.*', '!reservasi.history'],
                 'icon' => 'fa-solid fa-chair',
             ],
             [
@@ -68,7 +68,7 @@
         $menus['Admin Panel'] = [
             [
                 'type' => 'single',
-                'title' => 'Data Meja dan Kursi',
+                'title' => 'Kelola Data Meja',
                 'route' => 'admin.tables.index',
                 'active_pattern' => 'admin.tables.*',
                 'icon' => 'fa-solid fa-chair',
@@ -139,8 +139,8 @@
     }
 </style>
 
-<aside id="sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
-    class="fixed inset-y-0 left-0 w-64 md:w-16 xl:w-64 bg-white text-black flex flex-col z-[100] border-r border-slate-100 transition-transform duration-300 xl:transition-all shrink-0">
+<aside id="sidebar" x-cloak :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    class="-translate-x-full md:translate-x-0 fixed inset-y-0 left-0 w-64 md:w-16 xl:w-64 bg-white text-black flex flex-col z-[100] border-r border-slate-100 transition-transform duration-300 xl:transition-all shrink-0">
     <div
         class="h-20 flex items-center px-6 md:px-0 xl:px-8 border-b border-slate-100 relative shrink-0 justify-between md:justify-center xl:justify-start">
         <div class="flex items-center gap-3 relative z-10">
@@ -169,9 +169,13 @@
                             $isRouteActive = isset($menu['active_pattern'])
                                 ? request()->routeIs($menu['active_pattern'])
                                 : request()->routeIs($menu['route']);
+
+                            if ($menu['route'] === 'reservasi.index' && request()->routeIs('reservasi.history')) {
+                                $isRouteActive = false;
+                            }
                         @endphp
                         <a href="{{ isset($menu['route']) ? route($menu['route']) : $menu['url'] }}"
-                            class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-2 py-2 rounded-xl text-xs font-medium transition-all duration-200 {{ $isRouteActive ? 'bg-blue-50/40 text-blue-600 font-semibold border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}"
+                            class="flex items-center justify-start md:justify-center xl:justify-start gap-3 px-4 md:px-0 xl:px-2 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isRouteActive ? 'bg-blue-50/40 text-blue-600 font-semibold border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}"
                             title="{{ $menu['title'] }}">
                             <i class="{{ $menu['icon'] }} text-base w-5 text-center shrink-0"></i>
                             <span class="md:hidden xl:block">{{ $menu['title'] }}</span>
@@ -232,7 +236,7 @@
 
                         <div x-data="{ open: {{ $isDropdownOpen ? 'true' : 'false' }} }" class="space-y-1">
                             <button @click="open = !open"
-                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4 md:px-0 xl:px-4 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'text-blue-600 font-bold bg-blue-50/40 border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}">
+                                class="w-full flex items-center justify-between md:justify-center xl:justify-between px-4  md:px-2 py-3 rounded-xl text-xs font-medium transition-all duration-200 {{ $isDropdownActive ? 'text-blue-600 font-bold bg-blue-50/40 border border-blue-100/50' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800' }}">
                                 <div class="flex items-center gap-3">
                                     <i class="{{ $menu['icon'] }} text-base w-5 text-center shrink-0"></i>
                                     <span class="md:hidden xl:block">{{ $menu['title'] }}</span>
@@ -254,8 +258,7 @@
                                         }
                                     @endphp
                                     <a href="{{ $sub['url'] }}"
-                                        class="flex items-center gap-3 px-4 md:px-2 xl:px-4 py-2 text-[11px] font-medium rounded-lg transition-all md:justify-center xl:justify-start
-    {{ $isSubActive ? 'bg-blue-50/50 text-blue-600 font-bold border border-blue-100/50' : 'text-slate-500 hover:text-blue-600 hover:bg-slate-100' }}">
+                                        class="flex items-center gap-3 px-4 md:px-2 xl:px-4 py-3 text-[11px] font-medium rounded-lg transition-all md:justify-center xl:justify-start  {{ $isSubActive ? 'bg-blue-50/50 text-blue-600 font-bold border border-blue-100/50' : 'text-slate-500 hover:text-blue-600 hover:bg-slate-100' }}">
                                         <i class="{{ $sub['icon'] }} text-xs w-5 text-center shrink-0"></i>
                                         <span class="md:hidden xl:block">{{ $sub['title'] }}</span>
                                     </a>

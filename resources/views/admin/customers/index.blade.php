@@ -2,32 +2,35 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-100 pb-2 md:border-none md:pb-0 mt-8">
-            <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500">Area Kerja / Keanggotaan</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                    {{ __('Daftar Pelanggan Aktif') }}
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Daftar seluruh pelanggan Senja Space yang berstatus aktif dan terverifikasi</p>
-            </div>
+        <x-slot name="headerTitle">Pelanggan Aktif</x-slot>
 
-            <!-- SEARCH BAR COMPACT -->
-            <form action="{{ route('admin.customers.index') }}" method="GET" class="w-full md:w-72 m-0 flex gap-2">
-                <div class="relative w-full">
-                    <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama, email, atau kode..."
-                        class="w-full h-9 pl-8 pr-3 text-xs bg-white border border-slate-200 rounded-lg outline-none focus:border-indigo-500 text-slate-700 placeholder-slate-400">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                        <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
+        <x-slot name="header">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-100 pb-5 md:border-none md:pb-0">
+                <!-- Komponen Page Header (Sisi Kiri) -->
+                <x-page-header title="Daftar Pelanggan Aktif"
+                    subtitle="Daftar seluruh pelanggan Senja Space yang berstatus aktif dan terverifikasi">
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                        Area Kerja / Keanggotaan
+                    </span>
+                </x-page-header>
+
+                <!-- Search Bar Compact (Sisi Kanan) -->
+                <form action="{{ route('admin.customers.index') }}" method="GET" class="w-full md:w-72 m-0 flex gap-2 shrink-0">
+                    <div class="relative w-full">
+                        <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama, email, atau kode..."
+                            class="w-full h-9 pl-8 pr-3 text-xs bg-white border border-slate-200 rounded-lg outline-none focus:border-indigo-500 text-slate-700 placeholder-slate-400 transition-colors">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
+                        </div>
                     </div>
-                </div>
-                @if($search)
-                <a href="{{ route('admin.customers.index') }}" class="h-9 px-2.5 bg-slate-100 text-slate-500 hover:text-slate-700 rounded-lg flex items-center justify-center text-xs border border-slate-200">
-                    Reset
-                </a>
-                @endif
-            </form>
-        </div>
-
+                    @if($search)
+                    <a href="{{ route('admin.customers.index') }}" class="h-9 px-2.5 bg-slate-100 text-slate-500 hover:text-slate-700 rounded-lg flex items-center justify-center text-xs border border-slate-200 transition-colors shrink-0">
+                        Reset
+                    </a>
+                    @endif
+                </form>
+            </div>
+        </x-slot>
         <div class="bg-white rounded-2xl overflow-hidden w-full border border-slate-200/50">
 
             <!-- DESKTOP TABLE VIEW -->

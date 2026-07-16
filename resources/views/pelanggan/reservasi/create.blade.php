@@ -1,8 +1,17 @@
 <x-app-layout>
+    <x-slot name="headerTitle">Formulir Reservasi</x-slot>
+
     <x-slot name="header">
-        <h2 class="font-medium text-xl text-slate-800 leading-tight">
-            {{ __('Formulir Reservasi Meja') }}
-        </h2>
+        <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+            <!-- Komponen Page Header dengan tombol kembali -->
+            <x-page-header title="Formulir Reservasi Meja"
+                subtitle="Silahkan lengkapi data reservasi dan pilih area meja yang tersedia di Senja Space"
+                :backRoute="route('reservasi.index')" backTitle="Kembali ke Daftar Reservasi">
+                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                    Layanan / Reservasi
+                </span>
+            </x-page-header>
+        </div>
     </x-slot>
     @if ($existingBookings->isNotEmpty())
         <div class="m-5 p-3.5 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-xs">

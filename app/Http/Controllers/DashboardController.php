@@ -30,7 +30,7 @@ class DashboardController extends Controller
             return view('dashboard', compact('announcements', 'stats', 'recentReservations'));
         } else {
             $activeReservation = Reservation::where('user_id', $user->id)
-                ->whereIn('status', ['pending', 'confirmed'])
+                ->whereIn('status', ['approved'])
                 ->latest()
                 ->first();
 

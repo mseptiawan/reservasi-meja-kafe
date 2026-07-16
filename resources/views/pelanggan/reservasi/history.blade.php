@@ -1,19 +1,19 @@
 <x-app-layout>
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
+        <x-slot name="headerTitle">Riwayat Reservasi</x-slot>
 
         <!-- PAGE HEADER -->
-        <div class="border border-slate-200/60 md:border-none md:shadow-none mt-8">
-            <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500">Aktivitas Saya /
-                    Reservasi</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight">
-                    {{ __('Riwayat Reservasi Meja') }}
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Pantau status persetujuan kunjungan dan nomor meja makan
-                    Anda di Senja Space</p>
+        <x-slot name="header">
+            <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+                <x-page-header title="Riwayat Reservasi Meja"
+                    subtitle="Pantau status persetujuan kunjungan dan nomor meja makan Anda di Senja Space">
+                    {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                        Aktivitas Saya / Reservasi
+                    </span>
+                </x-page-header>
             </div>
-        </div>
-
+        </x-slot>
         <!-- STATS GRID -->
         <div
             class="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5 w-full max-w-full select-none box-border overflow-hidden">
@@ -118,7 +118,7 @@
                             <th class="py-4 px-6">Tanggal Kunjungan</th>
                             <th class="py-4 px-6">Durasi & Tamu</th>
                             <th class="py-4 px-6 text-center">Status</th>
-                            <th class="py-4 px-6 text-center">Nota</th>
+                            <th class="py-4 px-6 text-center">Detail Booking</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white font-medium text-slate-600">
@@ -169,9 +169,9 @@
                                 <td class="py-4 px-6">
                                     <div class="flex items-center justify-center">
                                         <a href="{{ route('reservasi.show', $res->id) }}"
-                                            class="w-8 h-8 rounded-lg bg-white border border-slate-200/80 text-slate-400 hover:text-indigo-600 inline-flex items-center justify-center transition-all active:scale-[0.95]"
-                                            title="Lihat Struk Nota">
-                                            <i class="fa-solid fa-receipt text-[11px]"></i>
+                                            class="text-slate-400 hover:text-indigo-600 font-medium text-[12px] transition-colors active:scale-[0.98]"
+                                            title="Lihat Tiket Reservasi">
+                                            Lihat
                                         </a>
                                     </div>
                                 </td>
@@ -240,7 +240,7 @@
                             </span>
                             <a href="{{ route('reservasi.show', $res->id) }}"
                                 class="h-8 px-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-medium rounded-lg flex items-center justify-center gap-1 transition-all active:scale-95">
-                                <i class="fa-solid fa-receipt text-[10px]"></i> Lihat Struk
+                                <i class="fa-solid fa-receipt text-[10px]"></i> Lihat
                             </a>
                         </div>
                     </div>

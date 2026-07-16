@@ -1,23 +1,32 @@
 <x-app-layout>
-    <div class="w-full  mx-auto space-y-8 px-4 py-8">
+    <div class="w-full  mx-auto space-y-8 py-8">
 
         <!-- WELCOME BANNER -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
-            <div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-blue-600">Ringkasan Sistem</span>
-                <h2 class="font-medium text-xl text-slate-800 leading-tight mt-0.5">
-                    Selamat Datang Kembali, {{ Auth::user()->name }}!
-                </h2>
-                <p class="text-[11px] text-slate-400 mt-0.5">Berikut adalah pantauan aktivitas dan informasi terbaru hari
-                    ini.</p>
+        <x-slot name="headerTitle">Dashboard</x-slot>
+
+        <x-slot name="header">
+            <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-100 pb-5 md:border-none md:pb-0">
+                <!-- Komponen Page Header (Sisi Kiri) -->
+                <x-page-header title="Selamat Datang Kembali, {{ Auth::user()->name }}!"
+                    subtitle="Berikut adalah pantauan aktivitas dan informasi terbaru hari ini.">
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-blue-600 block">
+                        Ringkasan Sistem
+                    </span>
+                </x-page-header>
+
+                <!-- Tombol Aksi Kustom (Sisi Kanan) -->
+                @if (Auth::user()->role === 'pelanggan')
+                    <div class="shrink-0 self-start md:self-auto">
+                        <a href="{{ route('reservasi.index') }}"
+                            class="inline-flex items-center justify-center h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-xs transition active:scale-95 duration-150 cursor-pointer shadow-sm shadow-blue-100">
+                            <i class="fa-solid fa-chair mr-2 text-[11px]"></i>
+                            Buat Reservasi Meja
+                        </a>
+                    </div>
+                @endif
             </div>
-            @if (Auth::user()->role === 'pelanggan')
-                <a href="{{ route('reservasi.index') }}"
-                    class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-xs uppercase tracking-wider transition duration-150  cursor-pointer">
-                    <i class="fa-solid fa-chair mr-2 text-xs"></i> Buat Reservasi Meja
-                </a>
-            @endif
-        </div>
+        </x-slot>
 
         @if (Auth::user()->role === 'admin')
             <!-- ============================================== -->

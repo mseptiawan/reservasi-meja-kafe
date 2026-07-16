@@ -12,14 +12,24 @@ class AdminReservationController extends Controller
     {
         $status = $request->get('status', 'pending');
 
+        // Menggunakan withTrashed() agar statistik menghitung data yang di-soft delete juga
         $stats = [
-            'total' => Reservation::count(),
-            'pending' => Reservation::where('status', 'pending')->count(),
-            'approved' => Reservation::where('status', 'approved')->count(),
-            'rejected' => Reservation::where('status', 'rejected')->count(),
+            'total' => Reservation::withTrashed()->count(),
+            'pending' => Reservation::withTrashed()->where('status', 'pending')->count(),
+            'approved' => Reservation::withTrashed()->where('status', 'approved')->count(),
+            'rejected' => Reservation::withTrashed()->where('status', 'rejected')->count(),
         ];
 
-        $reservations = Reservation::with(['user', 'table'])
+        // Menggunakan withTrashed() di query utama dan closure relasi
+        $reservations = Reservation::withTrashed()
+            ->with([
+                'user' => function ($query) {
+                    $query->withTrashed(); // Agar nama user tetap muncul jika user di-soft delete
+                },
+                'table' => function ($query) {
+                    $query->withTrashed(); // Agar nomor meja tetap muncul jika meja di-soft delete
+                },
+            ])
             ->when($status === 'pending', function ($query) {
                 return $query->where('status', 'pending');
             })
@@ -31,7 +41,6 @@ class AdminReservationController extends Controller
 
         return view('admin.reservations.index', compact('reservations', 'status', 'stats'));
     }
-
     public function updateStatus(Request $request, $id)
     {
         $request->validate([

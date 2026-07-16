@@ -1,20 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <a href="{{ route('reservasi.history') }}"
-                    class="w-8 h-8 rounded-lg text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all active:scale-95"
-                    title="Kembali ke Riwayat">
-                    <i class="fa-solid fa-arrow-left text-xs"></i>
-                </a>
-                <div>
-                    <h3 class="font-medium text-md text-slate-800 leading-tight">
-                        {{ __('Detail Struk Reservasi') }}
-                    </h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Nota digital bukti pengajuan tempat duduk di Senja Space
-                    </p>
-                </div>
-            </div>
+        <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+            <!-- Mengubah istilah Struk/Nota menjadi Tiket agar lebih relevan dengan isi halaman -->
+            <x-page-header title="Detail Tiket Reservasi"
+                subtitle="Tiket digital bukti pengajuan tempat duduk di Senja Space" :backRoute="route('reservasi.history')"
+                backTitle="Kembali ke Riwayat">
+                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                    Layanan / Reservasi
+                </span>
+            </x-page-header>
         </div>
     </x-slot>
     <div class="max-w-xl mx-auto bg-white border border-slate-200 rounded-xl overflow-hidden ">

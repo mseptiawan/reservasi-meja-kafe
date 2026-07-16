@@ -2,13 +2,18 @@
     <div class="w-full max-w-none mx-auto space-y-5 md:space-y-8">
 
         <!-- PAGE HEADER -->
+        <x-slot name="headerTitle">Reservasi</x-slot>
+
         <x-slot name="header">
-            <x-page-header title="Permohonan Reservasi"
-                subtitle="Verifikasi ketersediaan meja fisik dan tentukan persetujuan pemesanan pelanggan di Senja Space">
-                <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
-                    Area Kerja / Operasional
-                </span>
-            </x-page-header>
+            <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
+                <!-- Komponen Page Header -->
+                <x-page-header title="Permohonan Reservasi"
+                    subtitle="Verifikasi ketersediaan meja fisik dan tentukan persetujuan pemesanan pelanggan di Senja Space">
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
+                        Area Kerja / Operasional
+                    </span>
+                </x-page-header>
+            </div>
         </x-slot>
 
         <!-- STATS CARDS -->
@@ -28,7 +33,6 @@
                             class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-slate-400 inline-block ml-0.5">Data</span>
                     </span>
                 </div>
-                <!-- Perubahan: Background amber lembut dan icon amber hangat -->
                 <div
                     class="flex w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl items-center justify-center bg-amber-50 text-amber-500 border border-amber-100 shrink-0 ml-1">
                     <i class="fa-solid fa-hourglass-half text-[11px] sm:text-base"></i>
@@ -49,7 +53,6 @@
                             class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-slate-400 inline-block ml-0.5">Sesi</span>
                     </span>
                 </div>
-                <!-- Perubahan: Background emerald lembut dan icon emerald segar -->
                 <div
                     class="flex w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl items-center justify-center bg-emerald-50 text-emerald-500 border border-emerald-100 shrink-0 ml-1">
                     <i class="fa-solid fa-circle-check text-[11px] sm:text-base"></i>
@@ -70,7 +73,6 @@
                             class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-slate-400 inline-block ml-0.5">Sesi</span>
                     </span>
                 </div>
-                <!-- Perubahan: Background rose lembut dan icon rose tegas -->
                 <div
                     class="flex w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl items-center justify-center bg-rose-50 text-rose-500 border border-rose-100 shrink-0 ml-1">
                     <i class="fa-solid fa-calendar-xmark text-[11px] sm:text-base"></i>
@@ -91,13 +93,13 @@
                             class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-slate-500 inline-block ml-0.5">Data</span>
                     </span>
                 </div>
-                <!-- Perubahan: Background indigo khas Senja Space dan icon indigo profesional -->
                 <div
                     class="flex w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl items-center justify-center bg-indigo-50 text-indigo-500 border border-indigo-100 shrink-0 ml-1">
                     <i class="fa-solid fa-calendar-days text-[11px] sm:text-base"></i>
                 </div>
             </div>
         </div>
+
         <!-- TAB NAVIGATION -->
         <div
             class="flex flex-col md:flex-row md:items-center md:justify-between gap-3.5 w-full bg-white md:bg-transparent border border-slate-200/50 md:border-none p-4 md:p-0 rounded-2xl md:rounded-none md:shadow-none select-none">
@@ -199,18 +201,19 @@
                                     @endif
                                 </td>
 
-                                <!-- TOMBOL AKSI HANYA DIRENDER DI TAB PENDING -->
+                                <!-- TOMBOL AKSI DESKTOP: MENGGUNAKAN ICON PRESEGI MINIMALIS -->
                                 @if ($status === 'pending')
                                     <td class="py-4 px-6">
-                                        <div class="flex items-center justify-center gap-4 text-xs font-medium">
+                                        <div class="flex items-center justify-center gap-2">
                                             <form action="{{ route('admin.reservations.update_status', $res->id) }}"
                                                 method="POST" class="inline m-0">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit"
-                                                    class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
-                                                    Setujui
+                                                    class="w-8 h-8 rounded-lg bg-white border border-slate-200/80 text-slate-400 hover:text-emerald-600 inline-flex items-center justify-center transition-all active:scale-[0.95]"
+                                                    title="Setujui Reservasi">
+                                                    <i class="fa-solid fa-user-check text-[11px]"></i>
                                                 </button>
                                             </form>
 
@@ -220,8 +223,9 @@
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="rejected">
                                                 <button type="submit"
-                                                    class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
-                                                    Tolak
+                                                    class="w-8 h-8 rounded-lg border border-rose-200 bg-rose-50/40 text-rose-600 inline-flex items-center justify-center transition-all active:scale-[0.95] hover:bg-rose-50 cursor-pointer"
+                                                    title="Tolak Reservasi">
+                                                    <i class="fa-solid fa-user-xmark text-[11px]"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -230,7 +234,6 @@
                             </tr>
                         @empty
                             <tr>
-                                <!-- Ubah colspan dinamis menyesuaikan tab yang aktif -->
                                 <td colspan="{{ $status === 'pending' ? '6' : '5' }}"
                                     class="py-12 text-center text-slate-400 font-medium">
                                     Tidak ada data reservasi dengan status saat ini.
@@ -241,7 +244,6 @@
                 </table>
             </div>
 
-            <!-- MOBILE RESPONSIVE CARD VIEW -->
             <!-- MOBILE RESPONSIVE CARD VIEW -->
             <div class="block md:hidden divide-y divide-slate-100 w-full">
                 @forelse($reservations as $res)
@@ -307,27 +309,28 @@
                                 <i class="fa-solid fa-envelope mr-1"></i>{{ $res->user->email }}
                             </span>
 
-                            <!-- TOMBOL AKSI MOBILE HANYA MUNCUL DI TAB PENDING -->
+                            <!-- TOMBOL AKSI MOBILE: FIX DI DALAM DIV WRAPPER (BUKAN TD) -->
                             @if ($status === 'pending')
-                                <div class="flex items-center gap-4 text-xs font-medium">
+                                <div class="flex items-center gap-1.5">
                                     <form action="{{ route('admin.reservations.update_status', $res->id) }}"
                                         method="POST" class="inline m-0">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="approved">
                                         <button type="submit"
-                                            class="text-emerald-600 hover:text-emerald-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
-                                            Setujui
+                                            class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-semibold rounded-lg flex items-center justify-center tracking-wide active:scale-95">
+                                            SETUJUI
                                         </button>
                                     </form>
+
                                     <form action="{{ route('admin.reservations.update_status', $res->id) }}"
                                         method="POST" class="inline m-0">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="rejected">
                                         <button type="submit"
-                                            class="text-rose-600 hover:text-rose-700 transition-colors cursor-pointer bg-transparent border-none p-0 font-semibold">
-                                            Tolak
+                                            class="h-8 w-8 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center text-xs active:scale-95">
+                                            <i class="fa-solid fa-user-xmark"></i>
                                         </button>
                                     </form>
                                 </div>
