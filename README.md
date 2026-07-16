@@ -51,7 +51,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 ### Backend
 
 - Laravel 13
-- PHP 8.5
+- PHP 8.4
 
 ### Frontend
 
@@ -70,10 +70,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 - Docker
 - Docker Compose
 
-### Mail Testing
-
-- Mailpit
-
 ### Database Management
 
 - phpMyAdmin
@@ -86,7 +82,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 | ------------ | ------------------------ |
 | Laravel Sail | PHP Runtime & Web Server |
 | MySQL 8.4    | Database                 |
-| Mailpit      | Email Testing            |
 | phpMyAdmin   | Database Management      |
 
 ---
@@ -126,15 +121,21 @@ README.md
 
 # 🚀 Installation
 
+Pilih salah satu metode berikut:
+
+- **Option A** — Laravel Sail (Recommended)
+- **Option B** — Local Development (Without Docker)
+
+---
+
+# Option A — Laravel Sail (Docker)
+
 ## 1. Clone Repository
 
 ```bash
 git clone https://github.com/USERNAME/REPOSITORY.git
-
 cd REPOSITORY
 ```
-
----
 
 ## 2. Copy Environment File
 
@@ -142,17 +143,7 @@ cd REPOSITORY
 cp .env.example .env
 ```
 
----
-
-## 3. Install PHP Dependency
-
-Jika Composer tersedia di komputer
-
-```bash
-composer install
-```
-
-atau menggunakan Docker
+## 3. Install Dependencies
 
 ```bash
 docker run --rm \
@@ -163,7 +154,77 @@ laravelsail/php85-composer:latest \
 composer install
 ```
 
+## 4. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+## 5. Start Sail
+
+```bash
+./vendor/bin/sail up -d
+```
+
+## 6. Install Frontend Dependencies
+
+```bash
+./vendor/bin/sail npm install
+```
+
+## 7. Run Migration
+
+```bash
+./vendor/bin/sail artisan migrate --seed
+```
+
+## 8. Run Vite
+
+```bash
+./vendor/bin/sail npm run dev
+```
+
+Website:
+
+```
+http://localhost
+```
+
+phpMyAdmin:
+
+```
+http://localhost:8080
+```
+
 ---
+
+# Option B — Local Development (Without Docker)
+
+## Requirements
+
+- PHP 8.5+
+- Composer
+- Node.js
+- MySQL 8.4+
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/USERNAME/REPOSITORY.git
+cd REPOSITORY
+```
+
+## 2. Copy Environment File
+
+```bash
+cp .env.example .env
+```
+
+## 3. Install PHP Dependencies
+
+```bash
+composer install
+```
 
 ## 4. Generate Application Key
 
@@ -171,42 +232,49 @@ composer install
 php artisan key:generate
 ```
 
----
+## 5. Configure Database
 
-## 5. Jalankan Laravel Sail
+Edit file `.env`
 
-```bash
-./vendor/bin/sail up -d
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=reservasi_meja_kafe
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
 ```
-
----
 
 ## 6. Install Node Modules
 
 ```bash
-./vendor/bin/sail npm install
+npm install
 ```
 
----
-
-## 7. Jalankan Vite
+## 7. Run Database Migration
 
 ```bash
-./vendor/bin/sail npm run dev
+php artisan migrate --seed
 ```
 
----
+## 8. Run Development Server
 
-## 8. Jalankan Migration
+Terminal pertama:
 
 ```bash
-./vendor/bin/sail artisan migrate
+php artisan serve
 ```
 
-atau
+Terminal kedua:
 
 ```bash
-./vendor/bin/sail artisan migrate --seed
+npm run dev
+```
+
+Website:
+
+```
+http://127.0.0.1:8000
 ```
 
 ---
@@ -217,7 +285,6 @@ atau
 | ---------- | --------------------- |
 | Website    | http://localhost      |
 | phpMyAdmin | http://localhost:8080 |
-| Mailpit    | http://localhost:8025 |
 
 ---
 
@@ -237,31 +304,25 @@ DB_DATABASE=reservasi_kafe
 DB_USERNAME=sail
 DB_PASSWORD=password
 
-
-MAIL_MAILER=smtp
-MAIL_HOST=mailpit
-MAIL_PORT=1025
-MAIL_FROM_ADDRESS=hello@example.com
-MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 ---
 
 # 📌 Main Modules
 
-| Module               | Description                      |
-| -------------------- | -------------------------------- |
-| Authentication       | Login, Register, Forgot Password |
-| Dashboard            | Dashboard sesuai role pengguna   |
-| Account Approval     | Verifikasi akun pelanggan        |
-| Customer Management  | Daftar pelanggan                 |
-| Table Management     | CRUD meja                        |
-| Reservation          | Reservasi meja                   |
-| Reservation History  | Riwayat reservasi                |
-| Payment Confirmation | Upload bukti pembayaran          |
-| Payment Verification | Verifikasi pembayaran            |
-| Announcement         | CRUD pengumuman                  |
-| Profile              | Edit profil pengguna             |
+| Module               | Description                    |
+| -------------------- | ------------------------------ |
+| Authentication       | Login, Register                |
+| Dashboard            | Dashboard sesuai role pengguna |
+| Account Approval     | Verifikasi akun pelanggan      |
+| Customer Management  | Daftar pelanggan               |
+| Table Management     | CRUD meja                      |
+| Reservation          | Reservasi meja                 |
+| Reservation History  | Riwayat reservasi              |
+| Payment Confirmation | Upload bukti pembayaran        |
+| Payment Verification | Verifikasi pembayaran          |
+| Announcement         | CRUD pengumuman                |
+| Profile              | Edit profil pengguna           |
 
 ---
 

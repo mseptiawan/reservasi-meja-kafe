@@ -24,7 +24,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('lspsecret'),
         ]);
 
-        // 2. Data Pelanggan Awal (3 Variasi Status)
         $names = ['wawan', 'Pelanggan Dua', 'Pelanggan Tiga'];
         $emails = ['wawan@gmail.com', 'pelanggan2@example.com', 'pelanggan3@example.com'];
         $statuses = ['active', 'pending', 'rejected'];
@@ -43,7 +42,6 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        // 3. Tambahan 10 Pelanggan Baru (Nama Real & Status Active)
         $realNames = ['Rian Hidayat', 'Dewi Lestari', 'Budi Santoso', 'Siti Aminah', 'Rizky Pratama', 'Aditya Wijaya', 'Fitriani Kusuma', 'Andika Putra', 'Nabil', 'Mega Utami', 'Dimas Saputra'];
 
         $realEmails = ['rian.hidayat@gmail.com', 'dewi.lestari@gmail.com', 'budi.santoso@gmail.com', 'siti.aminah@gmail.com', 'rizky.pratama@gmail.com', 'aditya.wijaya@gmail.com', 'fitriani.kusuma@gmail.com', 'andika.putra@gmail.com', 'nabil@gmail.com', 'mega.utami@gmail.com', 'dimas.saputra@gmail.com'];

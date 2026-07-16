@@ -117,7 +117,6 @@
                             <th class="py-4 px-6">Kode Customer</th>
                             <th class="py-4 px-6">Tanggal Daftar</th>
                             <th class="py-4 px-6 text-center">Status</th>
-                            <!-- KOLOM AKSI HANYA DIRENDER JIKA DI TAB PENDING -->
                             @if ($status === 'pending')
                                 <th class="py-4 px-6 text-center">Aksi</th>
                             @endif
@@ -213,8 +212,6 @@
                 </table>
             </div>
 
-            <!-- MOBILE RESPONSIVE CARD VIEW -->
-            <!-- MOBILE RESPONSIVE CARD VIEW -->
             <!-- MOBILE RESPONSIVE CARD VIEW -->
             <div class="block md:hidden divide-y divide-slate-100 w-full">
                 @forelse($users as $user)

@@ -90,7 +90,6 @@
 
             <!-- ADMIN DETAILS GRID -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Left: Reservasi Terbaru -->
                 <div class="lg:col-span-2 bg-white p-6 border border-slate-200 rounded-2xl space-y-4">
                     <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
                         <h3 class="font-semibold text-slate-800 text-sm">Reservasi Terbaru</h3>

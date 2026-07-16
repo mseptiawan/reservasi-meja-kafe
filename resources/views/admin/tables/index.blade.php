@@ -5,7 +5,6 @@
     <x-slot name="header">
         <x-page-header title="Kelola Data Meja"
             subtitle="Atur daftar meja fisik, kapasitas, lokasi area, dan status ketersediaan untuk reservasi pelanggan di PesanMeja">
-            {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
             <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                 Area Kerja / Master Data
             </span>

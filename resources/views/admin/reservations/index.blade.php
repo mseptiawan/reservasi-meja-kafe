@@ -139,7 +139,6 @@
                             <th class="py-4 px-6">Tamu & Waktu</th>
                             <th class="py-4 px-6 text-center">Nota</th>
                             <th class="py-4 px-6 text-center">Status</th>
-                            <!-- KOLOM AKSI HANYA MUNCUL DI TAB PENDING -->
                             @if ($status === 'pending')
                                 <th class="py-4 px-6 text-center">Aksi</th>
                             @endif

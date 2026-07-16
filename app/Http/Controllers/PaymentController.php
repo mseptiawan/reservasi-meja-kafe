@@ -19,10 +19,8 @@ class PaymentController extends Controller
         $userId = Auth::id();
         $status = $request->get('status', 'pending');
 
-        // 1. Tagihan Aktif = Reservasi yang disetujui tapi belum bayar SAMA SEKALI
         $unpaidCount = Reservation::where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->count();
 
-        // 2. Pending Verifikasi = Sudah upload bukti transfer, status payment masih 'pending'
         $pendingVerificationCount = Payment::whereHas('reservation', function ($q) use ($userId) {
             $q->where('user_id', $userId);
         })
@@ -44,7 +42,7 @@ class PaymentController extends Controller
         // Stats untuk komponen UI
         $stats = [
             'total' => $unpaidCount + $pendingVerificationCount + $successCount + $failedCount,
-            'pending' => $unpaidCount + $pendingVerificationCount, // Gabungan yang butuh tindakan / sedang berjalan
+            'pending' => $unpaidCount + $pendingVerificationCount,
             'success' => $successCount,
             'failed' => $failedCount,
         ];
@@ -52,7 +50,6 @@ class PaymentController extends Controller
         $displayData = [];
 
         if ($status === 'pending') {
-            // Ambil data Reservasi yang Belum Bayar
             $unpaidReservations = Reservation::with('table')
                 ->where('user_id', $userId)
                 ->where('status', 'approved')
@@ -64,7 +61,6 @@ class PaymentController extends Controller
                     return $item;
                 });
 
-            // Ambil data Pembayaran yang Menunggu Verifikasi Admin
             $pendingPayments = Payment::with(['reservation.table'])
                 ->whereHas('reservation', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
@@ -77,10 +73,8 @@ class PaymentController extends Controller
                     return $item;
                 });
 
-            // Gabungkan keduanya ke dalam satu koleksi untuk ditampilkan di tab Permintaan Aktif
             $displayData = $unpaidReservations->concat($pendingPayments);
         } else {
-            // Riwayat hanya menampilkan transaksi yang sudah final (Success atau Failed)
             $displayData = Payment::with(['reservation.table'])
                 ->whereHas('reservation', function ($q) use ($userId) {
                     $q->where('user_id', $userId);

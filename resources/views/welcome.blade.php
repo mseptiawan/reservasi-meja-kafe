@@ -111,10 +111,8 @@
                     <img src="{{ asset('images/main.jpg') }}" alt="Signature Butterscotch Latte"
                         class="absolute inset-0 w-full h-full object-cover opacity-60" />
 
-                    <!-- GRADIENT OVERLAY (Supaya teks putih tetap terbaca jelas di atas gambar) -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"></div>
 
-                    <!-- KONTEN (Gunakan z-10 agar berada di atas gambar dan overlay) -->
                     <span
                         class="relative z-10 bg-white/10 backdrop-blur-md text-[11px] font-medium px-3 py-1.5 rounded-full self-start border border-white/10">
                         ☕ Signature Butterscotch Latte

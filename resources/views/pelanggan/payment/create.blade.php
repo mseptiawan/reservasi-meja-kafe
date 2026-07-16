@@ -44,7 +44,6 @@
                 <form action="{{ route('payment.store', $reservation->id) }}" method="POST"
                     enctype="multipart/form-data" class="space-y-4">
                     @csrf
-                    <!-- Simpan nominal pembayaran terhitung secara tersembunyi/eksplisit -->
                     <input type="hidden" name="amount" value="{{ $amountToPay }}">
 
                     <div>

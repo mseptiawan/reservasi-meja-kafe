@@ -268,7 +268,7 @@
         function switchTab(tabName) {
             const url = new URL(window.location.href);
             url.searchParams.set('status', tabName);
-            url.searchParams.delete('page'); // Reset pagination ke halaman awal
+            url.searchParams.delete('page');
             window.location.href = url.toString();
         }
     </script>
