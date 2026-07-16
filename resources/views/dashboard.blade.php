@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-full  mx-auto space-y-8 py-8">
+    <div class="w-full mx-auto space-y-8 py-8">
 
         <!-- WELCOME BANNER -->
         <x-slot name="headerTitle">Dashboard</x-slot>
@@ -36,7 +36,7 @@
             <!-- STAT CARDS GRID -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1: Verifikasi User -->
-                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Verifikasi Akun</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_users'] }}</h4>
@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- Card 2: Reservasi Pending -->
-                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Reservasi Baru</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_reservations'] }}</h4>
@@ -62,7 +62,7 @@
                 </div>
 
                 <!-- Card 3: Pembayaran Masuk -->
-                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Verifikasi Bayar</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['pending_payments'] }}</h4>
@@ -75,7 +75,7 @@
                 </div>
 
                 <!-- Card 4: Total Pelanggan -->
-                <div class="bg-white p-5 border border-slate-200 rounded-2xl  flex items-center justify-between">
+                <div class="bg-white p-5 border border-slate-200 rounded-2xl flex items-center justify-between">
                     <div class="space-y-1">
                         <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Total Pelanggan</p>
                         <h4 class="text-2xl font-medium text-slate-800">{{ $stats['total_customers'] }}</h4>
@@ -91,7 +91,7 @@
             <!-- ADMIN DETAILS GRID -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left: Reservasi Terbaru -->
-                <div class="lg:col-span-2 bg-white p-6 border border-slate-200 rounded-2xl  space-y-4">
+                <div class="lg:col-span-2 bg-white p-6 border border-slate-200 rounded-2xl space-y-4">
                     <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
                         <h3 class="font-semibold text-slate-800 text-sm">Reservasi Terbaru</h3>
                         <a href="{{ route('admin.reservations.index') }}"
@@ -115,7 +115,7 @@
                                         <td class="py-3">
                                             <span
                                                 class="px-2 py-0.5 rounded-full text-[10px] font-medium uppercase 
-                                                {{ $res->status === 'pending' ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700' }}">
+                                                {{ $res->status === 'pending' ? 'bg-amber-50 text-amber-700' : ($res->status === 'rejected' ? 'bg-rose-50 text-rose-700' : 'bg-emerald-50 text-emerald-700') }}">
                                                 {{ $res->status }}
                                             </span>
                                         </td>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Kolom Pengumuman (Admin) -->
+                <!-- Right: Kolom Pengumuman -->
                 @include('partials.announcements-widget')
             </div>
         @else
@@ -141,22 +141,29 @@
             <!-- ============================================== -->
 
             @if ($activeReservation)
-                <!-- HERO ACTION: TICKET/WAITING PAYMENT BANNER -->
+                <!-- HERO ACTION: BANNER PEMBAYARAN AKTIF -->
                 <div
-                    class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50/50 border border-blue-100 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    class="p-6 bg-gradient-to-r from-amber-50/70 to-orange-50/40 border border-amber-200/70 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xs">
                     <div class="space-y-1">
                         <span
-                            class="px-2.5 py-0.5 bg-blue-100 text-blue-800 rounded-full text-[9px] font-medium uppercase tracking-wider">Aktivitas
-                            Berjalan</span>
-                        <h3 class="font-semibold text-slate-800 text-sm mt-1">Anda memiliki reservasi yang sedang aktif!
+                            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-100/80 border border-amber-200 text-amber-800 rounded-full text-[9px] font-bold uppercase tracking-wider">
+                            <span class="w-1 h-1 rounded-full bg-amber-500 animate-pulse"></span>
+                            Menunggu Pembayaran
+                        </span>
+                        <h3 class="font-semibold text-slate-800 text-sm mt-1">
+                            Tagihan Meja Nomor: {{ $activeReservation->table->table_number ?? '-' }}
                         </h3>
-                        <p class="text-xs text-slate-500">Silakan segera selesaikan verifikasi pembayaran atau cek
-                            status reservasi Anda secara berkala.</p>
+                        <p class="text-xs text-slate-500">
+                            Reservasi Anda telah disetujui. Silakan segera selesaikan pembayaran sebesar
+                            <span class="font-bold text-slate-700">Rp
+                                {{ number_format($activeReservation->table->capacity * 25000, 0, ',', '.') }}</span>
+                            sebelum batas waktu berakhir.
+                        </p>
                     </div>
-                    <div class="flex gap-2 shrink-0">
+                    <div class="flex gap-2 shrink-0 w-full md:w-auto">
                         <a href="{{ route('payment.confirm') }}"
-                            class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold  transition">
-                            Konfirmasi Pembayaran
+                            class="w-full md:w-auto px-4 py-2 text-center bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95 duration-150">
+                            Bayar Sekarang
                         </a>
                     </div>
                 </div>
@@ -165,7 +172,7 @@
             <!-- CLIENT DETAILS GRID -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left: Riwayat Booking Saya -->
-                <div class="lg:col-span-2 bg-white p-6 border border-slate-200 rounded-2xl  space-y-4">
+                <div class="lg:col-span-2 bg-white p-6 border border-slate-200 rounded-2xl space-y-4">
                     <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
                         <h3 class="font-semibold text-slate-800 text-sm">Riwayat Booking Terakhir</h3>
                         <a href="{{ route('reservasi.history') }}"
@@ -175,35 +182,39 @@
                     <div class="space-y-3">
                         @forelse($myRecentBookings as $booking)
                             <div
-                                class="flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition">
+                                class="flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50/50 transition duration-150">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                                        class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400">
                                         <i class="fa-solid fa-receipt text-xs"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-semibold text-slate-800">Booking #{{ $booking->id }}
-                                        </p>
+                                        <p class="text-xs font-semibold text-slate-800">Kode:
+                                            {{ $booking->reservation_code }}</p>
                                         <p class="text-[10px] text-slate-400">
-                                            {{ $booking->created_at->format('d M Y, H:i') }} WIB</p>
+                                            {{ $booking->created_at->translatedFormat('d M Y, H:i') }} WIB
+                                        </p>
                                     </div>
                                 </div>
                                 <span
-                                    class="px-2 py-0.5 rounded-full text-[9px] font-medium uppercase 
-                                    {{ $booking->status === 'pending' ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700' }}">
+                                    class="px-2 py-0.5 rounded-full text-[9px] font-medium uppercase tracking-wide
+                                    {{ $booking->status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-100' : ($booking->status === 'rejected' ? 'bg-rose-50 text-rose-700 border border-rose-100' : 'bg-emerald-50 text-emerald-700 border border-emerald-100') }}">
                                     {{ $booking->status }}
                                 </span>
                             </div>
                         @empty
-                            <div class="text-center py-6 text-slate-400 text-xs">
-                                <i class="fa-solid fa-folder-open text-lg mb-2 block"></i>
+                            <div class="text-center py-8 text-slate-400 text-xs">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center mx-auto mb-2 text-slate-300">
+                                    <i class="fa-solid fa-folder-open text-sm"></i>
+                                </div>
                                 Anda belum memiliki riwayat reservasi.
                             </div>
                         @endforelse
                     </div>
                 </div>
 
-                <!-- Right: Kolom Pengumuman (Pelanggan) -->
+                <!-- Right: Kolom Pengumuman -->
                 @include('partials.announcements-widget')
             </div>
         @endif

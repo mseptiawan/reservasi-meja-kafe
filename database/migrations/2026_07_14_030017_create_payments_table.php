@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('payment_code')->unique();
             $table->decimal('amount', 12, 2);
             $table->string('proof_of_payment');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
             $table->timestamps();
         });
     }

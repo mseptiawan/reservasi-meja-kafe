@@ -149,10 +149,13 @@
                                     Rp {{ number_format($pay->amount, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <a href="{{ asset('storage/' . $pay->proof_of_payment) }}" target="_blank"
-                                        class="inline-flex items-center text-[11px] text-blue-600 hover:text-blue-800 font-medium gap-1.5 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-200/60 transition-all">
-                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Buka Berkas
-                                    </a>
+                                    <div class="flex items-center justify-center">
+                                        <a href="{{ asset('storage/' . $pay->proof_of_payment) }}" target="_blank"
+                                            class="text-slate-400 hover:text-indigo-600 font-medium text-[12px] transition-colors active:scale-[0.98]"
+                                            title="Lihat Bukti Transfer">
+                                            Lihat
+                                        </a>
+                                    </div>
                                 </td>
                                 <td class="py-4 px-6 text-center select-none">
                                     @if ($pay->status === 'pending')
@@ -174,21 +177,23 @@
                                             @method('PATCH')
                                             <button type="submit" name="status" value="success"
                                                 onclick="return confirm('Setujui transaksi ini?')"
-                                                class="w-7 h-7 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg inline-flex items-center justify-center active:scale-95 transition-all shadow-sm"
-                                                title="Acc Pembayaran">
-                                                <i class="fa-solid fa-check text-[11px]"></i>
+                                                class="w-8 h-8 rounded-lg bg-white border border-slate-200/80 text-slate-400 hover:text-emerald-600 inline-flex items-center justify-center transition-all active:scale-[0.95]"
+                                                title="Setujui Akun">
+                                                <i class="fa-solid fa-user-check text-[11px]"></i>
                                             </button>
                                             <button type="submit" name="status" value="failed"
                                                 onclick="return confirm('Tolak transaksi ini?')"
-                                                class="w-7 h-7 bg-rose-600 hover:bg-rose-700 text-white rounded-lg inline-flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                                                class="w-8 h-8 rounded-lg border border-rose-200 bg-rose-50/40 text-rose-600 inline-flex items-center justify-center transition-all active:scale-[0.95] hover:bg-rose-50 cursor-pointer"
                                                 title="Tolak Pembayaran">
-                                                <i class="fa-solid fa-xmark text-[11px]"></i>
+
+                                                <i class="fa-solid fa-user-xmark text-[11px]"></i>
+
                                             </button>
                                         </form>
                                     @else
                                         <div
                                             class="text-center text-[11px] text-slate-400 italic bg-slate-50 py-1 rounded-md border border-slate-100">
-                                            {{ $pay->admin_note ?? 'Terverifikasi' }}
+                                            Terverifikasi
                                         </div>
                                     @endif
                                 </td>
@@ -256,9 +261,6 @@
                                     class="flex items-center gap-1.5 m-0 w-full sm:w-auto">
                                     @csrf
                                     @method('PATCH')
-                                    <input type="text" name="admin_note" placeholder="Catatan..."
-                                        class="text-[11px] border border-slate-200 rounded-lg px-2 h-8 focus:ring-slate-900 flex-1">
-
                                     <button type="submit" name="status" value="success"
                                         class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-medium rounded-lg active:scale-95">
                                         ACC
@@ -271,7 +273,7 @@
                             @else
                                 <div
                                     class="text-right text-[11px] text-slate-400 italic bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 w-full">
-                                    Catatan: {{ $pay->admin_note ?? 'Terverifikasi' }}
+                                    Terverifikasi
                                 </div>
                             @endif
                         </div>

@@ -19,7 +19,15 @@ class PaymentController extends Controller
         $userId = Auth::id();
         $status = $request->get('status', 'pending');
 
-        $pendingCount = Reservation::where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->count();
+        // 1. Tagihan Aktif = Reservasi yang disetujui tapi belum bayar SAMA SEKALI
+        $unpaidCount = Reservation::where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->count();
+
+        // 2. Pending Verifikasi = Sudah upload bukti transfer, status payment masih 'pending'
+        $pendingVerificationCount = Payment::whereHas('reservation', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('status', 'pending')
+            ->count();
 
         $successCount = Payment::whereHas('reservation', function ($q) use ($userId) {
             $q->where('user_id', $userId);
@@ -33,29 +41,61 @@ class PaymentController extends Controller
             ->where('status', 'failed')
             ->count();
 
+        // Stats untuk komponen UI
         $stats = [
-            'total' => $pendingCount + $successCount + $failedCount,
-            'pending' => $pendingCount,
+            'total' => $unpaidCount + $pendingVerificationCount + $successCount + $failedCount,
+            'pending' => $unpaidCount + $pendingVerificationCount, // Gabungan yang butuh tindakan / sedang berjalan
             'success' => $successCount,
             'failed' => $failedCount,
         ];
 
         $displayData = [];
+
         if ($status === 'pending') {
-            $displayData = Reservation::with('table')->where('user_id', $userId)->where('status', 'approved')->whereDoesntHave('payment')->orderBy('reservation_date', 'asc')->get();
+            // Ambil data Reservasi yang Belum Bayar
+            $unpaidReservations = Reservation::with('table')
+                ->where('user_id', $userId)
+                ->where('status', 'approved')
+                ->whereDoesntHave('payment')
+                ->orderBy('reservation_date', 'asc')
+                ->get()
+                ->map(function ($item) {
+                    $item->display_type = 'unpaid';
+                    return $item;
+                });
+
+            // Ambil data Pembayaran yang Menunggu Verifikasi Admin
+            $pendingPayments = Payment::with(['reservation.table'])
+                ->whereHas('reservation', function ($q) use ($userId) {
+                    $q->where('user_id', $userId);
+                })
+                ->where('status', 'pending')
+                ->latest()
+                ->get()
+                ->map(function ($item) {
+                    $item->display_type = 'pending_verification';
+                    return $item;
+                });
+
+            // Gabungkan keduanya ke dalam satu koleksi untuk ditampilkan di tab Permintaan Aktif
+            $displayData = $unpaidReservations->concat($pendingPayments);
         } else {
+            // Riwayat hanya menampilkan transaksi yang sudah final (Success atau Failed)
             $displayData = Payment::with(['reservation.table'])
                 ->whereHas('reservation', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
                 })
                 ->whereIn('status', ['success', 'failed'])
                 ->latest()
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->display_type = 'history';
+                    return $item;
+                });
         }
 
         return view('pelanggan.payment.index', compact('displayData', 'status', 'stats'));
     }
-
     /**
      * Halaman detail reservasi beserta instruksi pembayaran & Form Upload
      */

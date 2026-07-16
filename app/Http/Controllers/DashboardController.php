@@ -30,7 +30,8 @@ class DashboardController extends Controller
             return view('dashboard', compact('announcements', 'stats', 'recentReservations'));
         } else {
             $activeReservation = Reservation::where('user_id', $user->id)
-                ->whereIn('status', ['approved'])
+                ->where('status', 'approved')
+                ->whereDoesntHave('payment') // <-- KUNCI UTAMA: Jika sudah bayar, data tidak akan lolos query ini
                 ->latest()
                 ->first();
 
