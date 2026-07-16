@@ -1,119 +1,385 @@
-services:
-    laravel.test:
-        build:
-            context: "./vendor/laravel/sail/runtimes/8.5"
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: "${WWWGROUP}"
-        container_name: "reservasimejakafe"
-        image: "sail-8.5/app"
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
-        ports:
-            - "${APP_PORT:-80}:80"
-            - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
-        environment:
-            WWWUSER: "${WWWUSER}"
-            LARAVEL_SAIL: 1
-            XDEBUG_MODE: "${SAIL_XDEBUG_MODE:-off}"
-            XDEBUG_CONFIG: "${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}"
-            IGNITION_LOCAL_SITES_PATH: "${PWD}"
-        volumes:
-            - ".:/var/www/html"
-        networks:
-            - sail
-        depends_on:
-            - mysql
-            - redis
-            - meilisearch
-            - mailpit
-    mysql:
-        image: "mysql:8.4"
-        ports:
-            - "${FORWARD_DB_PORT:-3306}:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-            MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: "${DB_DATABASE}"
-            MYSQL_USER: "${DB_USERNAME}"
-            MYSQL_PASSWORD: "${DB_PASSWORD}"
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-            MYSQL_EXTRA_OPTIONS: "${MYSQL_EXTRA_OPTIONS:-}"
-        volumes:
-            - "sail-mysql:/var/lib/mysql"
-            - "./vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh"
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - mysqladmin
-                - ping
-                - "-p${DB_PASSWORD}"
-            retries: 3
-            timeout: 5s
-    redis:
-        image: "redis:alpine"
-        ports:
-            - "${FORWARD_REDIS_PORT:-6379}:6379"
-        volumes:
-            - "sail-redis:/data"
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - redis-cli
-                - ping
-            retries: 3
-            timeout: 5s
-    meilisearch:
-        image: "getmeili/meilisearch:latest"
-        ports:
-            - "${FORWARD_MEILISEARCH_PORT:-7700}:7700"
-        environment:
-            MEILI_NO_ANALYTICS: "${MEILISEARCH_NO_ANALYTICS:-false}"
-        volumes:
-            - "sail-meilisearch:/meili_data"
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - wget
-                - "--no-verbose"
-                - "--spider"
-                - "http://127.0.0.1:7700/health"
-            retries: 3
-            timeout: 5s
-    mailpit:
-        image: "axllent/mailpit:latest"
-        ports:
-            - "${FORWARD_MAILPIT_PORT:-1025}:1025"
-            - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
-        networks:
-            - sail
+# ☕ Sistem Reservasi Meja Kafe
 
-    phpmyadmin:
-        image: "phpmyadmin:latest"
-        ports:
-            - "8080:80"
-        environment:
-            PMA_HOST: mysql
-            PMA_USER: "${DB_USERNAME}"
-            PMA_PASSWORD: "${DB_PASSWORD}"
-        networks:
-            - sail
-        depends_on:
-            - mysql
+Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk memudahkan pelanggan melakukan reservasi meja secara online tanpa harus datang langsung ke lokasi. Sistem ini juga membantu admin dalam mengelola meja, memverifikasi akun pelanggan, memproses reservasi, memverifikasi pembayaran, serta menyampaikan informasi kepada pelanggan melalui fitur pengumuman.
 
-networks:
-    sail:
-        driver: bridge
-volumes:
-    sail-mysql:
-        driver: local
-    sail-redis:
-        driver: local
-    sail-meilisearch:
-        driver: local
+---
+
+## 📸 Preview
+
+> Tambahkan screenshot aplikasi pada folder `docs/images`.
+
+| Halaman | Preview |
+|---------|---------|
+| Landing Page | `docs/images/home.png` |
+| Dashboard | `docs/images/dashboard.png` |
+| Reservasi Meja | `docs/images/reservation.png` |
+| Pembayaran | `docs/images/payment.png` |
+| Dashboard Admin | `docs/images/admin-dashboard.png` |
+
+---
+
+# ✨ Features
+
+## 👤 Customer
+
+- Registrasi akun
+- Melihat status pendaftaran akun
+- Login
+- Melihat daftar meja
+- Reservasi meja
+- Melihat detail reservasi
+- Melihat riwayat reservasi
+- Konfirmasi pembayaran
+- Mengubah profil
+- Melihat pengumuman
+
+---
+
+## 👨‍💼 Admin
+
+- Login
+- Dashboard Admin
+- Verifikasi akun pelanggan
+- Manajemen pelanggan
+- CRUD data meja
+- Verifikasi reservasi
+- Verifikasi pembayaran
+- CRUD pengumuman
+
+---
+
+# 🛠 Tech Stack
+
+### Backend
+
+- Laravel 12
+- PHP 8.5
+
+### Frontend
+
+- Blade
+- Tailwind CSS
+- JavaScript
+- Vite
+
+### Database
+
+- MySQL 8.4
+
+### Cache
+
+- Redis
+
+### Search Engine
+
+- Meilisearch
+
+### Development Environment
+
+- Laravel Sail
+- Docker
+- Docker Compose
+
+### Mail Testing
+
+- Mailpit
+
+### Database Management
+
+- phpMyAdmin
+
+---
+
+# 🐳 Docker Services
+
+| Service | Description |
+|----------|-------------|
+| Laravel Sail | PHP Runtime & Web Server |
+| MySQL 8.4 | Database |
+| Redis | Cache Server |
+| Meilisearch | Full-text Search Engine |
+| Mailpit | Email Testing |
+| phpMyAdmin | Database Management |
+
+---
+
+# 📂 Project Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   ├── Middleware/
+│   └── Requests/
+│
+├── Models/
+│
+database/
+├── migrations/
+├── seeders/
+│
+public/
+│
+resources/
+├── css/
+├── js/
+└── views/
+│
+routes/
+├── web.php
+└── auth.php
+│
+docker-compose.yml
+│
+README.md
+```
+
+---
+
+# 🚀 Installation
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/USERNAME/REPOSITORY.git
+
+cd REPOSITORY
+```
+
+---
+
+## 2. Copy Environment File
+
+```bash
+cp .env.example .env
+```
+
+---
+
+## 3. Install PHP Dependency
+
+Jika Composer tersedia di komputer
+
+```bash
+composer install
+```
+
+atau menggunakan Docker
+
+```bash
+docker run --rm \
+-u "$(id -u):$(id -g)" \
+-v $(pwd):/opt \
+-w /opt \
+laravelsail/php85-composer:latest \
+composer install
+```
+
+---
+
+## 4. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+---
+
+## 5. Jalankan Laravel Sail
+
+```bash
+./vendor/bin/sail up -d
+```
+
+---
+
+## 6. Install Node Modules
+
+```bash
+./vendor/bin/sail npm install
+```
+
+---
+
+## 7. Jalankan Vite
+
+```bash
+./vendor/bin/sail npm run dev
+```
+
+---
+
+## 8. Jalankan Migration
+
+```bash
+./vendor/bin/sail artisan migrate
+```
+
+atau
+
+```bash
+./vendor/bin/sail artisan migrate --seed
+```
+
+---
+
+## 9. Akses Aplikasi
+
+| Service | URL |
+|----------|-----|
+| Website | http://localhost |
+| phpMyAdmin | http://localhost:8080 |
+| Mailpit | http://localhost:8025 |
+| Meilisearch | http://localhost:7700 |
+
+---
+
+# ⚙️ Environment Variables
+
+Contoh konfigurasi `.env`
+
+```env
+APP_NAME="Reservasi Meja Kafe"
+
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=reservasi_kafe
+DB_USERNAME=sail
+DB_PASSWORD=password
+
+CACHE_STORE=redis
+QUEUE_CONNECTION=database
+
+REDIS_HOST=redis
+
+MEILISEARCH_HOST=http://meilisearch:7700
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_FROM_ADDRESS=hello@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+---
+
+# 📋 User Roles
+
+## 👤 Customer
+
+- Register account
+- Check account registration status
+- Login
+- Reserve table
+- View reservation details
+- View reservation history
+- Upload payment confirmation
+- View announcements
+- Update profile
+
+---
+
+## 👨‍💼 Admin
+
+- Login
+- Dashboard
+- Verify customer accounts
+- Manage customers
+- Manage tables
+- Verify reservations
+- Verify payments
+- Manage announcements
+
+---
+
+# 📌 Main Modules
+
+| Module | Description |
+|---------|-------------|
+| Authentication | Login, Register, Forgot Password |
+| Dashboard | Dashboard sesuai role pengguna |
+| Account Approval | Verifikasi akun pelanggan |
+| Customer Management | Daftar pelanggan |
+| Table Management | CRUD meja |
+| Reservation | Reservasi meja |
+| Reservation History | Riwayat reservasi |
+| Payment Confirmation | Upload bukti pembayaran |
+| Payment Verification | Verifikasi pembayaran |
+| Announcement | CRUD pengumuman |
+| Profile | Edit profil pengguna |
+
+---
+
+# 🔄 Reservation Flow
+
+```text
+Register Account
+        │
+        ▼
+Waiting Account Verification
+        │
+        ▼
+Login
+        │
+        ▼
+Choose Table
+        │
+        ▼
+Create Reservation
+        │
+        ▼
+Upload Payment Proof
+        │
+        ▼
+Payment Verification
+        │
+        ▼
+Reservation Completed
+```
+
+---
+
+# 🗄 Database
+
+Tabel utama pada sistem:
+
+- users
+- tables
+- reservations
+- payments
+- announcements
+
+---
+
+# 📈 Future Improvements
+
+- Email notification
+- WhatsApp notification
+- Payment Gateway Integration
+- QR Code Reservation
+- Reservation Report
+- Dashboard Analytics
+- Export PDF
+- Export Excel
+
+---
+
+# 📄 License
+
+Project ini dibuat untuk keperluan pembelajaran, penelitian, dan portofolio.
+
+---
+
+# 👨‍💻 Author
+
+**Septiawan**
+
+Backend Developer
+
+## 🤝 Let's Connect
+
+- LinkedIn: https://www.linkedin.com/in/mseptiawan/
+- Email: mseptiawan017@gmail.com
