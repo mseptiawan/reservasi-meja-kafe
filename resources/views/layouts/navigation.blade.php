@@ -122,6 +122,21 @@
                 'active_pattern' => 'admin.announcements.*',
                 'icon' => 'fa-solid fa-bullhorn',
             ],
+            [
+                'type' => 'dropdown',
+                'title' => 'Profil Saya',
+                'icon' => 'fa-solid fa-user-gear',
+                'active_pattern' => [],
+                'open_pattern' => ['profile.*'],
+                'submenu' => [
+                    [
+                        'title' => 'Edit Profil',
+                        'url' => route('profile.edit'),
+                        'route_name' => 'profile.edit',
+                        'icon' => 'fa-solid fa-user-pen',
+                    ],
+                ],
+            ],
         ];
     }
 @endphp
