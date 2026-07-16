@@ -9,7 +9,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 > Tambahkan screenshot aplikasi pada folder `docs/images`.
 
 | Halaman | Preview |
-|---------|---------|
+| ------- | ------- |
 | Landing Page | ![](docs/images/landing-page.png) |
 | Dashboard | ![](docs/images/dashboard.png) |
 | Reservasi Meja | ![](docs/images/buat-reservasi.png) |
