@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,6 @@ return new class extends Migration
             $table->decimal('amount', 12, 2);
             $table->string('proof_of_payment');
             $table->string('status')->default('pending');
-            $table->text('admin_note')->nullable();
             $table->timestamps();
         });
     }

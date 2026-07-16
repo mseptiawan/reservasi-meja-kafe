@@ -115,7 +115,7 @@
                         </div>
                         <div class="shrink-0">
                             <a href="{{ route('payment.create', $item->id) }}"
-                                class="inline-flex items-center px-4 py-2 bg-slate-900 border border-transparent rounded-lg font-medium text-xs text-white uppercase tracking-wider hover:bg-slate-800 active:bg-slate-950 transition ease-in-out duration-150 ">
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-medium text-xs text-white uppercase tracking-wider hover:bg-blue-500 active:bg-slate-950 transition ease-in-out duration-150 ">
                                 Bayar Sekarang
                             </a>
                         </div>

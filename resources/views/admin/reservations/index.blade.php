@@ -173,11 +173,14 @@
                                         {{ $res->guests_count }} Kursi Dipesan
                                     </div>
                                 </td>
-                                <td class="py-4 px-6 text-center">
-                                    <a href="{{ route('reservasi.show', $res->id) }}"
-                                        class="text-blue-500 italic hover:underline text-[12px]">
-                                        Lampiran
-                                    </a>
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center justify-center">
+                                        <a href="{{ route('reservasi.show', $res->id) }}"
+                                            class="text-slate-400 hover:text-indigo-600 font-medium text-[12px] transition-colors active:scale-[0.98]"
+                                            title="Lihat Tiket Reservasi">
+                                            Lihat
+                                        </a>
+                                    </div>
                                 </td>
                                 <td class="py-4 px-6 text-center select-none">
                                     @if ($res->status === 'pending')
@@ -297,8 +300,9 @@
                                 </div>
                                 <div class="mt-2">
                                     <a href="{{ route('reservasi.show', $res->id) }}"
-                                        class="text-blue-500 italic hover:underline text-[11px]">
-                                        Lampiran Nota
+                                        class="text-slate-400 hover:text-indigo-600 font-medium text-[11px] transition-colors active:scale-[0.98]"
+                                        title="Lihat Tiket Reservasi">
+                                        Lihat
                                     </a>
                                 </div>
                             </div>

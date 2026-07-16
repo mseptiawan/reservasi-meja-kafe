@@ -30,7 +30,7 @@
                     <span
                         class="text-sm sm:text-lg md:text-2xl font-medium text-slate-900 tracking-tight tabular-nums block break-all sm:truncate leading-none pt-0.5">
                         {{ $stats['total'] }} <span
-                            class="text-[8.5px] sm:text-[10px] md:text-xs font-semibold text-slate-500 inline-block ml-0.5">Data</span>
+                            class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-slate-500 inline-block ml-0.5">Data</span>
                     </span>
                 </div>
                 <div
@@ -50,7 +50,7 @@
                     <span
                         class="text-sm sm:text-lg md:text-2xl font-medium text-amber-700 tracking-tight tabular-nums block break-all sm:truncate leading-none pt-0.5">
                         {{ $stats['pending'] }} <span
-                            class="text-[8.5px] sm:text-[10px] md:text-xs font-semibold text-amber-500 inline-block ml-0.5">Berkas</span>
+                            class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-amber-500 inline-block ml-0.5">Berkas</span>
                     </span>
                 </div>
                 <div
@@ -70,7 +70,7 @@
                     <span
                         class="text-sm sm:text-lg md:text-2xl font-medium text-emerald-700 tracking-tight tabular-nums block break-all sm:truncate leading-none pt-0.5">
                         {{ $stats['success'] }} <span
-                            class="text-[8.5px] sm:text-[10px] md:text-xs font-semibold text-emerald-500 inline-block ml-0.5">Sukses</span>
+                            class="text-[8.5px] sm:text-[10px] md:text-xs font-medium text-emerald-500 inline-block ml-0.5">Sukses</span>
                     </span>
                 </div>
                 <div
@@ -112,14 +112,14 @@
                 <table class="w-full text-left border-collapse text-[13px]">
                     <thead>
                         <tr
-                            class="bg-slate-50/70 border-b border-slate-200/50 text-[11px] font-semibold text-slate-400 uppercase tracking-wider select-none">
+                            class="bg-slate-50/70 border-b border-slate-200/50 text-[11px] font-medium text-slate-400 uppercase tracking-wider select-none">
                             <th class="py-4 px-6">Kode / Waktu</th>
                             <th class="py-4 px-6">Pelanggan</th>
                             <th class="py-4 px-6">Detail Reservasi</th>
                             <th class="py-4 px-6">Nominal</th>
                             <th class="py-4 px-6">Bukti Transfer</th>
                             <th class="py-4 px-6 text-center">Status</th>
-                            <th class="py-4 px-6 text-center">Tindakan Persetujuan</th>
+                            <th class="py-4 px-6 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white font-medium text-slate-600">
@@ -127,7 +127,7 @@
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="py-4 px-6">
                                     <span
-                                        class="font-bold text-slate-800 block text-[13px]">{{ $pay->payment_code }}</span>
+                                        class="font-medium text-slate-800 block text-[13px]">{{ $pay->payment_code }}</span>
                                     <span
                                         class="text-[10px] font-medium text-slate-400 inline-block mt-0.5">{{ $pay->created_at->format('d M Y, H:i') }}
                                         WIB</span>
@@ -136,7 +136,7 @@
                                     {{ $pay->reservation->user->name ?? 'User Terhapus' }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <span class="block font-semibold text-slate-700">Meja
+                                    <span class="block font-medium text-slate-700">Meja
                                         {{ $pay->reservation->table->table_number ?? '-' }}</span>
                                     <span class="text-[11px] text-slate-400 font-normal block mt-0.5">
                                         Jadwal:
@@ -145,12 +145,12 @@
                                         {{ substr($pay->reservation->end_time, 0, 5) }})
                                     </span>
                                 </td>
-                                <td class="py-4 px-6 font-bold text-slate-900">
+                                <td class="py-4 px-6 font-medium text-slate-900">
                                     Rp {{ number_format($pay->amount, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-6">
                                     <a href="{{ asset('storage/' . $pay->proof_of_payment) }}" target="_blank"
-                                        class="inline-flex items-center text-[11px] text-blue-600 hover:text-blue-800 font-semibold gap-1.5 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-200/60 transition-all">
+                                        class="inline-flex items-center text-[11px] text-blue-600 hover:text-blue-800 font-medium gap-1.5 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-200/60 transition-all">
                                         <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Buka Berkas
                                     </a>
                                 </td>
@@ -172,9 +172,6 @@
                                             class="flex items-center justify-center gap-1.5 m-0">
                                             @csrf
                                             @method('PATCH')
-                                            <input type="text" name="admin_note" placeholder="Catatan opsional..."
-                                                class="text-[11px] border border-slate-200 rounded-lg px-2 py-1 focus:ring-slate-900 w-32">
-
                                             <button type="submit" name="status" value="success"
                                                 onclick="return confirm('Setujui transaksi ini?')"
                                                 class="w-7 h-7 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg inline-flex items-center justify-center active:scale-95 transition-all shadow-sm"
@@ -212,7 +209,7 @@
                     <div class="p-4 space-y-3.5 bg-white">
                         <div class="flex items-center justify-between gap-2">
                             <div>
-                                <h4 class="text-[13px] font-bold text-slate-800 tracking-tight">
+                                <h4 class="text-[13px] font-medium text-slate-800 tracking-tight">
                                     {{ $pay->payment_code }}</h4>
                                 <p class="text-[11px] text-slate-400 font-medium mt-0.5">
                                     {{ $pay->created_at->format('d/m/Y, H:i') }} WIB</p>
@@ -234,16 +231,16 @@
                             <div class="flex justify-between">
                                 <span class="text-slate-400">Pelanggan:</span>
                                 <span
-                                    class="font-semibold text-slate-700">{{ $pay->reservation->user->name ?? '-' }}</span>
+                                    class="font-medium text-slate-700">{{ $pay->reservation->user->name ?? '-' }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">Reservasi:</span>
-                                <span class="font-semibold text-slate-700">Meja
+                                <span class="font-medium text-slate-700">Meja
                                     {{ $pay->reservation->table->table_number ?? '-' }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">Nominal Transfer:</span>
-                                <span class="font-bold text-indigo-600">Rp
+                                <span class="font-medium text-indigo-600">Rp
                                     {{ number_format($pay->amount, 0, ',', '.') }}</span>
                             </div>
                         </div>
@@ -263,7 +260,7 @@
                                         class="text-[11px] border border-slate-200 rounded-lg px-2 h-8 focus:ring-slate-900 flex-1">
 
                                     <button type="submit" name="status" value="success"
-                                        class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-semibold rounded-lg active:scale-95">
+                                        class="h-8 px-3 bg-emerald-600 text-white text-[11px] font-medium rounded-lg active:scale-95">
                                         ACC
                                     </button>
                                     <button type="submit" name="status" value="failed"

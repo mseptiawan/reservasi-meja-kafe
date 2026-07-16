@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['reservation_code', 'user_id', 'table_id', 'reservation_date', 'start_time', 'end_time', 'guests_count', 'status'])]
+#[Fillable(['reservation_code', 'user_id', 'table_id', 'reservation_date', 'start_time', 'notes', 'end_time', 'guests_count', 'status'])]
 class Reservation extends Model
 {
     use HasFactory, SoftDeletes;

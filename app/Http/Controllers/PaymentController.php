@@ -144,12 +144,10 @@ class PaymentController extends Controller
 
         $request->validate([
             'status' => 'required|in:success,failed',
-            'admin_note' => 'nullable|string|max:255',
         ]);
 
         $payment->update([
             'status' => $request->status,
-            'admin_note' => $request->admin_note,
         ]);
 
         if ($request->status === 'success') {
