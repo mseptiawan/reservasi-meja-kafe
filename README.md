@@ -6,8 +6,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ## 📸 Preview
 
-> Tambahkan screenshot aplikasi pada folder `docs/images`.
-
 | Halaman               | Preview                                    |
 | --------------------- | ------------------------------------------ |
 | Landing Page          | ![](docs/images/landing-page.png)          |
@@ -41,7 +39,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 - Login
 - Dashboard Admin
 - Verifikasi akun pelanggan
-- Manajemen pelanggan
 - CRUD data meja
 - Verifikasi reservasi
 - Verifikasi pembayaran
@@ -53,7 +50,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ### Backend
 
-- Laravel 12
+- Laravel 13
 - PHP 8.5
 
 ### Frontend
@@ -66,14 +63,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 ### Database
 
 - MySQL 8.4
-
-### Cache
-
-- Redis
-
-### Search Engine
-
-- Meilisearch
 
 ### Development Environment
 
@@ -97,8 +86,6 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 | ------------ | ------------------------ |
 | Laravel Sail | PHP Runtime & Web Server |
 | MySQL 8.4    | Database                 |
-| Redis        | Cache Server             |
-| Meilisearch  | Full-text Search Engine  |
 | Mailpit      | Email Testing            |
 | phpMyAdmin   | Database Management      |
 
@@ -226,12 +213,11 @@ atau
 
 ## 9. Akses Aplikasi
 
-| Service     | URL                   |
-| ----------- | --------------------- |
-| Website     | http://localhost      |
-| phpMyAdmin  | http://localhost:8080 |
-| Mailpit     | http://localhost:8025 |
-| Meilisearch | http://localhost:7700 |
+| Service    | URL                   |
+| ---------- | --------------------- |
+| Website    | http://localhost      |
+| phpMyAdmin | http://localhost:8080 |
+| Mailpit    | http://localhost:8025 |
 
 ---
 
@@ -251,12 +237,6 @@ DB_DATABASE=reservasi_kafe
 DB_USERNAME=sail
 DB_PASSWORD=password
 
-CACHE_STORE=redis
-QUEUE_CONNECTION=database
-
-REDIS_HOST=redis
-
-MEILISEARCH_HOST=http://meilisearch:7700
 
 MAIL_MAILER=smtp
 MAIL_HOST=mailpit
@@ -264,34 +244,6 @@ MAIL_PORT=1025
 MAIL_FROM_ADDRESS=hello@example.com
 MAIL_FROM_NAME="${APP_NAME}"
 ```
-
----
-
-# 📋 User Roles
-
-## 👤 Customer
-
-- Register account
-- Check account registration status
-- Login
-- Reserve table
-- View reservation details
-- View reservation history
-- Upload payment confirmation
-- View announcements
-- Update profile
-
----
-
-## 👨‍💼 Admin
-
-- Login
-- Dashboard
-- Verify customer accounts
-- Manage tables
-- Verify reservations
-- Verify payments
-- Manage announcements
 
 ---
 
