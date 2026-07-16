@@ -10,11 +10,12 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 | Halaman | Preview |
 |---------|---------|
-| Landing Page | `docs/images/home.png` |
-| Dashboard | `docs/images/dashboard.png` |
-| Reservasi Meja | `docs/images/reservation.png` |
-| Pembayaran | `docs/images/payment.png` |
-| Dashboard Admin | `docs/images/admin-dashboard.png` |
+| Landing Page | ![](docs/images/landing-page.png) |
+| Dashboard | ![](docs/images/dashboard.png |
+| Reservasi Meja | ![](docs/images/buat-reservasi.png |
+| Persetujuan Reservasi | ![](docs/images/persetujuan-reservasi.png |
+| Pembayaran | ![](docs/images/konfirmasi-pembayaran.png |
+| Pengumuman | ![](docs/images/pengumuman.png |
 
 ---
 
