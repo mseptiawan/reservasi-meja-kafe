@@ -46,6 +46,13 @@
                 ],
             ],
             [
+                'type' => 'single',
+                'title' => 'Pusat Informasi',
+                'route' => 'announcements.index',
+                'active_pattern' => 'announcements.*',
+                'icon' => 'fa-solid fa-bullhorn',
+            ],
+            [
                 'type' => 'dropdown',
                 'title' => 'Profil Saya',
                 'icon' => 'fa-solid fa-user-gear',

@@ -3,7 +3,7 @@
         <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
             <!-- Mengubah istilah Struk/Nota menjadi Tiket agar lebih relevan dengan isi halaman -->
             <x-page-header title="Detail Tiket Reservasi"
-                subtitle="Tiket digital bukti pengajuan tempat duduk di Senja Space" :backRoute="route('reservasi.history')"
+                subtitle="Tiket digital bukti pengajuan tempat duduk di PesanMeja" :backRoute="route('reservasi.history')"
                 backTitle="Kembali ke Riwayat">
                 <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                     Layanan / Reservasi
@@ -22,7 +22,7 @@
                 </span>
                 <p class="text-[11px] text-slate-500 font-normal leading-relaxed">
                     Permintaan Anda sedang masuk dalam antrean pengecekan ketersediaan meja secara fisik oleh pihak
-                    manajemen Senja Space.
+                    manajemen PesanMeja.
                 </p>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="p-6 space-y-4 text-xs text-slate-600">
             <div class="flex justify-between items-center border-b border-dashed border-slate-200 pb-3">
                 <div>
-                    <h3 class="font-medium text-slate-800 text-sm">SENJA SPACE CAFE</h3>
+                    <h3 class="font-medium text-slate-800 text-sm">PesanMeja CAFE</h3>
                     <p class="text-[10px] text-slate-400 mt-0.5">Kode Booking:
                     <p class="text-slate-700">{{ $reservation->reservation_code }}</p>
                     </p>

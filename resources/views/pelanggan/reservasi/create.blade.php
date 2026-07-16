@@ -5,7 +5,7 @@
         <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
             <!-- Komponen Page Header dengan tombol kembali -->
             <x-page-header title="Formulir Reservasi Meja"
-                subtitle="Silahkan lengkapi data reservasi dan pilih area meja yang tersedia di Senja Space"
+                subtitle="Silahkan lengkapi data reservasi dan pilih area meja yang tersedia di PesanMeja"
                 :backRoute="route('reservasi.index')" backTitle="Kembali ke Daftar Reservasi">
                 <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                     Layanan / Reservasi

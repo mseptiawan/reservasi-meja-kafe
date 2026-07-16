@@ -8,7 +8,7 @@
             <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
                 <!-- Komponen Page Header -->
                 <x-page-header title="Permohonan Reservasi"
-                    subtitle="Verifikasi ketersediaan meja fisik dan tentukan persetujuan pemesanan pelanggan di Senja Space">
+                    subtitle="Verifikasi ketersediaan meja fisik dan tentukan persetujuan pemesanan pelanggan di PesanMeja">
                     <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                         Area Kerja / Operasional
                     </span>

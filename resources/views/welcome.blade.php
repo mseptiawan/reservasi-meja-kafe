@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Senja Space | Coffee & Workspace Palembang</title>
+    <title>PesanMeja | Coffee & Workspace Palembang</title>
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,14 +18,8 @@
     <header
         class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between sticky top-0 z-50 bg-[#faf9f6]/80 backdrop-blur-md">
         <div class="flex items-center gap-2">
-            <span class="p-2 rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-                </svg>
-            </span>
-            <span class="font-semibold tracking-tight text-lg">Senja <span class="text-blue-600">Space</span></span>
+
+            <span class="font-semibold tracking-tight text-lg">Pesan <span class="text-blue-600">Meja</span></span>
         </div>
 
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
@@ -63,7 +57,7 @@
                     class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Kreativitasmu.</span>
             </h1>
             <p class="text-base sm:text-lg text-stone-500 max-w-xl leading-relaxed">
-                Lebih dari sekadar secangkir kopi. Senja Space menghadirkan suasana tenang dengan fasilitas lengkap, pas
+                Lebih dari sekadar secangkir kopi. PesanMeja menghadirkan suasana tenang dengan fasilitas lengkap, pas
                 untuk fokus bekerja, rapat kolaboratif, atau sekadar menikmati sore.
             </p>
 
@@ -261,7 +255,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div class="max-w-xl">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-blue-600">Update & Informasi</span>
-                <h2 class="text-3xl font-extrabold tracking-tight mt-1 text-slate-800">Kabar Terbaru Senja Space</h2>
+                <h2 class="text-3xl font-extrabold tracking-tight mt-1 text-slate-800">Kabar Terbaru PesanMeja</h2>
                 <p class="text-sm text-stone-500 mt-2">Cari tahu promo menarik, event komunitas terdekat, dan
                     pemberitahuan layanan operasional kami di Palembang.</p>
             </div>
@@ -335,7 +329,7 @@
 
     <!-- FOOTER -->
     <footer class="w-full text-center py-8 text-xs text-stone-400 border-t border-stone-100">
-        &copy; {{ date('Y') }} Senja Space. Palembang, Indonesia. Developed with Tailwind & Laravel.
+        &copy; {{ date('Y') }} PesanMeja. Palembang, Indonesia. Developed with Tailwind & Laravel.
     </footer>
 
 </body>

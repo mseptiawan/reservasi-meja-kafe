@@ -6,7 +6,7 @@
         <x-slot name="header">
             <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
                 <x-page-header title="Riwayat Reservasi Meja"
-                    subtitle="Pantau status persetujuan kunjungan dan nomor meja makan Anda di Senja Space">
+                    subtitle="Pantau status persetujuan kunjungan dan nomor meja makan Anda di PesanMeja">
                     {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
                     <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                         Aktivitas Saya / Reservasi

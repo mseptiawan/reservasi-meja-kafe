@@ -22,8 +22,8 @@
             <div class="p-6 space-y-6">
                 <!-- Informasi Nomor Rekening/VA Kafe -->
                 <div>
-                    <h4 class="text-sm font-medium text-slate-700 mb-2.5">Silakan Transfer Ke Salah Satu Rekening Senja
-                        Space:</h4>
+                    <h4 class="text-sm font-medium text-slate-700 mb-2.5">Silakan Transfer Ke Salah Satu Rekening Pesan
+                        Meja:</h4>
                     <div class="grid gap-3">
                         @foreach ($bankInstructions as $bank)
                             <div class="p-3.5 bg-slate-50 border border-slate-200/60 rounded-lg">

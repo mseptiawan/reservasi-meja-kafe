@@ -6,7 +6,7 @@
         <x-slot name="header">
             <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
                 <x-page-header title="Pembayaran Reservasi"
-                    subtitle="Selesaikan tagihan pemesanan meja atau pantau riwayat konfirmasi keuangan Senja Space">
+                    subtitle="Selesaikan tagihan pemesanan meja atau pantau riwayat konfirmasi keuangan PesanMeja">
                     <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                         Area Pelanggan / Keuangan
                     </span>

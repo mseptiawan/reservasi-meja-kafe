@@ -15,7 +15,16 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::with('author')->orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+
+        $query = Announcement::with('author')->orderBy('created_at', 'desc');
+
+        if ($user && $user->role === 'pelanggan') {
+            $query->where('status', 'published');
+        }
+
+        $announcements = $query->get();
+
         return view('admin.announcements.index', compact('announcements'));
     }
 
@@ -33,11 +42,11 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'   => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'type'    => 'required|in:info_internal,promo,event,maintenance,announcement',
-            'status'  => 'required|in:draft,published,archived',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'type' => 'required|in:info_internal,promo,event,maintenance,announcement',
+            'status' => 'required|in:draft,published,archived',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $data = $request->only(['title', 'content', 'type', 'status']);
@@ -71,11 +80,11 @@ class AnnouncementController extends Controller
     public function update(Request $request, Announcement $announcement)
     {
         $request->validate([
-            'title'   => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'type'    => 'required|in:info_internal,promo,event,maintenance,announcement',
-            'status'  => 'required|in:draft,published,archived',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'type' => 'required|in:info_internal,promo,event,maintenance,announcement',
+            'status' => 'required|in:draft,published,archived',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $data = $request->only(['title', 'content', 'type', 'status']);

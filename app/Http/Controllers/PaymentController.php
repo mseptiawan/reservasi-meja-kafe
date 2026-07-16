@@ -103,7 +103,7 @@ class PaymentController extends Controller
     {
         $reservation = Reservation::with('table')->where('user_id', Auth::id())->where('status', 'approved')->findOrFail($reservation_id);
 
-        $bankInstructions = [['name' => 'Bank BCA (Manual Transfer)', 'number' => '8015-2234-99', 'holder' => 'Senja Space Cafe'], ['name' => 'Mandiri Virtual Account', 'number' => '8803-0821-xxxx-xxxx', 'holder' => 'Senja Space - ' . Auth::user()->name]];
+        $bankInstructions = [['name' => 'Bank BCA (Manual Transfer)', 'number' => '8015-2234-99', 'holder' => 'PesanMeja Cafe'], ['name' => 'Mandiri Virtual Account', 'number' => '8803-0821-0249-3940', 'holder' => 'PesanMeja - ' . Auth::user()->name]];
 
         $amountToPay = $reservation->table->capacity * 25000;
 

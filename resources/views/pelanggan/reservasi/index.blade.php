@@ -4,7 +4,7 @@
             <h2 class="font-medium text-xl text-slate-800 leading-tight">
                 {{ __('Pilih Meja Kafe') }}
             </h2>
-            <p class="text-[11px] text-slate-400 mt-1">Silahkan pilih nomor meja favoritmu yang tersedia di Senja Space
+            <p class="text-[11px] text-slate-400 mt-1">Silahkan pilih nomor meja favoritmu yang tersedia di PesanMeja
             </p>
         </div>
     </x-slot>
@@ -41,7 +41,7 @@
                             </span>
                         </div>
                         <p class="text-[11px] text-slate-400 leading-relaxed line-clamp-2">
-                            {{ $table->description ?? 'Nikmati suasana santai terbaik di sudut Senja Space.' }}
+                            {{ $table->description ?? 'Nikmati suasana santai terbaik di sudut PesanMeja.' }}
                         </p>
                     </div>
                 </div>

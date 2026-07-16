@@ -47,6 +47,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [ReservationController::class, 'show'])->name('show');
         });
 
+    Route::prefix('announcements')
+        ->name('announcements.')
+        ->group(function () {
+            Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+        });
+
     // Pelanggan: Alur Pembayaran
     Route::prefix('pembayaran')
         ->name('payment.')

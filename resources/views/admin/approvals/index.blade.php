@@ -7,7 +7,7 @@
         <!-- 2. Pengiriman Komponen Page Header ke Layout Utama -->
         <x-slot name="header">
             <x-page-header title="Persetujuan Akun Pelanggan"
-                subtitle="Verifikasi pendaftaran pelanggan baru untuk memberikan akses pemesanan meja di Senja Space">
+                subtitle="Verifikasi pendaftaran pelanggan baru untuk memberikan akses pemesanan meja di PesanMeja">
                 {{-- Slot untuk Badge Kustom di Bagian Atas Judul --}}
                 <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                     Area Kerja / Keamanan

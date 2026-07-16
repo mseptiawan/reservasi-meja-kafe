@@ -8,7 +8,7 @@
             <div class="border-b border-slate-100 pb-5 md:border-none md:pb-0">
                 <!-- Komponen Page Header -->
                 <x-page-header title="Verifikasi Pembayaran Masuk"
-                    subtitle="Konfirmasi bukti transfer tanda jadi reservasi pelanggan Senja Space Cafe">
+                    subtitle="Konfirmasi bukti transfer tanda jadi reservasi pelanggan PesanMeja Cafe">
                     <span class="text-[10px] font-medium uppercase tracking-wider text-indigo-500 block">
                         Area Kerja / Keuangan
                     </span>
