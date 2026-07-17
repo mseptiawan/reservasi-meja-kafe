@@ -134,7 +134,7 @@ Pilih salah satu metode berikut:
 
 ```bash
 git clone https://github.com/mseptiawan/reservasi-meja-kafe.git
-cd REPOSITORY
+cd reservasi-meja-kafe
 ```
 
 ## 2. Copy Environment File
