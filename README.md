@@ -133,7 +133,7 @@ Pilih salah satu metode berikut:
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/USERNAME/REPOSITORY.git
+git clone https://github.com/mseptiawan/reservasi-meja-kafe.git
 cd REPOSITORY
 ```
 
