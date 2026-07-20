@@ -4,7 +4,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-## 📸 Preview
+## Preview
 
 | Halaman               | Preview                                    |
 | --------------------- | ------------------------------------------ |
@@ -17,9 +17,9 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-# ✨ Features
+# Features
 
-## 👤 Customer
+## Customer
 
 - Registrasi akun
 - Melihat status pendaftaran akun
@@ -34,7 +34,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-## 👨‍💼 Admin
+## Admin
 
 - Login
 - Dashboard Admin
@@ -46,7 +46,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-# 🛠 Tech Stack
+# Tech Stack
 
 ### Backend
 
@@ -76,7 +76,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-# 🐳 Docker Services
+# Docker Services
 
 | Service      | Description              |
 | ------------ | ------------------------ |
@@ -86,7 +86,7 @@ Sistem Reservasi Meja Kafe adalah aplikasi berbasis web yang dirancang untuk mem
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```
 app/
@@ -119,7 +119,7 @@ README.md
 
 ---
 
-# 🚀 Installation
+# Installation
 
 Pilih salah satu metode berikut:
 
@@ -288,7 +288,7 @@ http://127.0.0.1:8000
 
 ---
 
-# ⚙️ Environment Variables
+# Environment Variables
 
 Contoh konfigurasi `.env`
 
@@ -308,7 +308,7 @@ DB_PASSWORD=password
 
 ---
 
-# 📌 Main Modules
+# Main Modules
 
 | Module               | Description                    |
 | -------------------- | ------------------------------ |
@@ -355,7 +355,7 @@ Reservation Completed
 
 ---
 
-# 🗄 Database
+# Database
 
 Tabel utama pada sistem:
 
@@ -367,19 +367,19 @@ Tabel utama pada sistem:
 
 ---
 
-# 📄 License
+# License
 
 Project ini dibuat untuk keperluan sertifikasi
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 **Septiawan**
 
 Entrepreneur
 
-## 🤝 Let's Connect
+## Let's Connect
 
 - LinkedIn: https://www.linkedin.com/in/mseptiawan/
 - Email: mseptiawan017@gmail.com
